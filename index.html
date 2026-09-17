@@ -50,25 +50,77 @@ color:#8db7c2;
 }
 
 
-/* MUSIC */
+/* =========================
+   BGM
+========================= */
 
 #musicBtn{
 position:fixed;
-top:18px;
-right:18px;
+top:20px;
+right:20px;
 z-index:1000;
-padding:8px 12px;
-border:1px solid rgba(145,190,202,.55);
-background:rgba(3,8,11,.78);
-color:#b9d5dc;
+
+width:94px;
+height:50px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+gap:10px;
+
+border:1px solid rgba(110,145,154,.25);
+border-radius:28px;
+
+background:rgba(3,7,10,.82);
+color:#68777d;
+
 font:9px "Courier New",monospace;
 letter-spacing:.12em;
+
 cursor:pointer;
 backdrop-filter:blur(8px);
+
+transition:
+border-color .25s ease,
+color .25s ease;
+}
+
+#musicBtn:before{
+content:"···";
+
+display:block;
+width:18px;
+
+color:#4b585d;
+
+font:bold 11px Arial,sans-serif;
+letter-spacing:3px;
+line-height:1;
+}
+
+#musicBtn.on{
+border-color:rgba(91,160,180,.4);
+color:#86aeb9;
+}
+
+#musicBtn.on:before{
+content:"";
+
+width:16px;
+height:14px;
+
+background:
+linear-gradient(#5794a6,#5794a6) 0 7px/3px 7px no-repeat,
+linear-gradient(#5794a6,#5794a6) 6px 2px/3px 12px no-repeat,
+linear-gradient(#5794a6,#5794a6) 12px 5px/3px 9px no-repeat;
+
+filter:drop-shadow(0 0 3px rgba(70,150,175,.25));
 }
 
 
-/* INTRO */
+/* =========================
+   INTRO
+========================= */
 
 #intro{
 position:fixed;
@@ -76,7 +128,10 @@ inset:0;
 z-index:500;
 overflow:hidden;
 background:#020507;
-transition:opacity .8s ease,visibility .8s ease;
+
+transition:
+opacity .7s ease,
+visibility .7s ease;
 }
 
 #intro.hide{
@@ -88,6 +143,7 @@ pointer-events:none;
 .intro-bg{
 position:absolute;
 inset:0;
+
 background:
 linear-gradient(
 180deg,
@@ -100,231 +156,312 @@ url("assets/anima_intro_bg.png") center/cover no-repeat;
 .intro-content{
 position:absolute;
 inset:0;
+
 display:flex;
 flex-direction:column;
 align-items:center;
 justify-content:center;
+
 padding:30px;
+
 text-align:center;
 }
 
 .intro-title{
 margin:0;
+
 font:clamp(64px,13vw,150px)/.8 Georgia,serif;
 letter-spacing:.06em;
+
 color:#edf7f9;
 }
 
 .intro-sub{
 margin-top:22px;
+
 font:9px "Courier New",monospace;
-letter-spacing:.3em;
+letter-spacing:.25em;
+
 color:#91b4bd;
 }
 
 
-/* DRAG AREA */
+/* =========================
+   LINK INTERACTION
+========================= */
 
-.link-zone{
+.link-interface{
 position:relative;
-width:min(420px,78vw);
-height:150px;
-margin-top:55px;
+
+width:min(520px,88vw);
+height:210px;
+
+margin-top:48px;
+
+border:1px solid rgba(126,171,184,.18);
+
+background:rgba(5,14,19,.3);
+
 display:flex;
 align-items:center;
 justify-content:center;
-border:1px solid rgba(126,171,184,.2);
-background:rgba(5,14,19,.28);
+
 transition:.3s;
 }
 
-.link-zone.active{
-border-color:rgba(154,211,224,.75);
-box-shadow:0 0 35px rgba(91,172,192,.15);
+.link-interface.active{
+border-color:rgba(154,211,224,.65);
+box-shadow:0 0 35px rgba(91,172,192,.13);
 }
 
-.link-zone.success{
-border-color:#c4e9f0;
-background:rgba(84,153,169,.13);
+.link-interface.success{
+border-color:#a9dce6;
+box-shadow:
+0 0 25px rgba(91,172,192,.18),
+inset 0 0 25px rgba(91,172,192,.06);
 }
 
-.link-label{
+.interface-label{
 position:absolute;
-top:12px;
-left:14px;
+top:13px;
+left:15px;
+
 font:7px "Courier New",monospace;
 letter-spacing:.16em;
+
 color:#63828b;
 }
 
-.link-target{
+.port-label{
 position:absolute;
-width:82px;
-height:82px;
-border:1px dashed rgba(152,205,216,.45);
+
+font:7px "Courier New",monospace;
+letter-spacing:.1em;
+
+color:#7598a2;
+}
+
+.link-port{
+position:absolute;
+
+right:22%;
+top:50%;
+
+width:88px;
+height:88px;
+
+transform:translateY(-50%);
+
+border:1px solid rgba(147,201,213,.55);
 border-radius:50%;
+
 display:flex;
 align-items:center;
 justify-content:center;
-color:#6e929d;
-font:7px "Courier New",monospace;
-letter-spacing:.08em;
+
+background:
+radial-gradient(
+circle,
+rgba(115,183,197,.08),
+rgba(3,10,14,.4)
+);
+
+box-shadow:
+inset 0 0 18px rgba(83,155,170,.08);
+
+transition:.25s;
+}
+
+.link-port:before{
+content:"";
+
+position:absolute;
+
+inset:11px;
+
+border:1px dashed rgba(151,207,218,.35);
+border-radius:50%;
+}
+
+.link-port:after{
+content:"";
+
+position:absolute;
+
+inset:27px;
+
+border:1px solid rgba(151,207,218,.28);
+border-radius:50%;
+}
+
+.link-port .port-label{
+top:102%;
+left:50%;
+
+transform:translateX(-50%);
+
+white-space:nowrap;
+}
+
+.link-port.active{
+border-color:#9fd9e4;
+
+box-shadow:
+0 0 25px rgba(91,172,192,.22),
+inset 0 0 20px rgba(91,172,192,.1);
 }
 
 .link-core{
 position:absolute;
-width:64px;
-height:64px;
-border:1px solid #9bcbd5;
+
+left:20%;
+top:50%;
+
+width:62px;
+height:62px;
+
+transform:translate(-50%,-50%);
+
+border:1px solid #91c6d1;
 border-radius:50%;
+
 background:
 radial-gradient(
 circle,
 #bce6ec 0,
-#497c88 16%,
+#497c88 15%,
 #102a34 48%,
 #050d11 72%
 );
-box-shadow:0 0 22px rgba(116,194,210,.22);
+
+box-shadow:
+0 0 22px rgba(116,194,210,.2);
+
 cursor:grab;
+
 touch-action:none;
+
 z-index:3;
+
 transition:
-transform .12s ease,
-box-shadow .2s ease;
+box-shadow .2s ease,
+transform .12s ease;
 }
 
 .link-core:before,
 .link-core:after{
 content:"";
+
 position:absolute;
-inset:9px;
+
 border:1px solid rgba(195,235,241,.3);
+
 border-radius:50%;
 }
 
+.link-core:before{
+inset:8px;
+}
+
 .link-core:after{
-inset:19px;
+inset:18px;
 border-color:rgba(195,235,241,.45);
 }
 
 .link-core.dragging{
 cursor:grabbing;
-transform:scale(1.08);
-box-shadow:0 0 35px rgba(133,215,229,.42);
+
+box-shadow:
+0 0 35px rgba(133,215,229,.4);
+
+transform:translate(-50%,-50%) scale(1.08);
 }
 
-.intro-hint{
-margin-top:20px;
+.core-label{
+position:absolute;
+
+left:20%;
+top:calc(50% + 45px);
+
+transform:translateX(-50%);
+
+font:7px "Courier New",monospace;
+letter-spacing:.12em;
+
+color:#718f98;
+
+white-space:nowrap;
+}
+
+.drag-hint{
+margin-top:18px;
+
 font:8px "Courier New",monospace;
 letter-spacing:.14em;
+
 color:#68858e;
 }
 
 
-/* LINKING */
+/* =========================
+   CONNECTING
+========================= */
 
-#linking{
+#connecting{
 position:absolute;
 inset:0;
-z-index:10;
+
+z-index:20;
+
 display:none;
 align-items:center;
 justify-content:center;
+
 text-align:center;
+
 background:
 linear-gradient(
 180deg,
-rgba(3,8,11,.38),
-rgba(3,8,11,.92)
-),
-url("assets/anima_link_bg.png") center/cover no-repeat;
-}
-
-#linking.show{
-display:flex;
-}
-
-.linking-inner{
-padding:30px;
-}
-
-.linking-title{
-font:clamp(35px,8vw,75px)/1 Georgia,serif;
-letter-spacing:.08em;
-}
-
-.linking-status{
-margin-top:18px;
-font:9px "Courier New",monospace;
-letter-spacing:.22em;
-color:#91b9c3;
-}
-
-
-/* COMPLETE */
-
-#complete{
-position:absolute;
-inset:0;
-z-index:20;
-display:none;
-align-items:flex-end;
-background:
-linear-gradient(
-180deg,
-rgba(3,8,11,.1),
-rgba(3,8,11,.92)
+rgba(2,7,10,.25),
+rgba(2,8,11,.9)
 ),
 url("assets/anima_link_complete.png") center/cover no-repeat;
 }
 
-#complete.show{
+#connecting.show{
 display:flex;
 }
 
-.complete-inner{
-width:min(1180px,calc(100% - 32px));
-margin:auto;
-padding-bottom:9vh;
+.connect-inner{
+padding:30px;
 }
 
-.complete-title{
-font:clamp(50px,9vw,110px)/.9 Georgia,serif;
-letter-spacing:.05em;
+.connect-title{
+font:clamp(38px,7vw,72px)/1 Georgia,serif;
+letter-spacing:.08em;
 }
 
-.complete-sub{
+.connect-status{
 margin-top:14px;
-font:9px "Courier New",monospace;
+
+font:8px "Courier New",monospace;
 letter-spacing:.22em;
-color:#9bbcc4;
-}
 
-.open-main{
-display:inline-block;
-margin-top:35px;
-padding:11px 22px;
-border:1px solid #83adb8;
-background:none;
-color:inherit;
-font:9px "Courier New",monospace;
-letter-spacing:.16em;
-cursor:pointer;
-}
-
-.open-main:hover{
-background:#d9eef2;
-color:#071015;
+color:#91b9c3;
 }
 
 
-/* MAIN */
+/* =========================
+   MAIN
+========================= */
 
 #site{
 opacity:0;
 visibility:hidden;
-transition:opacity .8s ease;
+
+transition:
+opacity .7s ease,
+visibility .7s ease;
 }
 
 #site.show{
@@ -339,6 +476,7 @@ margin:auto;
 
 section{
 padding:110px 0;
+
 border-top:1px solid #17262d;
 }
 
@@ -346,23 +484,30 @@ border-top:1px solid #17262d;
 display:flex;
 justify-content:space-between;
 align-items:flex-end;
+
 gap:40px;
+
 margin-bottom:42px;
 }
 
 .section-title{
 margin:7px 0 0;
+
 font:400 clamp(35px,5vw,62px)/1.05 Georgia,serif;
 }
 
 .section-copy{
 max-width:590px;
+
 font-size:13px;
+
 color:#8fa4ab;
 }
 
 
-/* PROJECT */
+/* =========================
+   PROJECT
+========================= */
 
 .world{
 display:grid;
@@ -383,7 +528,9 @@ object-fit:cover;
 
 .panel-text{
 padding:25px;
+
 font-size:13px;
+
 color:#99adb4;
 }
 
@@ -398,54 +545,73 @@ margin-bottom:0;
 .facts{
 display:grid;
 grid-template-columns:1fr 1fr;
+
 gap:1px;
+
 background:#27373e;
 }
 
 .fact{
 padding:25px;
+
 background:#091015;
 }
 
 .fact b{
 display:block;
+
 margin-bottom:7px;
+
 font:10px "Courier New",monospace;
 letter-spacing:.14em;
+
 color:#b9dbe3;
 }
 
 .fact span{
 font-size:12px;
+
 color:#899da4;
 }
 
 
-/* DOLL */
+/* =========================
+   DOLL
+========================= */
 
 .archive{
 display:grid;
+
 grid-template-columns:repeat(3,1fr);
+
 gap:16px;
 }
 
 .card{
 display:block;
+
 overflow:hidden;
+
 border:1px solid #26363d;
+
 background:#080d11;
+
 transition:.25s;
 }
 
 .card:hover{
 border-color:#739fac;
+
 transform:translateY(-3px);
 }
 
 .card-image{
 width:100%;
+
 aspect-ratio:4/5;
+
 object-fit:cover;
+
 background:#020405;
 }
 
@@ -455,48 +621,65 @@ padding:18px;
 
 .card-num{
 font:8px "Courier New",monospace;
+
 letter-spacing:.16em;
+
 color:#668e9a;
 }
 
 .card-name{
 margin-top:5px;
+
 font-size:24px;
 font-weight:500;
 }
 
 .card-en{
 font:9px "Courier New",monospace;
+
 letter-spacing:.13em;
+
 color:#68828b;
 }
 
 .card-quote{
 margin-top:16px;
+
 padding-top:13px;
+
 border-top:1px solid #223138;
+
 color:#b8d7df;
+
 font-size:11px;
 line-height:1.75;
 }
 
 .card-desc{
 margin-top:12px;
+
 color:#879ba2;
+
 font-size:10px;
 line-height:1.75;
 }
 
 
-/* DOLLMASTER */
+/* =========================
+   DOLLMASTER
+========================= */
 
 .standby{
 min-height:330px;
+
 display:flex;
 align-items:center;
 justify-content:center;
+
 text-align:center;
+
 border:1px solid #293a41;
+
 background:
 radial-gradient(
 circle at center,
@@ -508,19 +691,25 @@ circle at center,
 
 .standby-title{
 margin-top:12px;
+
 font:clamp(44px,7vw,82px) Georgia,serif;
+
 color:#d8e8ec;
 }
 
 .standby-status{
 margin-top:12px;
+
 font:9px "Courier New",monospace;
 letter-spacing:.2em;
+
 color:#718d96;
 }
 
 
-/* LINK ACCORDION */
+/* =========================
+   LINK ACCORDION
+========================= */
 
 .link-accordion{
 border-top:1px solid #2c4149;
@@ -532,14 +721,21 @@ border-bottom:1px solid #2c4149;
 
 .link-toggle{
 width:100%;
+
 padding:24px 4px;
+
 display:flex;
 align-items:center;
 justify-content:space-between;
+
 background:none;
+
 border:0;
+
 color:#dce8ec;
+
 cursor:pointer;
+
 text-align:left;
 }
 
@@ -549,14 +745,19 @@ font:32px Georgia,serif;
 
 .link-toggle-meta{
 margin-top:3px;
+
 font:8px "Courier New",monospace;
+
 letter-spacing:.16em;
+
 color:#718d96;
 }
 
 .link-plus{
 font:20px "Courier New",monospace;
+
 font-weight:300;
+
 transition:transform .3s;
 }
 
@@ -566,7 +767,9 @@ transform:rotate(45deg);
 
 .link-panel{
 display:grid;
+
 grid-template-rows:0fr;
+
 transition:grid-template-rows .35s ease;
 }
 
@@ -580,46 +783,64 @@ overflow:hidden;
 
 .link-character{
 display:flex;
+
 align-items:center;
 justify-content:space-between;
+
 padding:14px 4px;
+
 border-top:1px solid #142229;
+
 font-size:12px;
+
 color:#8fa7ae;
+
 transition:.2s;
 }
 
 .link-character:hover{
 color:#d9edf1;
+
 background:rgba(100,150,165,.04);
 }
 
 .link-character span:last-child{
 font:8px "Courier New",monospace;
+
 letter-spacing:.12em;
 }
 
 
-/* FOOTER */
+/* =========================
+   FOOTER
+========================= */
 
 .footer{
 padding:55px 0;
+
 border-top:1px solid #18262d;
+
 text-align:center;
+
 font:8px "Courier New",monospace;
+
 letter-spacing:.14em;
+
 color:#526870;
 }
 
 
-/* MOBILE */
+/* =========================
+   MOBILE
+========================= */
 
 @media(max-width:760px){
 
 #musicBtn{
 top:12px;
 right:12px;
-padding:8px 10px;
+width:88px;
+height:46px;
 }
 
 .intro-content{
@@ -635,10 +856,22 @@ font-size:8px;
 letter-spacing:.2em;
 }
 
-.link-zone{
-width:88vw;
-height:140px;
-margin-top:45px;
+.link-interface{
+width:92vw;
+height:190px;
+margin-top:40px;
+}
+
+.link-port{
+right:16%;
+}
+
+.link-core{
+left:18%;
+}
+
+.core-label{
+left:18%;
 }
 
 .world{
@@ -655,24 +888,31 @@ padding:75px 0;
 
 .section-head{
 display:block;
+
 margin-bottom:30px;
 }
 
 .section-copy{
 margin-top:17px;
+
 font-size:12px;
 }
 
 .archive{
 display:flex;
+
 overflow-x:auto;
+
 gap:12px;
+
 padding-bottom:14px;
+
 scroll-snap-type:x mandatory;
 }
 
 .card{
 flex:0 0 78%;
+
 scroll-snap-align:start;
 }
 
@@ -686,6 +926,7 @@ font-size:27px;
 
 .link-character{
 padding:13px 2px;
+
 font-size:11px;
 }
 
@@ -697,20 +938,27 @@ font-size:11px;
 <body class="lock">
 
 
-<!-- BGM -->
+<!-- =========================
+     BGM
+========================= -->
 
 <audio id="bgm" loop preload="auto">
 <source src="assets/song.mp3" type="audio/mpeg">
 </audio>
 
-<button id="musicBtn" onclick="toggleBGM()">BGM OFF</button>
+<button id="musicBtn" type="button" onclick="toggleBGM()">
+BGM
+</button>
 
 
-<!-- ==================== INTRO ==================== -->
+<!-- =========================
+     INTRO
+========================= -->
 
 <div id="intro">
 
 <div class="intro-bg"></div>
+
 
 <div class="intro-content">
 
@@ -723,75 +971,60 @@ ANIMA
 </h1>
 
 <div class="intro-sub">
-DRAG TO ESTABLISH LINK
+ESTABLISH YOUR LINK
 </div>
 
-<div class="link-zone" id="linkZone">
 
-<div class="link-label">
+<div class="link-interface" id="linkInterface">
+
+<div class="interface-label">
+ANIMA LINK SYSTEM
+</div>
+
+
+<div class="link-port" id="linkPort">
+
+<span class="port-label">
 LINK PORT
+</span>
+
 </div>
 
-<div class="link-target" id="linkTarget">
-LINK
-</div>
 
 <div class="link-core" id="linkCore"></div>
 
+<div class="core-label">
+ANIMA CORE
 </div>
 
-<div class="intro-hint">
-CONNECT THE CORE TO THE LINK PORT
+</div>
+
+
+<div class="drag-hint">
+DRAG THE CORE TO THE LINK PORT
 </div>
 
 </div>
 
 
-<!-- LINKING -->
+<!-- CONNECTING -->
 
-<div id="linking">
+<div id="connecting">
 
-<div class="linking-inner">
+<div class="connect-inner">
 
 <div class="eyebrow">
 ANIMA SYSTEM
 </div>
 
-<div class="linking-title">
-LINKING
+<div class="connect-title">
+CONNECTING...
 </div>
 
-<div class="linking-status">
-ESTABLISHING CONNECTION · PLEASE WAIT
-</div>
-
-</div>
-
-</div>
-
-
-<!-- COMPLETE -->
-
-<div id="complete">
-
-<div class="complete-inner">
-
-<div class="eyebrow">
+<div class="connect-status">
 LINK ESTABLISHED
 </div>
 
-<div class="complete-title">
-ANIMA
-</div>
-
-<div class="complete-sub">
-CONNECTION COMPLETE · ARCHIVE UNLOCKED
-</div>
-
-<button class="open-main" onclick="openMain()">
-ENTER ARCHIVE →
-</button>
-
 </div>
 
 </div>
@@ -799,7 +1032,9 @@ ENTER ARCHIVE →
 </div>
 
 
-<!-- ==================== MAIN ==================== -->
+<!-- =========================
+     MAIN SITE
+========================= -->
 
 <div id="site">
 
@@ -836,9 +1071,13 @@ ANIMA는 인간과 거의 구분되지 않는 전투 인형과,
 
 <div class="world">
 
+
 <div class="panel">
 
-<img src="assets/anima_world.png" alt="ANIMA WORLD">
+<img
+src="assets/anima_world.png"
+alt="ANIMA WORLD"
+>
 
 <div class="panel-text">
 
@@ -891,7 +1130,7 @@ ANIMA는 인간과 거의 구분되지 않는 전투 인형과,
 </section>
 
 
-<!-- ==================== DOLL ==================== -->
+<!-- DOLL ARCHIVE -->
 
 <section id="dolls">
 
@@ -921,17 +1160,18 @@ COMBAT DOLL
 <div class="archive">
 
 
-<!-- 01 ENOCH -->
-
-<a class="card"
+<a
+class="card"
 href="https://t.melting.chat/vvq874"
 target="_blank"
-rel="noopener">
+rel="noopener"
+>
 
 <img
 class="card-image"
 src="assets/doll_enoch.png"
-alt="에녹">
+alt="에녹"
+>
 
 <div class="card-body">
 
@@ -960,17 +1200,18 @@ ENOCH
 </a>
 
 
-<!-- 02 SEVRIN -->
-
-<a class="card"
+<a
+class="card"
 href="https://t.melting.chat/v2kej1"
 target="_blank"
-rel="noopener">
+rel="noopener"
+>
 
 <img
 class="card-image"
 src="assets/doll_sevrin.png"
-alt="세브린">
+alt="세브린"
+>
 
 <div class="card-body">
 
@@ -999,17 +1240,18 @@ SEVRIN
 </a>
 
 
-<!-- 03 HUGO -->
-
-<a class="card"
+<a
+class="card"
 href="https://t.melting.chat/z6v4s7"
 target="_blank"
-rel="noopener">
+rel="noopener"
+>
 
 <img
 class="card-image"
 src="assets/doll_hugo.png"
-alt="휴고">
+alt="휴고"
+>
 
 <div class="card-body">
 
@@ -1040,17 +1282,18 @@ HUGO
 </a>
 
 
-<!-- 04 SAIN -->
-
-<a class="card"
+<a
+class="card"
 href="https://t.melting.chat/5okzyg5"
 target="_blank"
-rel="noopener">
+rel="noopener"
+>
 
 <img
 class="card-image"
 src="assets/doll_sain.png"
-alt="세인">
+alt="세인"
+>
 
 <div class="card-body">
 
@@ -1080,17 +1323,18 @@ SAIN
 </a>
 
 
-<!-- 05 ROEN -->
-
-<a class="card"
+<a
+class="card"
 href="https://t.melting.chat/is1rmw"
 target="_blank"
-rel="noopener">
+rel="noopener"
+>
 
 <img
 class="card-image"
 src="assets/doll_roen.png"
-alt="로엔">
+alt="로엔"
+>
 
 <div class="card-body">
 
@@ -1115,17 +1359,18 @@ ROEN
 </a>
 
 
-<!-- 06 XIAO -->
-
-<a class="card"
+<a
+class="card"
 href="https://t.melting.chat/gwwgy5"
 target="_blank"
-rel="noopener">
+rel="noopener"
+>
 
 <img
 class="card-image"
 src="assets/doll_xiao.png"
-alt="샤오">
+alt="샤오"
+>
 
 <div class="card-body">
 
@@ -1157,17 +1402,18 @@ XIAO
 </a>
 
 
-<!-- 07 ROWELL & ROSE -->
-
-<a class="card"
+<a
+class="card"
 href="https://t.melting.chat/a5hf6m"
 target="_blank"
-rel="noopener">
+rel="noopener"
+>
 
 <img
 class="card-image"
 src="assets/doll_rowell_rose.png"
-alt="로웰과 로제">
+alt="로웰과 로제"
+>
 
 <div class="card-body">
 
@@ -1201,17 +1447,18 @@ ROWELL &amp; ROSÉ
 </a>
 
 
-<!-- 08 REV -->
-
-<a class="card"
+<a
+class="card"
 href="https://t.melting.chat/rpio5q"
 target="_blank"
-rel="noopener">
+rel="noopener"
+>
 
 <img
 class="card-image"
 src="assets/doll_rev.png"
-alt="레브">
+alt="레브"
+>
 
 <div class="card-body">
 
@@ -1241,17 +1488,18 @@ REV
 </a>
 
 
-<!-- 09 ZED -->
-
-<a class="card"
+<a
+class="card"
 href="https://t.melting.chat/atavbx"
 target="_blank"
-rel="noopener">
+rel="noopener"
+>
 
 <img
 class="card-image"
 src="assets/doll_zed.png"
-alt="제드">
+alt="제드"
+>
 
 <div class="card-body">
 
@@ -1283,17 +1531,18 @@ ZED
 </a>
 
 
-<!-- 10 SERN -->
-
-<a class="card"
+<a
+class="card"
 href="https://t.melting.chat/6pe8qox"
 target="_blank"
-rel="noopener">
+rel="noopener"
+>
 
 <img
 class="card-image"
 src="assets/doll_sern.png"
-alt="세른">
+alt="세른"
+>
 
 <div class="card-body">
 
@@ -1323,17 +1572,18 @@ SERN
 </a>
 
 
-<!-- 11 VALEN -->
-
-<a class="card"
+<a
+class="card"
 href="https://t.melting.chat/mty681k"
 target="_blank"
-rel="noopener">
+rel="noopener"
+>
 
 <img
 class="card-image"
 src="assets/doll_valen.png"
-alt="발렌">
+alt="발렌"
+>
 
 <div class="card-body">
 
@@ -1369,7 +1619,7 @@ VALEN
 </section>
 
 
-<!-- ==================== DOLLMASTER ==================== -->
+<!-- DOLLMASTER -->
 
 <section id="masters">
 
@@ -1419,7 +1669,7 @@ STANDBY
 </section>
 
 
-<!-- ==================== LINK ==================== -->
+<!-- LINK -->
 
 <section id="link">
 
@@ -1479,128 +1729,129 @@ MELTING
 <div class="link-panel-inner">
 
 
-<a class="link-character"
+<a
+class="link-character"
 href="https://t.melting.chat/vvq874"
 target="_blank"
-rel="noopener">
-
+rel="noopener"
+>
 <span>ENOCH / 에녹</span>
 <span>LINK →</span>
-
 </a>
 
 
-<a class="link-character"
+<a
+class="link-character"
 href="https://t.melting.chat/v2kej1"
 target="_blank"
-rel="noopener">
-
+rel="noopener"
+>
 <span>SEVRIN / 세브린</span>
 <span>LINK →</span>
-
 </a>
 
 
-<a class="link-character"
+<a
+class="link-character"
 href="https://t.melting.chat/z6v4s7"
 target="_blank"
-rel="noopener">
-
+rel="noopener"
+>
 <span>HUGO / 휴고</span>
 <span>LINK →</span>
-
 </a>
 
 
-<a class="link-character"
+<a
+class="link-character"
 href="https://t.melting.chat/5okzyg5"
 target="_blank"
-rel="noopener">
-
+rel="noopener"
+>
 <span>SAIN / 세인</span>
 <span>LINK →</span>
-
 </a>
 
 
-<a class="link-character"
+<a
+class="link-character"
 href="https://t.melting.chat/is1rmw"
 target="_blank"
-rel="noopener">
-
+rel="noopener"
+>
 <span>ROEN / 로엔</span>
 <span>LINK →</span>
-
 </a>
 
 
-<a class="link-character"
+<a
+class="link-character"
 href="https://t.melting.chat/gwwgy5"
 target="_blank"
-rel="noopener">
-
+rel="noopener"
+>
 <span>XIAO / 샤오</span>
 <span>LINK →</span>
-
 </a>
 
 
-<a class="link-character"
+<a
+class="link-character"
 href="https://t.melting.chat/a5hf6m"
 target="_blank"
-rel="noopener">
-
+rel="noopener"
+>
 <span>ROWELL &amp; ROSÉ / 로웰 &amp; 로제</span>
 <span>LINK →</span>
-
 </a>
 
 
-<a class="link-character"
+<a
+class="link-character"
 href="https://t.melting.chat/rpio5q"
 target="_blank"
-rel="noopener">
-
+rel="noopener"
+>
 <span>REV / 레브</span>
 <span>LINK →</span>
-
 </a>
 
 
-<a class="link-character"
+<a
+class="link-character"
 href="https://t.melting.chat/atavbx"
 target="_blank"
-rel="noopener">
-
+rel="noopener"
+>
 <span>ZED / 제드</span>
 <span>LINK →</span>
-
 </a>
 
 
-<a class="link-character"
+<a
+class="link-character"
 href="https://t.melting.chat/6pe8qox"
 target="_blank"
-rel="noopener">
-
+rel="noopener"
+>
 <span>SERN / 세른</span>
 <span>LINK →</span>
-
 </a>
 
 
-<a class="link-character"
+<a
+class="link-character"
 href="https://t.melting.chat/mty681k"
 target="_blank"
-rel="noopener">
-
+rel="noopener"
+>
 <span>VALEN / 발렌</span>
 <span>LINK →</span>
-
 </a>
 
 
 </div>
+
 </div>
 
 </div>
@@ -1657,10 +1908,8 @@ PREPARING
 
 
 <footer class="footer">
-
 ANIMA · COMBAT DOLL PROJECT ·
 ARTIFICIAL LIFE / COMBAT DOLL / LINK
-
 </footer>
 
 </div>
@@ -1668,12 +1917,16 @@ ARTIFICIAL LIFE / COMBAT DOLL / LINK
 
 <script>
 
-/* ====================
+/* =========================
    BGM
-==================== */
+========================= */
 
 const bgm=document.getElementById("bgm");
 const musicBtn=document.getElementById("musicBtn");
+
+function setBGMState(on){
+musicBtn.classList.toggle("on",on);
+}
 
 function startBGM(){
 
@@ -1681,7 +1934,7 @@ bgm.volume=.7;
 
 bgm.play().then(()=>{
 
-musicBtn.textContent="BGM ON";
+setBGMState(true);
 
 }).catch(()=>{});
 
@@ -1693,37 +1946,51 @@ if(bgm.paused){
 
 bgm.play().then(()=>{
 
-musicBtn.textContent="BGM ON";
+setBGMState(true);
 
 }).catch(()=>{});
 
 }else{
 
 bgm.pause();
-musicBtn.textContent="BGM OFF";
+
+setBGMState(false);
 
 }
 
 }
 
 
-/* ====================
-   INTRO DRAG LINK
-==================== */
+/* =========================
+   LINK DRAG
+========================= */
 
 const intro=document.getElementById("intro");
-const linkZone=document.getElementById("linkZone");
-const linkTarget=document.getElementById("linkTarget");
+const linkInterface=document.getElementById("linkInterface");
+const linkPort=document.getElementById("linkPort");
 const linkCore=document.getElementById("linkCore");
-const linking=document.getElementById("linking");
-const complete=document.getElementById("complete");
+const connecting=document.getElementById("connecting");
 const site=document.getElementById("site");
 
 let dragging=false;
-let offsetX=0;
-let offsetY=0;
 let linked=false;
 
+let startX=0;
+let startY=0;
+
+
+/* CORE POSITION */
+
+function resetCore(){
+
+linkCore.style.left="20%";
+linkCore.style.top="50%";
+linkCore.style.transform="translate(-50%,-50%)";
+
+}
+
+
+/* POINTER DOWN */
 
 linkCore.addEventListener("pointerdown",e=>{
 
@@ -1735,49 +2002,58 @@ linkCore.classList.add("dragging");
 
 linkCore.setPointerCapture(e.pointerId);
 
-const r=linkCore.getBoundingClientRect();
+const rect=linkCore.getBoundingClientRect();
 
-offsetX=e.clientX-(r.left+r.width/2);
-offsetY=e.clientY-(r.top+r.height/2);
+startX=e.clientX-(rect.left+rect.width/2);
+startY=e.clientY-(rect.top+rect.height/2);
 
 });
 
+
+/* POINTER MOVE */
 
 linkCore.addEventListener("pointermove",e=>{
 
 if(!dragging||linked)return;
 
-const zone=linkZone.getBoundingClientRect();
+const area=linkInterface.getBoundingClientRect();
+
 const core=linkCore.getBoundingClientRect();
 
-let x=e.clientX-zone.left-offsetX-core.width/2;
-let y=e.clientY-zone.top-offsetY-core.height/2;
+let x=e.clientX-area.left-startX;
+let y=e.clientY-area.top-startY;
+
+const halfW=core.width/2;
+const halfH=core.height/2;
 
 x=Math.max(
-0,
+halfW,
 Math.min(
 x,
-zone.width-core.width
+area.width-halfW
 )
 );
 
 y=Math.max(
-0,
+halfH,
 Math.min(
 y,
-zone.height-core.height
+area.height-halfH
 )
 );
 
 linkCore.style.left=x+"px";
 linkCore.style.top=y+"px";
-linkCore.style.transform="scale(1.08)";
+linkCore.style.transform="translate(-50%,-50%) scale(1.08)";
 
 
-const target=linkTarget.getBoundingClientRect();
+/* TARGET CHECK */
 
-const cx=core.left+core.width/2;
-const cy=core.top+core.height/2;
+const target=linkPort.getBoundingClientRect();
+const current=linkCore.getBoundingClientRect();
+
+const cx=current.left+current.width/2;
+const cy=current.top+current.height/2;
 
 const tx=target.left+target.width/2;
 const ty=target.top+target.height/2;
@@ -1787,13 +2063,22 @@ cx-tx,
 cy-ty
 );
 
-linkZone.classList.toggle(
+const active=distance<65;
+
+linkInterface.classList.toggle(
 "active",
-distance<45
+active
+);
+
+linkPort.classList.toggle(
+"active",
+active
 );
 
 });
 
+
+/* RELEASE */
 
 function releaseCore(){
 
@@ -1803,11 +2088,11 @@ dragging=false;
 
 linkCore.classList.remove("dragging");
 
-const core=linkCore.getBoundingClientRect();
-const target=linkTarget.getBoundingClientRect();
+const target=linkPort.getBoundingClientRect();
+const current=linkCore.getBoundingClientRect();
 
-const cx=core.left+core.width/2;
-const cy=core.top+core.height/2;
+const cx=current.left+current.width/2;
+const cy=current.top+current.height/2;
 
 const tx=target.left+target.width/2;
 const ty=target.top+target.height/2;
@@ -1818,17 +2103,17 @@ cy-ty
 );
 
 
-if(distance<55){
+if(distance<70){
 
-completeLink();
+establishLink();
 
 }else{
 
-linkCore.style.left="";
-linkCore.style.top="";
-linkCore.style.transform="";
+resetCore();
 
-linkZone.classList.remove("active");
+linkInterface.classList.remove("active");
+
+linkPort.classList.remove("active");
 
 }
 
@@ -1846,50 +2131,33 @@ releaseCore
 );
 
 
-/* ====================
-   LINK COMPLETE
-==================== */
+/* =========================
+   LINK SUCCESS
+========================= */
 
-function completeLink(){
+function establishLink(){
 
 linked=true;
 
-linkZone.classList.add("success");
+linkInterface.classList.remove("active");
 
-linkCore.style.left="50%";
+linkInterface.classList.add("success");
+
+linkPort.classList.add("active");
+
+linkCore.style.left="82%";
 linkCore.style.top="50%";
-
 linkCore.style.transform=
-"translate(-50%,-50%) scale(1.15)";
+"translate(-50%,-50%) scale(.72)";
 
 
 setTimeout(()=>{
 
-linking.classList.add("show");
+connecting.classList.add("show");
 
 startBGM();
 
-
 setTimeout(()=>{
-
-linking.classList.remove("show");
-
-complete.classList.add("show");
-
-},1800);
-
-},500);
-
-}
-
-
-/* ====================
-   OPEN MAIN
-==================== */
-
-function openMain(){
-
-complete.classList.remove("show");
 
 intro.classList.add("hide");
 
@@ -1899,12 +2167,16 @@ document.body.classList.remove("lock");
 
 window.scrollTo(0,0);
 
+},1000);
+
+},450);
+
 }
 
 
-/* ====================
-   LINK ACCORDION
-==================== */
+/* =========================
+   ACCORDION
+========================= */
 
 document
 .querySelectorAll(".link-toggle")
@@ -1929,6 +2201,13 @@ item.classList.toggle("open");
 });
 
 });
+
+
+/* =========================
+   INITIAL
+========================= */
+
+resetCore();
 
 </script>
 
