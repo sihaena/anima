@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>ANIMA — COMBAT DOLL PROJECT</title>
+
+<style>
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+margin:0;
+background:#05080b;
+color:#dce7eb;
+font-family:"Noto Sans KR","Pretendard","Malgun Gothic",sans-serif;
+line-height:1.7;
+}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+
+.wrap{
+width:min(1180px,calc(100% - 32px));
+margin:auto;
+}
+
+.eyebrow{
+font:10px/1.4 "Courier New",monospace;
+letter-spacing:.18em;
+color:#8eb9c5;
+}
+
+.hero{
+min-height:100vh;
+position:relative;
+display:flex;
+align-items:flex-end;
+overflow:hidden;
+background:#020508;
+}
+
+.hero:before{
+content:"";
+position:absolute;
+inset:0;
+background:
+linear-gradient(180deg,rgba(0,0,0,.05) 20%,rgba(3,8,11,.94) 100%),
+url("assets/anima_intro_bg.png") center/cover no-repeat;
+}
+
+.hero-inner{
+position:relative;
+width:min(1180px,calc(100% - 32px));
+margin:auto;
+padding:0 0 9vh;
+}
+
+.logo{
+font:clamp(64px,11vw,150px)/.82 Georgia,serif;
+letter-spacing:.05em;
+color:#edf5f7;
+}
+
+.subtitle{
+margin-top:20px;
+font:11px "Courier New",monospace;
+letter-spacing:.3em;
+color:#9ebdc5;
+}
+
+.enter{
+display:inline-block;
+margin-top:42px;
+padding:12px 24px;
+border:1px solid #6e99a6;
+font:10px "Courier New",monospace;
+letter-spacing:.18em;
+transition:.25s;
+}
+
+.enter:hover{
+background:#d7edf2;
+color:#071015;
+}
+
+section{
+padding:110px 0;
+border-top:1px solid #18262d;
+}
+
+.section-head{
+display:flex;
+justify-content:space-between;
+align-items:flex-end;
+gap:40px;
+margin-bottom:42px;
+}
+
+.section-title{
+margin:7px 0 0;
+font:400 clamp(34px,5vw,62px)/1.05 Georgia,serif;
+}
+
+.section-copy{
+max-width:590px;
+font-size:13px;
+color:#8fa3aa;
+}
+
+.world{
+display:grid;
+grid-template-columns:1.15fr .85fr;
+gap:18px;
+}
+
+.panel{
+border:1px solid #27373e;
+background:#091015;
+}
+
+.panel img{
+width:100%;
+aspect-ratio:16/9;
+object-fit:cover;
+}
+
+.panel-text{
+padding:25px;
+font-size:13px;
+color:#9aadb3;
+}
+
+.panel-text p{
+margin:0 0 16px;
+}
+
+.panel-text p:last-child{
+margin-bottom:0;
+}
+
+.facts{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:1px;
+background:#27373e;
+}
+
+.fact{
+padding:25px;
+background:#091015;
+}
+
+.fact b{
+display:block;
+margin-bottom:7px;
+font:10px "Courier New",monospace;
+letter-spacing:.14em;
+color:#bcdfe7;
+}
+
+.fact span{
+font-size:12px;
+color:#899da4;
+}
+
+.archive{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:16px;
+}
+
+.card{
+overflow:hidden;
+border:1px solid #26363d;
+background:#080d11;
+transition:.25s;
+}
+
+.card:hover{
+border-color:#739fac;
+transform:translateY(-3px);
+}
+
+.card-image{
+width:100%;
+aspect-ratio:4/5;
+object-fit:cover;
+background:#020405;
+}
+
+.card-body{
+padding:18px;
+}
+
+.card-num{
+font:8px "Courier New",monospace;
+letter-spacing:.16em;
+color:#668e9a;
+}
+
+.card-name{
+margin-top:5px;
+font-size:24px;
+font-weight:500;
+}
+
+.card-en{
+font:9px "Courier New",monospace;
+letter-spacing:.13em;
+color:#68828b;
+}
+
+.card-quote{
+margin-top:16px;
+padding-top:13px;
+border-top:1px solid #223138;
+color:#b8d7df;
+font-size:11px;
+line-height:1.75;
+}
+
+.card-desc{
+margin-top:12px;
+color:#879ba2;
+font-size:10px;
+line-height:1.75;
+}
+
+.card-master{
+margin-top:12px;
+padding-top:11px;
+border-top:1px solid #19262c;
+font:9px "Courier New",monospace;
+color:#718e97;
+letter-spacing:.06em;
+}
+
+.standby{
+min-height:330px;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+border:1px solid #293a41;
+background:
+radial-gradient(circle at center,#10222b 0,#071015 55%,#05090c 100%);
+}
+
+.standby-title{
+margin-top:12px;
+font:clamp(44px,7vw,82px) Georgia,serif;
+color:#d8e8ec;
+}
+
+.standby-status{
+margin-top:12px;
+font:9px "Courier New",monospace;
+letter-spacing:.2em;
+color:#718d96;
+}
+
+.links{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:16px;
+}
+
+.link-card{
+min-height:270px;
+padding:34px;
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+border:1px solid #2c4149;
+background:#081015;
+transition:.25s;
+}
+
+.link-card:hover{
+border-color:#9acbd6;
+background:#0b171d;
+}
+
+.link-title{
+margin:8px 0;
+font:36px Georgia,serif;
+font-weight:400;
+}
+
+.link-desc{
+font-size:12px;
+color:#8da1a8;
+}
+
+.link-button{
+align-self:flex-start;
+padding:10px 16px;
+border:1px solid #496b76;
+font:9px "Courier New",monospace;
+letter-spacing:.15em;
+}
+
+.footer{
+padding:55px 0;
+border-top:1px solid #18262d;
+text-align:center;
+font:8px "Courier New",monospace;
+letter-spacing:.14em;
+color:#526870;
+}
+
+/* mobile */
+@media(max-width:760px){
+
+.wrap{
+width:calc(100% - 22px);
+}
+
+.hero-inner{
+width:calc(100% - 22px);
+padding-bottom:7vh;
+}
+
+.logo{
+font-size:19vw;
+}
+
+.subtitle{
+font-size:9px;
+letter-spacing:.18em;
+}
+
+section{
+padding:75px 0;
+}
+
+.section-head{
+display:block;
+margin-bottom:30px;
+}
+
+.section-copy{
+margin-top:17px;
+font-size:12px;
+}
+
+.world{
+grid-template-columns:1fr;
+}
+
+.facts{
+grid-template-columns:1fr 1fr;
+}
+
+.archive{
+display:flex;
+overflow-x:auto;
+gap:12px;
+padding-bottom:14px;
+scroll-snap-type:x mandatory;
+}
+
+.card{
+flex:0 0 78%;
+scroll-snap-align:start;
+}
+
+.links{
+grid-template-columns:1fr;
+}
+
+.link-card{
+min-height:220px;
+padding:26px;
+}
+
+.link-title{
+font-size:30px;
+}
+
+}
+</style>
+</head>
+
+
+<body>
+
+<!-- ==================== INTRO ==================== -->
+
+<header class="hero" id="top">
+
+<div class="hero-inner">
+
+<div class="eyebrow">
+COMBAT DOLL PROJECT / ANIMA
+</div>
+
+<div class="logo">
+ANIMA
+</div>
+
+<div class="subtitle">
+ARTIFICIAL LIFE · COMBAT DOLL · LINK
+</div>
+
+<a class="enter" href="#project">
+ENTER ARCHIVE ↓
+</a>
+
+</div>
+
+</header>
+
+
+<main class="wrap">
+
+
+<!-- ==================== PROJECT ==================== -->
+
+<section id="project">
+
+<div class="section-head">
+
+<div>
+<div class="eyebrow">
+01 / PROJECT
+</div>
+
+<h2 class="section-title">
+사람처럼 만들어진<br>
+인형
+</h2>
+</div>
+
+<div class="section-copy">
+ANIMA는 인간과 거의 구분되지 않는 전투 인형과,
+그 인형을 움직이는 인형사의 이야기를 다루는
+현대 한국 배경의 합작 프로젝트다.
+</div>
+
+</div>
+
+
+<div class="world">
+
+<div class="panel">
+
+<img
+src="assets/anima_world.png"
+alt="ANIMA WORLD">
+
+<div class="panel-text">
+
+<p>
+인형은 단순한 병기가 아니다.
+살아 움직이고, 생각하고, 감정을 가진다.
+</p>
+
+<p>
+인형은 레지움으로 만들어진 몸체와
+아니마를 중심으로 하나의 개체로 완성된다.
+</p>
+
+<p>
+인형사와의 <b>LINK</b>는 인형이 활동하기 위한
+생명선이며 두 존재 사이의 관계를 결정한다.
+</p>
+
+</div>
+
+</div>
+
+
+<div class="facts">
+
+<div class="fact">
+<b>ANIMA</b>
+<span>
+인형의 핵심이 되는 중심 요소.
+</span>
+</div>
+
+<div class="fact">
+<b>RESIUM</b>
+<span>
+인형의 몸체를 구성하는 원재료.
+</span>
+</div>
+
+<div class="fact">
+<b>VITA</b>
+<span>
+손상과 침식에 대응하기 위한 치료용 수액.
+</span>
+</div>
+
+<div class="fact">
+<b>MORS</b>
+<span>
+인형의 정상적인 상태를 무너뜨리는 침식.
+</span>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ==================== DOLL ARCHIVE ==================== -->
+
+<section id="dolls">
+
+<div class="section-head">
+
+<div>
+
+<div class="eyebrow">
+02 / DOLL ARCHIVE
+</div>
+
+<h2 class="section-title">
+COMBAT DOLL
+</h2>
+
+</div>
+
+<div class="section-copy">
+현재 등록된 전투 인형을 확인한다.
+서로 다른 제작 기록과 성격을 가진
+11개의 개체가 존재한다.
+</div>
+
+</div>
+
+
+<div class="archive">
+
+
+<!-- 01 ENOCH -->
+
+<article class="card">
+
+<img
+class="card-image"
+src="assets/doll_enoch.png"
+alt="에녹">
+
+<div class="card-body">
+
+<div class="card-num">
+DOLL FILE / 01
+</div>
+
+<div class="card-name">
+에녹
+</div>
+
+<div class="card-en">
+ENOCH
+</div>
+
+<div class="card-quote">
+“질투요? 내가? 그냥 마음에 안 드는건데.”
+</div>
+
+<div class="card-desc">
+감정을 모르는 주제에 아는 척하는 인형.
+</div>
+
+<div class="card-master">
+DOLLMASTER · 시해나
+</div>
+
+</div>
+
+</article>
+
+
+<!-- 02 SEVRIN -->
+
+<article class="card">
+
+<img
+class="card-image"
+src="assets/doll_sevrin.png"
+alt="세브린">
+
+<div class="card-body">
+
+<div class="card-num">
+DOLL FILE / 02
+</div>
+
+<div class="card-name">
+세브린
+</div>
+
+<div class="card-en">
+SEVRIN
+</div>
+
+<div class="card-quote">
+“전투하다가 다치면 네가 책임질 거야?”
+</div>
+
+<div class="card-desc">
+자기 몸을 세상에서 제일 아끼는
+예민한 나르시시스트.
+</div>
+
+<div class="card-master">
+DOLLMASTER · 현야
+</div>
+
+</div>
+
+</article>
+
+
+<!-- 03 HUGO -->
+
+<article class="card">
+
+<img
+class="card-image"
+src="assets/doll_hugo.png"
+alt="휴고">
+
+<div class="card-body">
+
+<div class="card-num">
+DOLL FILE / 03
+</div>
+
+<div class="card-name">
+휴고
+</div>
+
+<div class="card-en">
+HUGO
+</div>
+
+<div class="card-quote">
+“마스터. 지시를.”
+</div>
+
+<div class="card-desc">
+제작된 지 얼마 되지 않아 주인을 잃고
+아무것도 익히지 못한 인형.
+의료 인형을 전투 인형으로 비인가 개조했다.
+</div>
+
+<div class="card-master">
+DOLLMASTER · 반엽
+</div>
+
+</div>
+
+</article>
+
+
+<!-- 04 SAIN -->
+
+<article class="card">
+
+<img
+class="card-image"
+src="assets/doll_sain.png"
+alt="세인">
+
+<div class="card-body">
+
+<div class="card-num">
+DOLL FILE / 04
+</div>
+
+<div class="card-name">
+세인
+</div>
+
+<div class="card-en">
+SAIN
+</div>
+
+<div class="card-quote">
+“좋아해서 듣는 거지,
+다 맡긴다는 뜻은 아닌데요.”
+</div>
+
+<div class="card-desc">
+주인을 편애하는 고집 센 자율형 인형.
+</div>
+
+<div class="card-master">
+DOLLMASTER · Pubb
+</div>
+
+</div>
+
+</article>
+
+
+<!-- 05 ROEN -->
+
+<article class="card">
+
+<img
+class="card-image"
+src="assets/doll_roen.png"
+alt="로엔">
+
+<div class="card-body">
+
+<div class="card-num">
+DOLL FILE / 05
+</div>
+
+<div class="card-name">
+로엔
+</div>
+
+<div class="card-en">
+ROEN
+</div>
+
+<div class="card-quote">
+“인형은 고칩니다. 제 건 나중에요.”
+</div>
+
+<div class="card-master">
+DOLLMASTER · Riv
+</div>
+
+</div>
+
+</article>
+
+
+<!-- 06 XIAO -->
+
+<article class="card">
+
+<img
+class="card-image"
+src="assets/doll_xiao.png"
+alt="샤오">
+
+<div class="card-body">
+
+<div class="card-num">
+DOLL FILE / 06
+</div>
+
+<div class="card-name">
+샤오
+</div>
+
+<div class="card-en">
+XIAO
+</div>
+
+<div class="card-quote">
+“이것도 다 임무의 연장선이라고요.
+존나게, 중요한.”
+</div>
+
+<div class="card-desc">
+장난기 많고 호기심이 지나치게 많아
+명령을 알아들어도 제멋대로 행동하는
+반항적인 탐사 인형.
+</div>
+
+<div class="card-master">
+DOLLMASTER · 스낵키
+</div>
+
+</div>
+
+</article>
+
+
+<!-- 07 ROWELL & ROSÉ -->
+
+<article class="card">
+
+<img
+class="card-image"
+src="assets/doll_rowell_rose.png"
+alt="로웰과 로제">
+
+<div class="card-body">
+
+<div class="card-num">
+DOLL FILE / 07
+</div>
+
+<div class="card-name">
+로웰 &amp; 로제
+</div>
+
+<div class="card-en">
+ROWELL &amp; ROSÉ
+</div>
+
+<div class="card-quote">
+“명령은 들었어. 따를지는 우리가 정해.”
+</div>
+
+<div class="card-desc">
+같은 레지움 원괴를 양분해 같은 날 제작된
+두 인형. 높은 아니마 공명률로 서로의
+위치와 손상을 감지한다.
+</div>
+
+<div class="card-master">
+DOLLMASTER · 뽀야라
+</div>
+
+</div>
+
+</article>
+
+
+<!-- 08 REV -->
+
+<article class="card">
+
+<img
+class="card-image"
+src="assets/doll_rev.png"
+alt="레브">
+
+<div class="card-body">
+
+<div class="card-num">
+DOLL FILE / 08
+</div>
+
+<div class="card-name">
+레브
+</div>
+
+<div class="card-en">
+REV
+</div>
+
+<div class="card-quote">
+“살고 싶어. 빌어먹게 오래.”
+</div>
+
+<div class="card-desc">
+자기 삶을 부품값으로 계산당하는 걸
+못 견디는 능글맞은 생존주의자.
+</div>
+
+<div class="card-master">
+DOLLMASTER · 저온
+</div>
+
+</div>
+
+</article>
+
+
+<!-- 09 ZED -->
+
+<article class="card">
+
+<img
+class="card-image"
+src="assets/doll_zed.png"
+alt="제드">
+
+<div class="card-body">
+
+<div class="card-num">
+DOLL FILE / 09
+</div>
+
+<div class="card-name">
+제드
+</div>
+
+<div class="card-en">
+ZED
+</div>
+
+<div class="card-quote">
+“착각하지 마. 네가 없으면 귀찮아지니까 따라가는 거야.”
+</div>
+
+<div class="card-desc">
+자기방어형 츤데레 수집광.
+이전 인형사의 기억을 잃었지만
+흔적을 소중히 간직한다.
+</div>
+
+<div class="card-master">
+DOLLMASTER · 로멘
+</div>
+
+</div>
+
+</article>
+
+
+<!-- 10 SERN -->
+
+<article class="card">
+
+<img
+class="card-image"
+src="assets/doll_sern.png"
+alt="세른">
+
+<div class="card-body">
+
+<div class="card-num">
+DOLL FILE / 10
+</div>
+
+<div class="card-name">
+세른
+</div>
+
+<div class="card-en">
+SERN
+</div>
+
+<div class="card-quote">
+“링크됐다고 해서 널 인정한 건 아니니까.”
+</div>
+
+<div class="card-desc">
+이전 인형사를 잃은 뒤 새로운 관계를
+밀어내는 오만하고 까칠한 전투 인형.
+</div>
+
+<div class="card-master">
+DOLLMASTER · 은현._.
+</div>
+
+</div>
+
+</article>
+
+
+<!-- 11 VALEN -->
+
+<article class="card">
+
+<img
+class="card-image"
+src="assets/doll_valen.png"
+alt="발렌">
+
+<div class="card-body">
+
+<div class="card-num">
+DOLL FILE / 11
+</div>
+
+<div class="card-name">
+발렌
+</div>
+
+<div class="card-en">
+VALEN
+</div>
+
+<div class="card-quote">
+“여전히 예쁘네. 나 없이도 잘 살았나 봐.”
+</div>
+
+<div class="card-desc">
+10년을 함께한 인형사에게 버림받았다 오해하고
+반정부 세력에서 활동 중인 애증을 품은 전투 인형.
+</div>
+
+<div class="card-master">
+DOLLMASTER · 의여주
+</div>
+
+</div>
+
+</article>
+
+
+</div>
+
+</section>
+
+
+<!-- ==================== DOLLMASTER ==================== -->
+
+<section id="masters">
+
+<div class="section-head">
+
+<div>
+
+<div class="eyebrow">
+03 / DOLLMASTER ARCHIVE
+</div>
+
+<h2 class="section-title">
+LINK HOLDER
+</h2>
+
+</div>
+
+<div class="section-copy">
+인형사의 등록은 현재 준비 중이다.
+최대 5명의 인형사가 링크를 통해
+인형과 연결될 예정이다.
+</div>
+
+</div>
+
+
+<div class="standby">
+
+<div>
+
+<div class="eyebrow">
+DOLLMASTER DATA
+</div>
+
+<div class="standby-title">
+STANDBY
+</div>
+
+<div class="standby-status">
+05 SLOTS · PREPARING
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ==================== LINK ==================== -->
+
+<section id="link">
+
+<div class="section-head">
+
+<div>
+
+<div class="eyebrow">
+04 / LINK
+</div>
+
+<h2 class="section-title">
+LINK WITH<br>
+ANIMA
+</h2>
+
+</div>
+
+<div class="section-copy">
+모든 인형의 기록을 확인했다면
+마지막으로 링크를 선택한다.
+</div>
+
+</div>
+
+
+<div class="links">
+
+
+<a
+class="link-card"
+href="#"
+target="_blank">
+
+<div>
+
+<div class="eyebrow">
+MELTING
+</div>
+
+<div class="link-title">
+LINK / MELTING
+</div>
+
+<div class="link-desc">
+멜팅에서 진행되는 ANIMA 프로젝트.
+</div>
+
+</div>
+
+<span class="link-button">
+ENTER LINK →
+</span>
+
+</a>
+
+
+<a
+class="link-card"
+href="#"
+target="_blank">
+
+<div>
+
+<div class="eyebrow">
+TINGLE
+</div>
+
+<div class="link-title">
+LINK / TINGLE
+</div>
+
+<div class="link-desc">
+팅글에서 진행되는 ANIMA 프로젝트.
+</div>
+
+</div>
+
+<span class="link-button">
+ENTER LINK →
+</span>
+
+</a>
+
+
+</div>
+
+</section>
+
+
+</main>
+
+
+<footer class="footer">
+
+ANIMA · COMBAT DOLL PROJECT · ARTIFICIAL LIFE / COMBAT DOLL / LINK
+
+</footer>
+
+
+</body>
+</html>
