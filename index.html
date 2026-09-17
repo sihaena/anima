@@ -4,2313 +4,500 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>ANIMA — COMBAT DOLL PROJECT</title>
-
 <style>
-*{
-  box-sizing:border-box;
-}
-
-html{
-  scroll-behavior:smooth;
-}
-
-html,body{
-  margin:0;
-  min-height:100%;
-  background:#04080b;
-  color:#dce8ec;
-  font-family:"Noto Sans KR","Pretendard","Malgun Gothic",sans-serif;
-}
-
-body{
-  line-height:1.7;
-}
-
-body.lock{
-  overflow:hidden;
-}
-
-img{
-  display:block;
-  max-width:100%;
-}
-
-a{
-  color:inherit;
-  text-decoration:none;
-}
-
-button{
-  font:inherit;
-}
-
-.eyebrow{
-  font:9px/1.4 "Courier New",monospace;
-  letter-spacing:.18em;
-  color:#8db7c2;
-}
-
-
-/* =========================
-   BGM
-========================= */
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+html,body{margin:0;min-height:100%;background:#04080b;color:#dce8ec;font-family:"Noto Sans KR","Pretendard","Malgun Gothic",sans-serif}
+body{line-height:1.7}
+body.lock{overflow:hidden}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font:inherit}
+.eyebrow{font:9px/1.4 "Courier New",monospace;letter-spacing:.18em;color:#8db7c2}
 
 #musicBtn{
-  position:fixed;
-  top:14px;
-  right:14px;
-  z-index:1000;
-
-  width:70px;
-  height:38px;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:7px;
-
-  border:1px solid rgba(110,145,154,.25);
-  border-radius:22px;
-
-  background:rgba(3,7,10,.82);
-  color:#68777d;
-
-  font:8px "Courier New",monospace;
-  letter-spacing:.1em;
-
-  cursor:pointer;
-  backdrop-filter:blur(8px);
-
-  transition:
-    border-color .25s ease,
-    color .25s ease;
+position:fixed;top:14px;right:14px;z-index:1000;width:70px;height:38px;
+display:flex;align-items:center;justify-content:center;gap:7px;
+border:1px solid rgba(110,145,154,.25);border-radius:22px;
+background:rgba(3,7,10,.82);color:#68777d;font:8px "Courier New",monospace;
+letter-spacing:.1em;cursor:pointer;backdrop-filter:blur(8px);transition:.25s
 }
-
-#musicBtn:before{
-  content:"···";
-  display:block;
-  width:14px;
-
-  color:#4b585d;
-
-  font:bold 9px Arial,sans-serif;
-  letter-spacing:2px;
-  line-height:1;
-}
-
-#musicBtn.on{
-  border-color:rgba(91,160,180,.4);
-  color:#86aeb9;
-}
-
+#musicBtn:before{content:"···";display:block;width:14px;color:#4b585d;font:bold 9px Arial,sans-serif;letter-spacing:2px;line-height:1}
+#musicBtn.on{border-color:rgba(91,160,180,.4);color:#86aeb9}
 #musicBtn.on:before{
-  content:"";
-
-  width:13px;
-  height:11px;
-
-  background:
-    linear-gradient(#5794a6,#5794a6)
-    0 6px/2px 5px no-repeat,
-
-    linear-gradient(#5794a6,#5794a6)
-    5px 1px/2px 10px no-repeat,
-
-    linear-gradient(#5794a6,#5794a6)
-    10px 4px/2px 7px no-repeat;
-
-  filter:drop-shadow(
-    0 0 3px rgba(70,150,175,.25)
-  );
-}
-
-
-/* =========================
-   INTRO
-========================= */
-
-#intro{
-  position:fixed;
-  inset:0;
-  z-index:500;
-
-  overflow:hidden;
-
-  background:#020507;
-
-  transition:
-    opacity .7s ease,
-    visibility .7s ease;
-}
-
-#intro.hide{
-  opacity:0;
-  visibility:hidden;
-  pointer-events:none;
-}
-
-.intro-bg{
-  position:absolute;
-  inset:0;
-
-  background:
-    linear-gradient(
-      180deg,
-      rgba(2,5,7,.16),
-      rgba(2,7,10,.90)
-    ),
-    url("assets/anima_link.png")
-    center/cover no-repeat;
-}
-
-.intro-content{
-  position:absolute;
-  inset:0;
-
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-
-  padding:30px;
-
-  text-align:center;
-}
-
-.intro-title{
-  margin:0;
-
-  font:
-    clamp(64px,13vw,150px)/.8
-    Georgia,serif;
-
-  letter-spacing:.06em;
-  color:#edf7f9;
-}
-
-.intro-sub{
-  margin-top:22px;
-
-  font:9px "Courier New",monospace;
-  letter-spacing:.25em;
-
-  color:#91b4bd;
-}
-
-
-/* =========================
-   LINK INTERFACE
-========================= */
-
-.link-interface{
-  position:relative;
-
-  width:min(520px,88vw);
-  height:210px;
-
-  margin-top:48px;
-
-  border:1px solid rgba(126,171,184,.18);
-
-  background:rgba(5,14,19,.30);
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  transition:
-    border-color .3s ease,
-    box-shadow .3s ease;
-}
-
-.link-interface.active{
-  border-color:rgba(154,211,224,.65);
-
-  box-shadow:
-    0 0 35px rgba(91,172,192,.13);
-}
-
-.link-interface.success{
-  border-color:#a9dce6;
-
-  box-shadow:
-    0 0 25px rgba(91,172,192,.18),
-    inset 0 0 25px rgba(91,172,192,.06);
-}
-
-.interface-label{
-  position:absolute;
-
-  top:13px;
-  left:15px;
-
-  font:7px "Courier New",monospace;
-  letter-spacing:.16em;
-
-  color:#63828b;
-}
-
-.link-port{
-  position:absolute;
-
-  right:22%;
-  top:50%;
-
-  width:88px;
-  height:88px;
-
-  transform:translateY(-50%);
-
-  border:1px solid rgba(147,201,213,.55);
-  border-radius:50%;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  background:
-    radial-gradient(
-      circle,
-      rgba(115,183,197,.08),
-      rgba(3,10,14,.40)
-    );
-
-  box-shadow:
-    inset 0 0 18px rgba(83,155,170,.08);
-
-  transition:.25s;
-}
-
-.link-port:before{
-  content:"";
-
-  position:absolute;
-  inset:11px;
-
-  border:1px dashed rgba(151,207,218,.35);
-  border-radius:50%;
-}
-
-.link-port:after{
-  content:"";
-
-  position:absolute;
-  inset:27px;
-
-  border:1px solid rgba(151,207,218,.28);
-  border-radius:50%;
-}
-
-.port-label{
-  position:absolute;
-
-  top:102%;
-  left:50%;
-
-  transform:translateX(-50%);
-
-  font:7px "Courier New",monospace;
-  letter-spacing:.1em;
-
-  color:#7598a2;
-
-  white-space:nowrap;
-}
-
-.link-port.active{
-  border-color:#9fd9e4;
-
-  box-shadow:
-    0 0 25px rgba(91,172,192,.22),
-    inset 0 0 20px rgba(91,172,192,.10);
-}
-
-.link-core{
-  position:absolute;
-
-  left:20%;
-  top:50%;
-
-  width:62px;
-  height:62px;
-
-  transform:translate(-50%,-50%);
-
-  border:1px solid #91c6d1;
-  border-radius:50%;
-
-  background:
-    radial-gradient(
-      circle,
-      #bce6ec 0,
-      #497c88 15%,
-      #102a34 48%,
-      #050d11 72%
-    );
-
-  box-shadow:
-    0 0 22px rgba(116,194,210,.20);
-
-  cursor:grab;
-
-  touch-action:none;
-
-  z-index:3;
-
-  transition:
-    box-shadow .2s ease,
-    transform .12s ease;
-}
-
-.link-core:before,
-.link-core:after{
-  content:"";
-
-  position:absolute;
-
-  border:1px solid rgba(195,235,241,.30);
-
-  border-radius:50%;
-}
-
-.link-core:before{
-  inset:8px;
-}
-
-.link-core:after{
-  inset:18px;
-
-  border-color:rgba(195,235,241,.45);
-}
-
-.link-core.dragging{
-  cursor:grabbing;
-
-  box-shadow:
-    0 0 35px rgba(133,215,229,.40);
-
-  transform:
-    translate(-50%,-50%)
-    scale(1.08);
-}
-
-.core-label{
-  position:absolute;
-
-  left:20%;
-  top:calc(50% + 45px);
-
-  transform:translateX(-50%);
-
-  font:7px "Courier New",monospace;
-  letter-spacing:.12em;
-
-  color:#718f98;
-
-  white-space:nowrap;
-}
-
-.drag-hint{
-  margin-top:18px;
-
-  font:8px "Courier New",monospace;
-  letter-spacing:.14em;
-
-  color:#68858e;
-}
-
-
-/* =========================
-   MAIN
-========================= */
-
-#site{
-  position:relative;
-
-  min-height:100vh;
-
-  opacity:0;
-  visibility:hidden;
-
-  transition:
-    opacity .7s ease,
-    visibility .7s ease;
-
-  background:
-    linear-gradient(
-      180deg,
-      rgba(3,8,11,.72),
-      rgba(3,8,11,.94)
-    ),
-    url("assets/anima_main_bg.png")
-    center top/cover no-repeat;
-}
-
-#site.show{
-  opacity:1;
-  visibility:visible;
-}
-
-.wrap{
-  width:min(1180px,calc(100% - 32px));
-  margin:auto;
-}
-
-section{
-  padding:110px 0;
-
-  border-top:1px solid #17262d;
-}
-
-.section-head{
-  display:flex;
-
-  justify-content:space-between;
-  align-items:flex-end;
-
-  gap:40px;
-
-  margin-bottom:42px;
-}
-
-.section-title{
-  margin:7px 0 0;
-
-  font:
-    400 clamp(35px,5vw,62px)/1.05
-    Georgia,serif;
-}
-
-.section-copy{
-  max-width:590px;
-
-  font-size:13px;
-
-  color:#8fa4ab;
-}
-
-
-/* =========================
-   PROJECT
-========================= */
-
-.world{
-  display:grid;
-
-  grid-template-columns:1.15fr .85fr;
-
-  gap:18px;
-}
-
-.panel{
-  border:1px solid #27373e;
-
-  background:#091015;
-}
-
-.panel img{
-  width:100%;
-
-  aspect-ratio:16/9;
-
-  object-fit:cover;
-}
-
-.panel-text{
-  padding:28px;
-
-  font-size:13px;
-
-  color:#99adb4;
-}
-
-.panel-text p{
-  margin:0 0 18px;
-}
-
-.panel-text p:last-child{
-  margin-bottom:0;
-}
-
-.project-points{
-  display:grid;
-
-  grid-template-columns:1fr 1fr;
-
-  gap:1px;
-
-  background:#27373e;
-}
-
-.project-point{
-  padding:27px;
-
-  background:#091015;
-}
-
-.project-point b{
-  display:block;
-
-  margin-bottom:8px;
-
-  font:10px "Courier New",monospace;
-  letter-spacing:.14em;
-
-  color:#b9dbe3;
-}
-
-.project-point span{
-  font-size:12px;
-
-  color:#899da4;
-}
-
-
-/* =========================
-   SYSTEM
-========================= */
-
-.system-grid{
-  display:grid;
-
-  grid-template-columns:1fr 1fr;
-
-  gap:1px;
-
-  background:#27373e;
-}
-
-.system-card{
-  overflow:hidden;
-
-  background:#091015;
-}
-
-.system-image{
-  width:100%;
-
-  aspect-ratio:1/1;
-
-  object-fit:cover;
-}
-
-.system-body{
-  padding:25px;
-}
-
-.system-name{
-  font:29px/1 Georgia,serif;
-}
-
-.system-en{
-  margin-top:7px;
-
-  font:8px "Courier New",monospace;
-  letter-spacing:.15em;
-
-  color:#688b95;
-}
-
-.system-desc{
-  margin-top:16px;
-
-  font-size:12px;
-  line-height:1.9;
-
-  color:#91a5ac;
-}
-
-
-/* =========================
-   DOLL ARCHIVE
-========================= */
-
-.archive{
-  display:grid;
-
-  grid-template-columns:repeat(3,1fr);
-
-  gap:16px;
-}
-
-.card{
-  display:block;
-
-  overflow:hidden;
-
-  border:1px solid #26363d;
-
-  background:#080d11;
-
-  transition:.25s;
-}
-
-.card:hover{
-  border-color:#739fac;
-
-  transform:translateY(-3px);
-}
-
-.card-image{
-  width:100%;
-
-  aspect-ratio:4/5;
-
-  object-fit:cover;
-
-  background:#020405;
-}
-
-.card-body{
-  padding:18px;
-}
-
-.card-num{
-  font:8px "Courier New",monospace;
-  letter-spacing:.16em;
-
-  color:#668e9a;
-}
-
-.card-name{
-  margin-top:5px;
-
-  font-size:24px;
-  font-weight:500;
-}
-
-.card-en{
-  font:9px "Courier New",monospace;
-  letter-spacing:.13em;
-
-  color:#68828b;
-}
-
-.card-quote{
-  margin-top:16px;
-
-  padding-top:13px;
-
-  border-top:1px solid #223138;
-
-  color:#b8d7df;
-
-  font-size:11px;
-  line-height:1.75;
-}
-
-.card-desc{
-  margin-top:12px;
-
-  color:#879ba2;
-
-  font-size:10px;
-  line-height:1.75;
-}
-
-
-/* =========================
-   DOLLMASTER
-========================= */
-
-.master-info{
-  display:grid;
-
-  grid-template-columns:1fr 1fr;
-
-  gap:1px;
-
-  background:#27373e;
-}
-
-.master-panel{
-  min-height:260px;
-
-  padding:35px;
-
-  background:#091015;
-}
-
-.master-panel h3{
-  margin:0;
-
-  font:34px/1 Georgia,serif;
-}
-
-.master-panel p{
-  margin:18px 0 0;
-
-  font-size:12px;
-  line-height:2;
-
-  color:#91a5ac;
-}
-
-.standby{
-  min-height:260px;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  text-align:center;
-
-  border:1px solid #293a41;
-
-  background:
-    radial-gradient(
-      circle at center,
-      #10222b 0,
-      #071015 55%,
-      #05090c 100%
-    );
-}
-
-.standby-title{
-  margin-top:12px;
-
-  font:
-    clamp(44px,7vw,82px)
-    Georgia,serif;
-
-  color:#d8e8ec;
-}
-
-.standby-status{
-  margin-top:12px;
-
-  font:9px "Courier New",monospace;
-  letter-spacing:.2em;
-
-  color:#718d96;
-}
-
-
-/* =========================
-   LINK ARCHIVE
-========================= */
-
-.link-accordion{
-  border-top:1px solid #2c4149;
-}
-
-.link-item{
-  border-bottom:1px solid #2c4149;
-}
-
-.link-toggle{
-  width:100%;
-
-  padding:24px 4px;
-
-  display:flex;
-
-  align-items:center;
-  justify-content:space-between;
-
-  background:none;
-
-  border:0;
-
-  color:#dce8ec;
-
-  cursor:pointer;
-
-  text-align:left;
-}
-
-.link-toggle-name{
-  font:32px Georgia,serif;
-}
-
-.link-toggle-meta{
-  margin-top:3px;
-
-  font:8px "Courier New",monospace;
-  letter-spacing:.16em;
-
-  color:#718d96;
-}
-
-.link-plus{
-  font:20px "Courier New",monospace;
-
-  font-weight:300;
-
-  transition:transform .3s;
-}
-
-.link-item.open .link-plus{
-  transform:rotate(45deg);
-}
-
-.link-panel{
-  display:grid;
-
-  grid-template-rows:0fr;
-
-  transition:grid-template-rows .35s ease;
-}
-
-.link-item.open .link-panel{
-  grid-template-rows:1fr;
-}
-
-.link-panel-inner{
-  overflow:hidden;
-}
-
-.link-character{
-  display:flex;
-
-  align-items:center;
-  justify-content:space-between;
-
-  padding:14px 4px;
-
-  border-top:1px solid #142229;
-
-  font-size:12px;
-
-  color:#8fa7ae;
-
-  transition:.2s;
-}
-
-.link-character:hover{
-  color:#d9edf1;
-
-  background:rgba(100,150,165,.04);
-}
-
-.link-character span:last-child{
-  font:8px "Courier New",monospace;
-  letter-spacing:.12em;
-}
-
-
-/* =========================
-   FOOTER
-========================= */
-
-.footer{
-  padding:55px 0;
-
-  border-top:1px solid #18262d;
-
-  text-align:center;
-
-  font:8px "Courier New",monospace;
-  letter-spacing:.14em;
-
-  color:#526870;
-}
-
-
-/* =========================
-   MOBILE
-========================= */
+content:"";width:13px;height:11px;
+background:
+linear-gradient(#5794a6,#5794a6) 0 6px/2px 5px no-repeat,
+linear-gradient(#5794a6,#5794a6) 5px 1px/2px 10px no-repeat,
+linear-gradient(#5794a6,#5794a6) 10px 4px/2px 7px no-repeat;
+filter:drop-shadow(0 0 3px rgba(70,150,175,.25))
+}
+
+#intro{position:fixed;inset:0;z-index:500;overflow:hidden;background:#020507;transition:opacity .7s ease,visibility .7s ease}
+#intro.hide{opacity:0;visibility:hidden;pointer-events:none}
+.intro-bg{position:absolute;inset:0;background:linear-gradient(180deg,rgba(2,5,7,.16),rgba(2,7,10,.9)),url("assets/anima_link.png") center/cover no-repeat}
+.intro-content{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:30px;text-align:center}
+.intro-title{margin:0;font:clamp(64px,13vw,150px)/.8 Georgia,serif;letter-spacing:.06em;color:#edf7f9}
+.intro-sub{margin-top:22px;font:9px "Courier New",monospace;letter-spacing:.25em;color:#91b4bd}
+.link-interface{position:relative;width:min(520px,88vw);height:210px;margin-top:48px;border:1px solid rgba(126,171,184,.18);background:rgba(5,14,19,.3);display:flex;align-items:center;justify-content:center;transition:.3s}
+.link-interface.active{border-color:rgba(154,211,224,.65);box-shadow:0 0 35px rgba(91,172,192,.13)}
+.link-interface.success{border-color:#a9dce6;box-shadow:0 0 25px rgba(91,172,192,.18),inset 0 0 25px rgba(91,172,192,.06)}
+.interface-label{position:absolute;top:13px;left:15px;font:7px "Courier New",monospace;letter-spacing:.16em;color:#63828b}
+.link-port{position:absolute;right:22%;top:50%;width:88px;height:88px;transform:translateY(-50%);border:1px solid rgba(147,201,213,.55);border-radius:50%;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle,rgba(115,183,197,.08),rgba(3,10,14,.4));box-shadow:inset 0 0 18px rgba(83,155,170,.08);transition:.25s}
+.link-port:before{content:"";position:absolute;inset:11px;border:1px dashed rgba(151,207,218,.35);border-radius:50%}
+.link-port:after{content:"";position:absolute;inset:27px;border:1px solid rgba(151,207,218,.28);border-radius:50%}
+.port-label{position:absolute;top:102%;left:50%;transform:translateX(-50%);font:7px "Courier New",monospace;letter-spacing:.1em;color:#7598a2;white-space:nowrap}
+.link-port.active{border-color:#9fd9e4;box-shadow:0 0 25px rgba(91,172,192,.22),inset 0 0 20px rgba(91,172,192,.1)}
+.link-core{position:absolute;left:20%;top:50%;width:62px;height:62px;transform:translate(-50%,-50%);border:1px solid #91c6d1;border-radius:50%;background:radial-gradient(circle,#bce6ec 0,#497c88 15%,#102a34 48%,#050d11 72%);box-shadow:0 0 22px rgba(116,194,210,.2);cursor:grab;touch-action:none;z-index:3;transition:box-shadow .2s ease,transform .12s ease}
+.link-core:before,.link-core:after{content:"";position:absolute;border:1px solid rgba(195,235,241,.3);border-radius:50%}
+.link-core:before{inset:8px}.link-core:after{inset:18px;border-color:rgba(195,235,241,.45)}
+.link-core.dragging{cursor:grabbing;box-shadow:0 0 35px rgba(133,215,229,.4);transform:translate(-50%,-50%) scale(1.08)}
+.core-label{position:absolute;left:20%;top:calc(50% + 45px);transform:translateX(-50%);font:7px "Courier New",monospace;letter-spacing:.12em;color:#718f98;white-space:nowrap}
+.drag-hint{margin-top:18px;font:8px "Courier New",monospace;letter-spacing:.14em;color:#68858e}
+
+#site{position:relative;min-height:100vh;opacity:0;visibility:hidden;transition:opacity .7s ease,visibility .7s ease;background:linear-gradient(180deg,rgba(3,8,11,.72),rgba(3,8,11,.94)),url("assets/anima_main_bg.png") center top/cover no-repeat}
+#site.show{opacity:1;visibility:visible}
+.wrap{width:min(1180px,calc(100% - 32px));margin:auto}
+section{padding:100px 0;border-top:1px solid #17262d}
+.section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;margin-bottom:42px}
+.section-title{margin:7px 0 0;font:400 clamp(35px,5vw,62px)/1.05 Georgia,serif}
+.section-copy{max-width:590px;font-size:13px;color:#8fa4ab}
+
+.world{display:grid;grid-template-columns:1.15fr .85fr;gap:18px}
+.panel{border:1px solid #27373e;background:#091015}
+.panel img{width:100%;aspect-ratio:16/9;object-fit:cover}
+.panel-text{padding:28px;font-size:13px;color:#99adb4}
+.panel-text p{margin:0 0 18px}.panel-text p:last-child{margin-bottom:0}
+.project-points{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:#27373e}
+.project-point{padding:27px;background:#091015}.project-point b{display:block;margin-bottom:8px;font:10px "Courier New",monospace;letter-spacing:.14em;color:#b9dbe3}.project-point span{font-size:12px;color:#899da4}
+
+.system-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:#27373e}
+.system-card{background:#091015;overflow:hidden}.system-image{width:100%;aspect-ratio:1/1;object-fit:cover}.system-body{padding:25px}.system-name{font:29px/1 Georgia,serif}.system-en{margin-top:7px;font:8px "Courier New",monospace;letter-spacing:.15em;color:#688b95}.system-desc{margin-top:16px;font-size:12px;line-height:1.9;color:#91a5ac}
+
+.database{border-top:1px solid #2a3b42}
+.db-item{border-bottom:1px solid #2a3b42}
+.db-toggle{width:100%;padding:25px 4px;display:flex;align-items:center;justify-content:space-between;gap:20px;background:none;border:0;color:#dce8ec;cursor:pointer;text-align:left}
+.db-title{font:27px Georgia,serif}.db-meta{margin-top:4px;font:8px "Courier New",monospace;letter-spacing:.15em;color:#6e8d97}
+.db-plus{font:22px "Courier New",monospace;color:#789aa5;transition:.3s}.db-item.open .db-plus{transform:rotate(45deg)}
+.db-panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .35s ease}.db-item.open .db-panel{grid-template-rows:1fr}.db-inner{overflow:hidden}
+.db-content{padding:0 4px 30px;color:#9bafb5;font-size:12px;line-height:1.95}
+.db-content h4{margin:22px 0 8px;color:#c9e0e5;font-size:13px;font-weight:500}
+.db-content h4:first-child{margin-top:0}.db-content p{margin:0 0 14px}.db-content ul{margin:7px 0 16px;padding-left:20px}.db-content li{margin:3px 0}.quote{margin:18px 0;padding:13px 16px;border-left:1px solid #5d8b98;color:#b8d6dc;background:rgba(93,139,152,.04)}
+
+.archive{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{display:block;overflow:hidden;border:1px solid #26363d;background:#080d11;transition:.25s}.card:hover{border-color:#739fac;transform:translateY(-3px)}
+.card-image{width:100%;aspect-ratio:4/5;object-fit:cover;background:#020405}.card-body{padding:18px}.card-num{font:8px "Courier New",monospace;letter-spacing:.16em;color:#668e9a}.card-name{margin-top:5px;font-size:24px;font-weight:500}.card-en{font:9px "Courier New",monospace;letter-spacing:.13em;color:#68828b}.card-quote{margin-top:16px;padding-top:13px;border-top:1px solid #223138;color:#b8d7df;font-size:11px;line-height:1.75}.card-desc{margin-top:12px;color:#879ba2;font-size:10px;line-height:1.75}
+
+.master-info{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:#27373e}
+.master-panel{min-height:260px;padding:35px;background:#091015}.master-panel h3{margin:0;font:34px/1 Georgia,serif}.master-panel p{margin:18px 0 0;font-size:12px;line-height:2;color:#91a5ac}
+.standby{min-height:260px;display:flex;align-items:center;justify-content:center;text-align:center;border:1px solid #293a41;background:radial-gradient(circle at center,#10222b 0,#071015 55%,#05090c 100%)}
+.standby-title{margin-top:12px;font:clamp(44px,7vw,82px) Georgia,serif;color:#d8e8ec}.standby-status{margin-top:12px;font:9px "Courier New",monospace;letter-spacing:.2em;color:#718d96}
+
+.link-accordion{border-top:1px solid #2c4149}.link-item{border-bottom:1px solid #2c4149}.link-toggle{width:100%;padding:24px 4px;display:flex;align-items:center;justify-content:space-between;background:none;border:0;color:#dce8ec;cursor:pointer;text-align:left}.link-toggle-name{font:32px Georgia,serif}.link-toggle-meta{margin-top:3px;font:8px "Courier New",monospace;letter-spacing:.16em;color:#718d96}.link-plus{font:20px "Courier New",monospace;font-weight:300;transition:.3s}.link-item.open .link-plus{transform:rotate(45deg)}.link-panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .35s ease}.link-item.open .link-panel{grid-template-rows:1fr}.link-panel-inner{overflow:hidden}.link-character{display:flex;align-items:center;justify-content:space-between;padding:14px 4px;border-top:1px solid #142229;font-size:12px;color:#8fa7ae;transition:.2s}.link-character:hover{color:#d9edf1;background:rgba(100,150,165,.04)}.link-character span:last-child{font:8px "Courier New",monospace;letter-spacing:.12em}
+.footer{padding:55px 0;border-top:1px solid #18262d;text-align:center;font:8px "Courier New",monospace;letter-spacing:.14em;color:#526870}
 
 @media(max-width:760px){
-
-  .intro-content{
-    padding:20px;
-  }
-
-  .intro-title{
-    font-size:20vw;
-  }
-
-  .intro-sub{
-    font-size:8px;
-    letter-spacing:.2em;
-  }
-
-  .link-interface{
-    width:92vw;
-    height:190px;
-
-    margin-top:40px;
-  }
-
-  .link-port{
-    right:16%;
-  }
-
-  .link-core{
-    left:18%;
-  }
-
-  .core-label{
-    left:18%;
-  }
-
-  section{
-    padding:75px 0;
-  }
-
-  .section-head{
-    display:block;
-
-    margin-bottom:30px;
-  }
-
-  .section-copy{
-    margin-top:17px;
-
-    font-size:12px;
-  }
-
-  .world,
-  .master-info{
-    grid-template-columns:1fr;
-  }
-
-  .system-grid{
-    grid-template-columns:1fr;
-  }
-
-  .project-points{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .archive{
-    display:flex;
-
-    overflow-x:auto;
-
-    gap:12px;
-
-    padding-bottom:14px;
-
-    scroll-snap-type:x mandatory;
-  }
-
-  .card{
-    flex:0 0 78%;
-
-    scroll-snap-align:start;
-  }
-
-  .link-toggle{
-    padding:20px 2px;
-  }
-
-  .link-toggle-name{
-    font-size:27px;
-  }
-
-  .link-character{
-    padding:13px 2px;
-
-    font-size:11px;
-  }
-
+.intro-content{padding:20px}.intro-title{font-size:20vw}.intro-sub{font-size:8px;letter-spacing:.2em}
+.link-interface{width:92vw;height:190px;margin-top:40px}.link-port{right:16%}.link-core{left:18%}.core-label{left:18%}
+section{padding:75px 0}.section-head{display:block;margin-bottom:30px}.section-copy{margin-top:17px;font-size:12px}
+.world,.master-info{grid-template-columns:1fr}.system-grid{grid-template-columns:1fr}.project-points{grid-template-columns:1fr 1fr}
+.archive{display:flex;overflow-x:auto;gap:12px;padding-bottom:14px;scroll-snap-type:x mandatory}.card{flex:0 0 78%;scroll-snap-align:start}
+.db-toggle{padding:21px 2px}.db-title{font-size:24px}.link-toggle{padding:20px 2px}.link-toggle-name{font-size:27px}.link-character{padding:13px 2px;font-size:11px}
 }
 </style>
 </head>
-
 <body class="lock">
 
-
-<!-- =========================
-     AUDIO
-========================= -->
-
-<audio id="bgm" loop preload="auto">
-  <source src="assets/song.mp3" type="audio/mpeg">
-</audio>
-
-<button id="musicBtn" type="button">
-  BGM
-</button>
-
-
-<!-- =========================
-     INTRO
-========================= -->
+<audio id="bgm" loop preload="auto"><source src="assets/song.mp3" type="audio/mpeg"></audio>
+<button id="musicBtn" type="button" onclick="toggleBGM()">BGM</button>
 
 <div id="intro">
-
   <div class="intro-bg"></div>
-
   <div class="intro-content">
-
-    <div class="eyebrow">
-      COMBAT DOLL PROJECT / ANIMA
-    </div>
-
-    <h1 class="intro-title">
-      ANIMA
-    </h1>
-
-    <div class="intro-sub">
-      ESTABLISH YOUR LINK
-    </div>
-
-
+    <div class="eyebrow">COMBAT DOLL PROJECT / ANIMA</div>
+    <h1 class="intro-title">ANIMA</h1>
+    <div class="intro-sub">ESTABLISH YOUR LINK</div>
     <div class="link-interface" id="linkInterface">
-
-      <div class="interface-label">
-        ANIMA LINK SYSTEM
-      </div>
-
-      <div class="link-port" id="linkPort">
-        <span class="port-label">
-          LINK PORT
-        </span>
-      </div>
-
+      <div class="interface-label">ANIMA LINK SYSTEM</div>
+      <div class="link-port" id="linkPort"><span class="port-label">LINK PORT</span></div>
       <div class="link-core" id="linkCore"></div>
-
-      <div class="core-label">
-        ANIMA CORE
-      </div>
-
+      <div class="core-label">ANIMA CORE</div>
     </div>
-
-    <div class="drag-hint">
-      DRAG THE CORE TO THE LINK PORT
-    </div>
-
+    <div class="drag-hint">DRAG THE CORE TO THE LINK PORT</div>
   </div>
-
 </div>
-
-
-<!-- =========================
-     MAIN
-========================= -->
 
 <div id="site">
-
 <main class="wrap">
 
-
-<!-- PROJECT -->
-
 <section id="project">
-
   <div class="section-head">
-
-    <div>
-      <div class="eyebrow">
-        01 / PROJECT
-      </div>
-
-      <h2 class="section-title">
-        ANIMA
-      </h2>
-    </div>
-
-    <div class="section-copy">
-      인간의 모습을 하고 살아 움직이는 인형과,
-      그 인형을 움직이는 인형사의 이야기를 다루는
-      현대 배경의 합작 프로젝트.
-    </div>
-
+    <div><div class="eyebrow">01 / PROJECT</div><h2 class="section-title">ANIMA</h2></div>
+    <div class="section-copy">현대 대한민국을 배경으로, 모르스 침식에 대응하기 위해 만들어진 인공 생명체와 그들을 운용하는 인형사들의 세계.</div>
   </div>
-
-
   <div class="world">
-
     <div class="panel">
-
-      <img
-        src="assets/anima_world.png"
-        alt="ANIMA PROJECT"
-      >
-
+      <img src="assets/anima_world.png" alt="ANIMA WORLD">
       <div class="panel-text">
-
-        <p>
-          인형은 단순히 명령을 수행하는 병기가 아니다.
-          각자의 성격과 기억, 판단을 가진 하나의 개체로 존재한다.
-        </p>
-
-        <p>
-          인형의 몸체는 레지움으로 만들어지며,
-          그 중심에는 아니마가 자리한다.
-          인형은 인형사와의 LINK를 통해 활동한다.
-        </p>
-
-        <p>
-          손상에는 VITA가 사용되며,
-          인형을 무너뜨리는 침식은 MORS라고 불린다.
-        </p>
-
+        <p>현재 세계는 모르스의 침식으로 인해 붕괴되고 있다. 모르스는 생명체를 변질시키며, 인류가 접근하기 어려운 지역과 그곳에서 발생하는 사변체는 지속적인 위협이 된다.</p>
+        <p>인형은 모르스에 침식되지 않는 인공 생명체다. 인간과 거의 구분되지 않는 외형과 신체를 가지고 있으며, 아니마와 인형사와의 링크를 통해 활동한다.</p>
+        <p>전투 인형은 국가가 관리하는 희귀한 전력이고, 비전투 인형은 민간에서도 제작·운용된다.</p>
       </div>
-
     </div>
-
-
     <div class="project-points">
-
-      <div class="project-point">
-        <b>DOLL</b>
-        <span>
-          인간과 거의 구분되지 않는 외형을 가진
-          인공적인 전투 개체.
-        </span>
-      </div>
-
-      <div class="project-point">
-        <b>DOLLMASTER</b>
-        <span>
-          인형과 LINK를 맺고 인형의 활동을
-          유지하는 존재.
-        </span>
-      </div>
-
-      <div class="project-point">
-        <b>LINK</b>
-        <span>
-          인형과 인형사를 연결하는 관계이자
-          인형이 활동하기 위한 연결.
-        </span>
-      </div>
-
-      <div class="project-point">
-        <b>COMBAT DOLL</b>
-        <span>
-          전투를 목적으로 제작되거나
-          전투에 투입되는 인형.
-        </span>
-      </div>
-
+      <div class="project-point"><b>MORS</b><span>생명체를 변질시키는 외부 물질. 침식과 사변체의 원인이 된다.</span></div>
+      <div class="project-point"><b>DOLL</b><span>모르스 대응을 위해 개발된 인공 생명체. 스스로 생명력을 만들 수 없다.</span></div>
+      <div class="project-point"><b>DOLLMASTER</b><span>아니마와 링크를 형성하여 인형에게 생명력을 전달하고 운용하는 사람.</span></div>
+      <div class="project-point"><b>LINK</b><span>생명력 전달을 넘어 인형사와 인형의 감정·정신까지 연결하는 현상.</span></div>
     </div>
-
   </div>
-
 </section>
 
+<section id="database">
+  <div class="section-head">
+    <div><div class="eyebrow">02 / WORLD DATABASE</div><h2 class="section-title">WORLD</h2></div>
+    <div class="section-copy">ANIMA의 세계를 구성하는 핵심 설정. 각 항목을 열어 상세 기록을 확인할 수 있다.</div>
+  </div>
 
-<!-- SYSTEM -->
+  <div class="database">
+
+    <article class="db-item">
+      <button class="db-toggle" type="button"><div><div class="db-title">모르스의 침식</div><div class="db-meta">MORS / EROSION / DEAD BODY</div></div><span class="db-plus">+</span></button>
+      <div class="db-panel"><div class="db-inner"><div class="db-content">
+        <h4>모르스 Mors</h4>
+        <p>우주에서 유입된 외부 물질로, 검은 연기와 같은 형태로 관측된다. 생명체가 모르스와 접촉하거나 일정 범위 내에 접근하는 것만으로 영향을 받으며, 생명 활동을 저해한다.</p>
+        <h4>침식</h4>
+        <p>모르스에 의해 생명체가 변질되는 현상. 피부와 조직이 검게 변하고 감각 및 신체 기능이 저하되며 생명력이 감소한다. 최종적으로 생명 활동을 유지하지 못하고 사망한다.</p>
+        <h4>사변체 死變體</h4>
+        <p>모르스는 생명이 사라진 육체에도 영향을 준다. 장기간 노출된 시체는 정상적인 부패를 거치지 않고 변질되며, 이렇게 변화한 시체를 사변체라 부른다. 더 이상 생명체는 아니지만 변형된 육체를 유지하며 본능적으로 살아있는 생명체를 공격한다.</p>
+        <h4>비타 Vita</h4>
+        <p>모르스의 영향을 받지 않는 일부 식물에서 채취되는 특수한 수액. 침식으로 변질된 신체 일부의 회복, 초기 침식 억제, 손상 조직 재생에 도움을 준다.</p>
+        <ul><li>비타 생성 식물은 극히 희귀하다.</li><li>채취 가능한 양이 매우 적다.</li><li>성장까지 긴 시간이 필요하다.</li></ul>
+        <p>때문에 현재 비타는 매우 귀중한 치료 물질로 취급된다.</p>
+      </div></div></div>
+    </article>
+
+    <article class="db-item">
+      <button class="db-toggle" type="button"><div><div class="db-title">인형</div><div class="db-meta">DOLL / ARTIFICIAL LIFE</div></div><span class="db-plus">+</span></button>
+      <div class="db-panel"><div class="db-inner"><div class="db-content">
+        <p>인형은 모르스에 대응하기 위해 개발된 인공 생명체다. 생명체가 아닌 인공 육체이므로 모르스의 침식에 영향을 받지 않는다. 인간이 활동하기 어려운 지역에서도 임무를 수행할 수 있어 침식 대응의 중요한 수단으로 자리 잡았다.</p>
+        <h4>기본 특징</h4>
+        <ul><li>모르스에 침식되지 않음</li><li>인간이 활동하기 어려운 환경에서 임무 수행 가능</li><li>손상된 육체를 교체 및 수리 가능</li><li>스스로 움직일 수 없으며 아니마와 인형사의 링크가 필요함</li></ul>
+        <h4>외형</h4>
+        <p>인간과 거의 구별되지 않는 외형과 피부·신체 구조를 가진다. 머리카락, 눈동자, 피부색 등 외형에는 특별한 제한이 없으며 개체마다 다양한 특징을 가진다. 생체 기능 역시 인간과 매우 유사하다.</p>
+        <h4>신체 특징</h4>
+        <ul><li>피로를 느끼지 않는다.</li><li>질병에 걸리지 않는다.</li><li>모르스의 영향을 받지 않는다.</li><li>일반적인 생명 활동 없이도 신체를 유지할 수 있다.</li><li>생명력 공급이 중단되면 활동을 멈춘다.</li></ul>
+        <h4>능력</h4>
+        <p>높은 신체 내구성, 우수한 근력과 민첩성, 빠른 반응 속도, 침식 지역에서의 장시간 활동이 가능하다. 단, 능력은 공급받는 생명력과 인형의 상태에 영향을 받는다.</p>
+        <h4>수명과 성격</h4>
+        <p>인형은 노화하지 않지만 전투로 인한 손상은 누적된다. 제작 직후에는 감정 표현이 거의 없으나 인형사와 장기간 링크하고 다양한 경험을 쌓으며 각자의 성격과 가치관을 형성한다.</p>
+      </div></div></div>
+    </article>
+
+    <article class="db-item">
+      <button class="db-toggle" type="button"><div><div class="db-title">인형의 자아와 기억</div><div class="db-meta">ANIMA / MEMORY / IDENTITY</div></div><span class="db-plus">+</span></button>
+      <div class="db-panel"><div class="db-inner"><div class="db-content">
+        <h4>자아</h4>
+        <p>인형의 자아는 아니마를 중심으로 형성되며, 경험과 기억은 신체에 축적된다.</p>
+        <h4>기억</h4>
+        <ul><li>심각한 신체 손상으로 일부 기억이 흐려지거나 소실될 수 있다.</li><li>신체를 수리해도 소실된 기억이 반드시 복구되는 것은 아니다.</li><li>타 인형의 부품을 이식받아도 기억이나 인격이 전달되지는 않는다.</li><li>다만 습관·숙련 동작·반사 행동 등의 신체 기억이 무의식적으로 나타날 수 있다.</li><li>신체 일부를 교체하더라도 아니마가 유지되는 한 동일한 자아를 유지한다.</li><li>아니마의 완전한 상실은 해당 인형의 죽음에 해당한다.</li></ul>
+        <p>링크 해제나 새로운 인형사와의 재링크만으로 기존 기억과 자아가 초기화되지는 않는다.</p>
+      </div></div></div>
+    </article>
+
+    <article class="db-item">
+      <button class="db-toggle" type="button"><div><div class="db-title">아니마와 링크</div><div class="db-meta">ANIMA / LINK / LIFE FORCE</div></div><span class="db-plus">+</span></button>
+      <div class="db-panel"><div class="db-inner"><div class="db-content">
+        <h4>아니마 Anima</h4>
+        <p>생명체의 기운을 저장하고 전달하기 위해 개발된 특수 기관. 인형의 심장 역할을 하며 인형사의 생명력을 전달받아 인형을 움직이는 동력원으로 사용한다.</p>
+        <p>인형사가 아니마에 자신의 생명 정보를 기록하면 아니마와 인형사 사이에 링크가 형성된다.</p>
+        <h4>링크의 발견</h4>
+        <p>초기에는 단순한 생명력 전달 및 제어 과정으로 여겨졌다. 그러나 장기간 링크를 유지한 인형사와 인형 사이에서 서로의 감정과 정신 상태가 영향을 주고받는 현상이 확인되었다.</p>
+        <div class="quote">인형사 → 명령 전달<br>인형 → 명령 수행</div>
+        <p>이후 링크는 단순한 제어 과정이 아니라 인형사와 인형의 감정과 정신을 연결하는 현상으로 밝혀진다.</p>
+        <h4>링크 해제</h4>
+        <p>인형사가 의식적으로 해제하거나 링크된 인형사가 사망하면 자연스럽게 해제된다. 인형사로부터의 생명력 공급과 감정·정신 연결은 중단되지만, 인형은 신체에 남은 생명력으로 일정 시간 활동할 수 있다.</p>
+        <ul><li>잔존 생명력이 소모될수록 움직임과 활동이 둔화된다.</li><li>링크 해제만으로 자아·기억·성격·가치관이 초기화되지 않는다.</li><li>새로운 인형사가 아니마에 생명 정보를 기록하면 새로운 링크를 형성할 수 있다.</li><li>재링크 이후에도 이전 인형사와의 경험과 기억은 유지된다.</li></ul>
+      </div></div></div>
+    </article>
+
+    <article class="db-item">
+      <button class="db-toggle" type="button"><div><div class="db-title">생명력 교환</div><div class="db-meta">LIFE FORCE / LINK MAINTENANCE</div></div><span class="db-plus">+</span></button>
+      <div class="db-panel"><div class="db-inner"><div class="db-content">
+        <p>인형사와 인형은 최초 링크 이후에도 링크와 인형의 활동을 유지하기 위해 주기적으로 생명력을 교환해야 한다.</p>
+        <p>생명력 교환은 링크된 인형사와 인형 사이의 성행위를 통해 이루어진다. 이 과정에서 인형사의 생명력이 링크를 따라 아니마로 전달되며, 아니마에 저장된 생명력은 인형의 신체 전체로 순환하여 활동을 유지한다.</p>
+        <ul><li>최초 링크 이후 지속적으로 필요하다.</li><li>교환된 생명력은 아니마에 저장되어 인형의 동력으로 사용된다.</li><li>교환이 이루어지지 않으면 잔존 생명력이 점차 감소한다.</li><li>생명력이 부족해질수록 움직임과 반응이 둔화되며 최종적으로 활동을 정지한다.</li><li>교환을 반복하며 링크가 지속될수록 양측의 감정·정신적 연결이 깊어진다.</li></ul>
+      </div></div></div>
+    </article>
+
+    <article class="db-item">
+      <button class="db-toggle" type="button"><div><div class="db-title">인형사</div><div class="db-meta">DOLLMASTER / QUALIFICATION / TRAINING</div></div><span class="db-plus">+</span></button>
+      <div class="db-panel"><div class="db-inner"><div class="db-content">
+        <p>인형사는 아니마와 링크를 형성하여 인형에게 생명력을 전달하고 운용하는 사람이다.</p>
+        <h4>조건</h4>
+        <ul><li>충분한 생명력 보유</li><li>링크 형성 적성</li><li>장기간 링크를 유지할 수 있는 정신적 안정성</li></ul>
+        <p>링크된 인형의 수와 활동량이 증가할수록 생명력 소모도 증가하기 때문에 지속적인 건강 관리가 필요하다.</p>
+        <h4>전투 인형사</h4>
+        <p>전투 인형과 링크하여 모르스 침식 지역과 사변체에 대응하는 공인 인형사. 높은 생명력과 안정적인 링크 유지 능력, 전투 상황에서 인형과 행동을 맞출 수 있는 운용 능력이 요구된다.</p>
+        <h4>비전투 인형사</h4>
+        <p>생활 지원, 산업, 의료, 연구 등 전투 외의 목적으로 비전투 인형을 운용하는 인형사. 기업·연구기관·의료기관 또는 개인 단위로 활동할 수 있다.</p>
+        <h4>교육</h4>
+        <p>전투 인형사 자격을 취득하려는 인형사는 국가 기관에서 전문 교육을 받는다. 링크 형성, 아니마 운용, 인형 관리, 생명력 조절, 전투 인형 운용, 링크 상태의 감정·정신적 영향, 모르스 및 사변체 대응 등을 배운다.</p>
+        <h4>다중 링크</h4>
+        <p>한 명의 인형사가 여러 인형과 링크하는 것은 가능하지만 생명력 소모, 정신적 부담, 감정 동조의 복잡화가 발생한다. 대부분의 전투 인형사는 하나의 전투 인형과 링크를 유지한다.</p>
+      </div></div></div>
+    </article>
+
+    <article class="db-item">
+      <button class="db-toggle" type="button"><div><div class="db-title">정부 관리 기관</div><div class="db-meta">GOVERNMENT / BRANCH / FACILITIES</div></div><span class="db-plus">+</span></button>
+      <div class="db-panel"><div class="db-inner"><div class="db-content">
+        <p>모르스 침식이 확산되면서 정부는 공인 전투 인형사와 전투 인형을 전문적으로 관리하고 운용하기 위한 국가 기관을 설립했다.</p>
+        <p>공인 인형사 교육과 자격 관리, 전투 인형 등록·배치·정비, 아니마 및 링크 관리, 침식 지역 대응과 사변체 처리 등 국가의 인형 전력 전반을 담당한다.</p>
+        <h4>지역 지부</h4>
+        <p>주요 생활권마다 지역 지부를 운영한다. 전투 인형사와 전투 인형은 담당 지부를 거점으로 생활하며, 관할 지역에서 모르스 침식이나 사변체가 발견되면 현장에 파견된다. 링크 유지와 주기적인 생명력 교환을 위해 링크된 전투 인형과 인형사는 같은 지부에 배치되는 것을 원칙으로 한다.</p>
+        <h4>주요 시설</h4>
+        <ul><li><b>생활동</b> — 전투 인형사와 링크된 인형이 생활하는 거주 구역.</li><li><b>훈련장</b> — 전투 및 협동 훈련, 신체 능력 측정, 사변체 대응 훈련 시설.</li><li><b>정비소</b> — 손상된 전투 인형의 신체 점검·수리 및 레지움 상태 확인.</li><li><b>무기고</b> — 전투 인형의 무기와 현장 대응 장비를 등록제로 관리.</li><li><b>브리핑룸</b> — 침식 지역, 모르스 농도, 사변체, 구조 대상 정보를 공유하고 작전을 수립.</li><li><b>휴게실</b> — 인형사와 인형이 자유롭게 이용하는 공용 공간.</li><li><b>의료실</b> — 인형사의 건강·생명력·모르스 노출 여부를 검사하고 치료.</li><li><b>관제실</b> — 모르스와 사변체 발생 상황을 감시하고 임무를 배정.</li></ul>
+        <h4>법적 지위</h4>
+        <p>인형은 감정과 자아를 형성할 수 있지만 법적으로 인간과 동일한 권리를 가진 존재로 인정되지 않는다. 전투 인형은 국가가 제작·관리하는 특수 전력으로 분류되며 행정상 국가 자산으로 취급된다.</p>
+      </div></div></div>
+    </article>
+
+    <article class="db-item">
+      <button class="db-toggle" type="button"><div><div class="db-title">인형의 분류와 제작</div><div class="db-meta">COMBAT / NON-COMBAT / PRODUCTION</div></div><span class="db-plus">+</span></button>
+      <div class="db-panel"><div class="db-inner"><div class="db-content">
+        <h4>전투 인형</h4>
+        <p>모르스 대응을 목적으로 제작된 특수 인형. 신체는 레지움Resium이라는 특수 소재로 제작되며, 인간과 거의 동일한 신체 구조와 움직임, 높은 신체 성능, 정밀한 전투 행동, 오염 지역에서의 장기간 활동이 가능하다.</p>
+        <p>레지움은 매우 희귀하며 개인이나 민간에서 사용할 수 없다. 모든 전투 인형은 정부에서 관리하고 모르스 대응과 사변체 처리를 담당한다.</p>
+        <h4>비전투 인형</h4>
+        <p>전투 외 목적을 위해 제작되는 일반 인형. 생활 보조, 산업 지원, 의료 지원, 연구 활동, 위험 지역 탐사 등에 활용되며 인간형·동물형·작업 특화형 등 다양한 형태가 존재한다. 민간에서도 제작과 운용이 가능하다.</p>
+        <h4>제작 체계</h4>
+        <p>아니마는 인형 운용의 핵심 기관으로 제작 기술과 기본 구조가 공유되어 있다. 비전투 인형은 다양한 기업과 연구기관에서 제작할 수 있으나, 전투 인형은 레지움을 사용하기 때문에 국가 관리 아래 제한적으로 제작된다.</p>
+      </div></div></div>
+    </article>
+
+    <article class="db-item">
+      <button class="db-toggle" type="button"><div><div class="db-title">반정부 조직과 비인가 인형사</div><div class="db-meta">OUTLAW / MODIFIED DOLL / GOVERNMENT CONFLICT</div></div><span class="db-plus">+</span></button>
+      <div class="db-panel"><div class="db-inner"><div class="db-content">
+        <h4>비인가 인형사</h4>
+        <p>정부의 승인 없이 아니마에 자신의 생명 정보를 각인하고 인형과 링크를 형성한 사람. 실제 링크 형성은 가능하지만 정식 교육과 관리 과정을 거치지 않았기 때문에 정부 관리에서 벗어난다.</p>
+        <p>비인가 각인은 생명력 조건과 링크 적성을 확인할 수 없어 위험성이 높으며, 실패하거나 불안정할 경우 생명력 급격한 소모, 신체 기능 저하, 정신적 불안정 등이 발생할 수 있다.</p>
+        <h4>반정부 조직</h4>
+        <p>일부 비인가 인형사들은 정부의 인형사 관리 체계에 반발하며 조직을 형성한다. 비인가 인형사 양성, 아니마 및 링크 관련 기술 연구, 비전투 인형 개조, 정부 관리 시설 습격 등이 주요 활동이다.</p>
+        <h4>개조 인형</h4>
+        <p>반정부 조직은 공식 전투 인형을 확보할 수 없기 때문에 기존 비전투 인형을 개조해 전투 목적으로 운용한다. 레지움을 사용하지 않으며 공식 전투 인형이 아니다. 구조 변경, 출력 제한 해제, 비정상적인 링크 운용 등이 이루어질 수 있어 전투 과정에서 불안정성이 발생한다.</p>
+        <h4>정부의 대응</h4>
+        <p>정부는 비인가 인형사를 국가 관리 체계를 벗어난 위험 요소로 분류한다. 특히 정식 전투 인형사가 이탈하는 경우 해당 인형사는 최우선 제거 대상으로 지정된다. 이탈한 전투 인형은 국가 전력으로서 반드시 회수해야 하는 자산으로 취급된다.</p>
+      </div></div></div>
+    </article>
+
+    <article class="db-item">
+      <button class="db-toggle" type="button"><div><div class="db-title">레지움 고갈과 현재의 한계</div><div class="db-meta">RESIUM CRISIS / REPAIR / SURVIVAL</div></div><span class="db-plus">+</span></button>
+      <div class="db-panel"><div class="db-inner"><div class="db-content">
+        <p>인형 병기는 모르스 침식에 대응하는 핵심 전력으로 자리 잡았지만, 전투 인형의 신체를 구성하는 레지움은 매우 희귀한 소재다. 장기간 전투와 침식 대응 과정에서 지속적으로 소모되었으며 현재 새로운 레지움의 확보는 거의 불가능한 상황이다.</p>
+        <h4>현재 발생한 문제</h4>
+        <ul><li>새로운 전투 인형 제작 불가능</li><li>기존 전투 인형의 유지 중요성 증가</li><li>손상된 전투 인형의 수리 한계</li></ul>
+        <p>손상된 인형의 수리는 다른 인형의 신체 부품을 사용하는 방식으로 이루어진다. 새로운 전투 인형은 더 이상 제작할 수 없고 기존 인형은 계속 손상되기 때문에, 생존과 임무 수행을 위해 다른 인형의 희생이 필요해지는 모순이 생긴다.</p>
+      </div></div></div>
+    </article>
+
+    <article class="db-item">
+      <button class="db-toggle" type="button"><div><div class="db-title">주요 갈등</div><div class="db-meta">DOLL / DOLLMASTER / CHOICE</div></div><span class="db-plus">+</span></button>
+      <div class="db-panel"><div class="db-inner"><div class="db-content">
+        <h4>인형의 갈등</h4>
+        <p>인형은 인간을 지키기 위해 만들어졌지만, 새로운 동료가 만들어지지 않는 시대에서 자신의 생존을 위해 다른 인형의 희생을 받아들여야 하는 상황에 놓인다.</p>
+        <div class="quote">“우리는 인간을 지키기 위해 만들어졌는데, 살아남기 위해 같은 존재를 희생해야 하는가?”</div>
+        <p>임무 수행을 위해 자신을 희생할 것인지, 동료를 희생해서라도 존재를 유지할 것인지, 마지막까지 인간을 지키는 것이 자신의 존재 이유인지 선택해야 한다.</p>
+        <h4>인형사의 갈등</h4>
+        <p>인형사는 단순히 인형을 조종하는 존재가 아니다. 링크를 통해 인형에게 생명력을 공급하고 서로의 감정과 정신 상태를 공유한다.</p>
+        <div class="quote">“내가 연결된 존재는 도구인가, 아니면 함께 살아가는 존재인가?”</div>
+        <p>인형에게 명령을 내려야 하는지, 인형의 의사를 존중해야 하는지, 인형의 희생을 결정할 권리가 자신에게 있는지 선택해야 한다.</p>
+      </div></div></div>
+    </article>
+
+  </div>
+</section>
 
 <section id="system">
-
   <div class="section-head">
-
-    <div>
-      <div class="eyebrow">
-        02 / SYSTEM
-      </div>
-
-      <h2 class="section-title">
-        CORE SYSTEM
-      </h2>
-    </div>
-
-    <div class="section-copy">
-      ANIMA를 구성하는 핵심 요소.
-      인형의 중심부터 몸체와 치료,
-      그리고 침식까지.
-    </div>
-
+    <div><div class="eyebrow">03 / CORE SYSTEM</div><h2 class="section-title">ANIMA SYSTEM</h2></div>
+    <div class="section-copy">인형의 중심과 몸체, 치료와 침식을 구성하는 네 가지 핵심 요소.</div>
   </div>
-
-
   <div class="system-grid">
-
-
-    <article class="system-card">
-
-      <img
-        class="system-image"
-        src="assets/anima.png"
-        alt="ANIMA"
-      >
-
-      <div class="system-body">
-
-        <div class="system-name">
-          ANIMA
-        </div>
-
-        <div class="system-en">
-          CORE / ARTIFICIAL HEART
-        </div>
-
-        <div class="system-desc">
-          인형의 중심에 존재하는 핵심.
-          심장과 같은 형태를 가진 인공적인 생명 코어로,
-          인형이라는 개체를 성립시키는 중심 요소다.
-        </div>
-
-      </div>
-
-    </article>
-
-
-    <article class="system-card">
-
-      <img
-        class="system-image"
-        src="assets/resium.png"
-        alt="RESIUM"
-      >
-
-      <div class="system-body">
-
-        <div class="system-name">
-          RESIUM
-        </div>
-
-        <div class="system-en">
-          SYNTHETIC CELL MATERIAL
-        </div>
-
-        <div class="system-desc">
-          인형의 몸체를 구성하는 대체 세포.
-          광석과 세포의 중간에 가까운 성질을 가진
-          특수한 인공 물질이다.
-        </div>
-
-      </div>
-
-    </article>
-
-
-    <article class="system-card">
-
-      <img
-        class="system-image"
-        src="assets/vita.png"
-        alt="VITA"
-      >
-
-      <div class="system-body">
-
-        <div class="system-name">
-          VITA
-        </div>
-
-        <div class="system-en">
-          REPAIR / TREATMENT FLUID
-        </div>
-
-        <div class="system-desc">
-          손상된 인형을 치료하고 상태를 유지하기 위해
-          사용되는 치료용 수액.
-        </div>
-
-      </div>
-
-    </article>
-
-
-    <article class="system-card">
-
-      <img
-        class="system-image"
-        src="assets/mors.png"
-        alt="MORS"
-      >
-
-      <div class="system-body">
-
-        <div class="system-name">
-          MORS
-        </div>
-
-        <div class="system-en">
-          CORRUPTION / EROSION
-        </div>
-
-        <div class="system-desc">
-          인형의 정상적인 상태를 무너뜨리는 침식.
-          인형에게 발생하는 위험한 변질 현상을 가리킨다.
-        </div>
-
-      </div>
-
-    </article>
-
-
+    <article class="system-card"><img class="system-image" src="assets/anima.png" alt="ANIMA"><div class="system-body"><div class="system-name">ANIMA</div><div class="system-en">CORE / ARTIFICIAL HEART</div><div class="system-desc">인형의 심장 역할을 하는 핵심 기관. 인형사의 생명력을 저장·전달하고, 인형의 자아와 개체성을 유지하는 중심이다.</div></div></article>
+    <article class="system-card"><img class="system-image" src="assets/resium.png" alt="RESIUM"><div class="system-body"><div class="system-name">RESIUM</div><div class="system-en">BODY MATERIAL / COMBAT DOLL</div><div class="system-desc">전투 인형의 몸체를 구성하는 희귀한 특수 소재. 생명체와 유사한 특성을 가지며 인간과 거의 동일한 신체 구조와 움직임을 구현할 수 있다.</div></div></article>
+    <article class="system-card"><img class="system-image" src="assets/vita.png" alt="VITA"><div class="system-body"><div class="system-name">VITA</div><div class="system-en">EROSION TREATMENT</div><div class="system-desc">모르스의 영향을 받지 않는 일부 식물에서 채취되는 특수한 수액. 침식 억제와 변질 조직의 회복에 사용된다.</div></div></article>
+    <article class="system-card"><img class="system-image" src="assets/mors.png" alt="MORS"><div class="system-body"><div class="system-name">MORS</div><div class="system-en">EXTERNAL MATTER / EROSION</div><div class="system-desc">우주에서 유입된 외부 물질. 생명체를 침식시키며, 장기간 노출된 시체를 사변체로 변화시킨다.</div></div></article>
   </div>
-
 </section>
-
-
-<!-- DOLL ARCHIVE -->
 
 <section id="dolls">
-
   <div class="section-head">
-
-    <div>
-      <div class="eyebrow">
-        03 / DOLL ARCHIVE
-      </div>
-
-      <h2 class="section-title">
-        COMBAT DOLL
-      </h2>
-    </div>
-
-    <div class="section-copy">
-      현재 등록된 전투 인형.
-      서로 다른 제작 기록과 성격을 가진
-      11개의 개체가 존재한다.
-    </div>
-
+    <div><div class="eyebrow">04 / DOLL ARCHIVE</div><h2 class="section-title">COMBAT DOLL</h2></div>
+    <div class="section-copy">현재 등록된 전투 인형. 총 11개체의 기록을 확인할 수 있다.</div>
   </div>
-
-
   <div class="archive">
 
+    <a class="card" href="https://t.melting.chat/vvq874" target="_blank" rel="noopener"><img class="card-image" src="assets/doll_enoch.png" alt="에녹"><div class="card-body"><div class="card-num">DOLL FILE / 01</div><div class="card-name">에녹</div><div class="card-en">ENOCH</div><div class="card-quote">“질투요? 내가? 그냥 마음에 안 드는건데.”</div><div class="card-desc">감정을 모르는 주제에 아는 척하는 인형.</div></div></a>
 
-    <a
-      class="card"
-      href="https://t.melting.chat/vvq874"
-      target="_blank"
-      rel="noopener"
-    >
-      <img
-        class="card-image"
-        src="assets/doll_enoch.png"
-        alt="에녹"
-      >
+    <a class="card" href="https://t.melting.chat/v2kej1" target="_blank" rel="noopener"><img class="card-image" src="assets/doll_sevrin.png" alt="세브린"><div class="card-body"><div class="card-num">DOLL FILE / 02</div><div class="card-name">세브린</div><div class="card-en">SEVRIN</div><div class="card-quote">“전투하다가 다치면 네가 책임질 거야?”</div><div class="card-desc">자기 몸을 세상에서 제일 아끼는 예민한 나르시시스트.</div></div></a>
 
-      <div class="card-body">
-        <div class="card-num">DOLL FILE / 01</div>
-        <div class="card-name">에녹</div>
-        <div class="card-en">ENOCH</div>
+    <a class="card" href="https://t.melting.chat/z6v4s7" target="_blank" rel="noopener"><img class="card-image" src="assets/doll_hugo.png" alt="휴고"><div class="card-body"><div class="card-num">DOLL FILE / 03</div><div class="card-name">휴고</div><div class="card-en">HUGO</div><div class="card-quote">“마스터. 지시를.”</div><div class="card-desc">제작된 지 얼마 되지 않아 주인을 잃고 아무것도 익히지 못한 인형. 의료 인형을 전투 인형으로 비인가 개조했다.</div></div></a>
 
-        <div class="card-quote">
-          “질투요? 내가? 그냥 마음에 안 드는건데.”
-        </div>
+    <a class="card" href="https://t.melting.chat/5okzyg5" target="_blank" rel="noopener"><img class="card-image" src="assets/doll_sain.png" alt="세인"><div class="card-body"><div class="card-num">DOLL FILE / 04</div><div class="card-name">세인</div><div class="card-en">SAIN</div><div class="card-quote">“좋아해서 듣는 거지, 다 맡긴다는 뜻은 아닌데요.”</div><div class="card-desc">주인을 편애하는 고집 센 자율형 인형.</div></div></a>
 
-        <div class="card-desc">
-          감정을 모르는 주제에 아는 척하는 인형.
-        </div>
-      </div>
-    </a>
+    <a class="card" href="https://t.melting.chat/is1rmw" target="_blank" rel="noopener"><img class="card-image" src="assets/doll_roen.png" alt="로엔"><div class="card-body"><div class="card-num">DOLL FILE / 05</div><div class="card-name">로엔</div><div class="card-en">ROEN</div><div class="card-quote">“인형은 고칩니다. 제 건 나중에요.”</div></div></a>
 
+    <a class="card" href="https://t.melting.chat/gwwgy5" target="_blank" rel="noopener"><img class="card-image" src="assets/doll_xiao.png" alt="샤오"><div class="card-body"><div class="card-num">DOLL FILE / 06</div><div class="card-name">샤오</div><div class="card-en">XIAO</div><div class="card-quote">“이것도 다 임무의 연장선이라고요. 존나게, 중요한.”</div><div class="card-desc">장난기 많고 호기심이 지나치게 많아 명령을 알아들어도 제멋대로 행동하는 반항적인 금쪽이 탐사 인형.</div></div></a>
 
-    <a
-      class="card"
-      href="https://t.melting.chat/v2kej1"
-      target="_blank"
-      rel="noopener"
-    >
-      <img
-        class="card-image"
-        src="assets/doll_sevrin.png"
-        alt="세브린"
-      >
+    <a class="card" href="https://t.melting.chat/a5hf6m" target="_blank" rel="noopener"><img class="card-image" src="assets/doll_rowell_rose.png" alt="로웰과 로제"><div class="card-body"><div class="card-num">DOLL FILE / 07</div><div class="card-name">로웰 &amp; 로제</div><div class="card-en">ROWELL &amp; ROSÉ</div><div class="card-quote">“명령은 들었어. 따를지는 우리가 정해.”</div><div class="card-desc">같은 레지움 원괴를 양분해 같은 날 제작된 두 인형. 서로의 위치와 손상을 감지하며 한쪽의 전투 동작을 다른 쪽이 본능적으로 이어받는다.</div></div></a>
 
-      <div class="card-body">
-        <div class="card-num">DOLL FILE / 02</div>
-        <div class="card-name">세브린</div>
-        <div class="card-en">SEVRIN</div>
+    <a class="card" href="https://t.melting.chat/rpio5q" target="_blank" rel="noopener"><img class="card-image" src="assets/doll_rev.png" alt="레브"><div class="card-body"><div class="card-num">DOLL FILE / 08</div><div class="card-name">레브</div><div class="card-en">REV</div><div class="card-quote">“살고 싶어. 빌어먹게 오래.”</div><div class="card-desc">자기 삶을 부품값으로 계산당하는 걸 못 견디는 능글맞은 생존주의자.</div></div></a>
 
-        <div class="card-quote">
-          “전투하다가 다치면 네가 책임질 거야?”
-        </div>
+    <a class="card" href="https://t.melting.chat/atavbx" target="_blank" rel="noopener"><img class="card-image" src="assets/doll_zed.png" alt="제드"><div class="card-body"><div class="card-num">DOLL FILE / 09</div><div class="card-name">제드</div><div class="card-en">ZED</div><div class="card-quote">“착각하지 마. 네가 없으면 귀찮아지니까 따라가는 거야.”</div><div class="card-desc">자기방어형 츤데레 수집광. 이전 인형사의 기억을 잃었지만 흔적을 소중히 간직한다.</div></div></a>
 
-        <div class="card-desc">
-          자기 몸을 세상에서 제일 아끼는 예민한 나르시시스트.
-        </div>
-      </div>
-    </a>
+    <a class="card" href="https://t.melting.chat/6pe8qox" target="_blank" rel="noopener"><img class="card-image" src="assets/doll_sern.png" alt="세른"><div class="card-body"><div class="card-num">DOLL FILE / 10</div><div class="card-name">세른</div><div class="card-en">SERN</div><div class="card-quote">“링크됐다고 해서 널 인정한 건 아니니까.”</div><div class="card-desc">이전 인형사를 잃은 뒤 새로운 관계를 밀어내는 오만하고 까칠한 전투 인형.</div></div></a>
 
-
-    <a
-      class="card"
-      href="https://t.melting.chat/z6v4s7"
-      target="_blank"
-      rel="noopener"
-    >
-      <img
-        class="card-image"
-        src="assets/doll_hugo.png"
-        alt="휴고"
-      >
-
-      <div class="card-body">
-        <div class="card-num">DOLL FILE / 03</div>
-        <div class="card-name">휴고</div>
-        <div class="card-en">HUGO</div>
-
-        <div class="card-quote">
-          “마스터. 지시를.”
-        </div>
-
-        <div class="card-desc">
-          제작된 지 얼마 되지 않아 주인을 잃고
-          아무것도 익히지 못한 인형.
-          의료 인형을 전투 인형으로 비인가 개조했다.
-        </div>
-      </div>
-    </a>
-
-
-    <a
-      class="card"
-      href="https://t.melting.chat/5okzyg5"
-      target="_blank"
-      rel="noopener"
-    >
-      <img
-        class="card-image"
-        src="assets/doll_sain.png"
-        alt="세인"
-      >
-
-      <div class="card-body">
-        <div class="card-num">DOLL FILE / 04</div>
-        <div class="card-name">세인</div>
-        <div class="card-en">SAIN</div>
-
-        <div class="card-quote">
-          “좋아해서 듣는 거지, 다 맡긴다는 뜻은 아닌데요.”
-        </div>
-
-        <div class="card-desc">
-          주인을 편애하는 고집 센 자율형 인형.
-        </div>
-      </div>
-    </a>
-
-
-    <a
-      class="card"
-      href="https://t.melting.chat/is1rmw"
-      target="_blank"
-      rel="noopener"
-    >
-      <img
-        class="card-image"
-        src="assets/doll_roen.png"
-        alt="로엔"
-      >
-
-      <div class="card-body">
-        <div class="card-num">DOLL FILE / 05</div>
-        <div class="card-name">로엔</div>
-        <div class="card-en">ROEN</div>
-
-        <div class="card-quote">
-          “인형은 고칩니다. 제 건 나중에요.”
-        </div>
-      </div>
-    </a>
-
-
-    <a
-      class="card"
-      href="https://t.melting.chat/gwwgy5"
-      target="_blank"
-      rel="noopener"
-    >
-      <img
-        class="card-image"
-        src="assets/doll_xiao.png"
-        alt="샤오"
-      >
-
-      <div class="card-body">
-        <div class="card-num">DOLL FILE / 06</div>
-        <div class="card-name">샤오</div>
-        <div class="card-en">XIAO</div>
-
-        <div class="card-quote">
-          “이것도 다 임무의 연장선이라고요.
-          존나게, 중요한.”
-        </div>
-
-        <div class="card-desc">
-          장난기 많고 호기심이 지나치게 많아
-          명령을 알아들어도 제멋대로 행동하는
-          반항적인 금쪽이 탐사 인형.
-        </div>
-      </div>
-    </a>
-
-
-    <a
-      class="card"
-      href="https://t.melting.chat/a5hf6m"
-      target="_blank"
-      rel="noopener"
-    >
-      <img
-        class="card-image"
-        src="assets/doll_rowell_rose.png"
-        alt="로웰과 로제"
-      >
-
-      <div class="card-body">
-        <div class="card-num">DOLL FILE / 07</div>
-        <div class="card-name">로웰 &amp; 로제</div>
-        <div class="card-en">ROWELL &amp; ROSÉ</div>
-
-        <div class="card-quote">
-          “명령은 들었어. 따를지는 우리가 정해.”
-        </div>
-
-        <div class="card-desc">
-          같은 레지움 원괴를 양분해 같은 날 제작된 두 인형.
-          서로의 위치와 손상을 감지하며,
-          한쪽의 전투 동작을 다른 쪽이 본능적으로 이어받는다.
-        </div>
-      </div>
-    </a>
-
-
-    <a
-      class="card"
-      href="https://t.melting.chat/rpio5q"
-      target="_blank"
-      rel="noopener"
-    >
-      <img
-        class="card-image"
-        src="assets/doll_rev.png"
-        alt="레브"
-      >
-
-      <div class="card-body">
-        <div class="card-num">DOLL FILE / 08</div>
-        <div class="card-name">레브</div>
-        <div class="card-en">REV</div>
-
-        <div class="card-quote">
-          “살고 싶어. 빌어먹게 오래.”
-        </div>
-
-        <div class="card-desc">
-          자기 삶을 부품값으로 계산당하는 걸
-          못 견디는 능글맞은 생존주의자.
-        </div>
-      </div>
-    </a>
-
-
-    <a
-      class="card"
-      href="https://t.melting.chat/atavbx"
-      target="_blank"
-      rel="noopener"
-    >
-      <img
-        class="card-image"
-        src="assets/doll_zed.png"
-        alt="제드"
-      >
-
-      <div class="card-body">
-        <div class="card-num">DOLL FILE / 09</div>
-        <div class="card-name">제드</div>
-        <div class="card-en">ZED</div>
-
-        <div class="card-quote">
-          “착각하지 마.
-          네가 없으면 귀찮아지니까 따라가는 거야.”
-        </div>
-
-        <div class="card-desc">
-          자기방어형 츤데레 수집광.
-          이전 인형사의 기억을 잃었지만
-          흔적을 소중히 간직한다.
-        </div>
-      </div>
-    </a>
-
-
-    <a
-      class="card"
-      href="https://t.melting.chat/6pe8qox"
-      target="_blank"
-      rel="noopener"
-    >
-      <img
-        class="card-image"
-        src="assets/doll_sern.png"
-        alt="세른"
-      >
-
-      <div class="card-body">
-        <div class="card-num">DOLL FILE / 10</div>
-        <div class="card-name">세른</div>
-        <div class="card-en">SERN</div>
-
-        <div class="card-quote">
-          “링크됐다고 해서 널 인정한 건 아니니까.”
-        </div>
-
-        <div class="card-desc">
-          이전 인형사를 잃은 뒤 새로운 관계를
-          밀어내는 오만하고 까칠한 전투 인형.
-        </div>
-      </div>
-    </a>
-
-
-    <a
-      class="card"
-      href="https://t.melting.chat/mty681k"
-      target="_blank"
-      rel="noopener"
-    >
-      <img
-        class="card-image"
-        src="assets/doll_valen.png"
-        alt="발렌"
-      >
-
-      <div class="card-body">
-        <div class="card-num">DOLL FILE / 11</div>
-        <div class="card-name">발렌</div>
-        <div class="card-en">VALEN</div>
-
-        <div class="card-quote">
-          “여전히 예쁘네. 나 없이도 잘 살았나 봐.”
-        </div>
-
-        <div class="card-desc">
-          10년을 함께한 인형사에게 버림받았다 오해하고,
-          반정부 세력에서 활동 중인 애증을 품은 전투 인형.
-        </div>
-      </div>
-    </a>
-
+    <a class="card" href="https://t.melting.chat/mty681k" target="_blank" rel="noopener"><img class="card-image" src="assets/doll_valen.png" alt="발렌"><div class="card-body"><div class="card-num">DOLL FILE / 11</div><div class="card-name">발렌</div><div class="card-en">VALEN</div><div class="card-quote">“여전히 예쁘네. 나 없이도 잘 살았나 봐.”</div><div class="card-desc">10년을 함께한 인형사에게 버림받았다 오해하고, 반정부 세력에서 활동 중인 애증을 품은 전투 인형.</div></div></a>
 
   </div>
-
 </section>
-
-
-<!-- DOLLMASTER -->
 
 <section id="masters">
-
   <div class="section-head">
-
-    <div>
-      <div class="eyebrow">
-        04 / DOLLMASTER
-      </div>
-
-      <h2 class="section-title">
-        DOLLMASTER
-      </h2>
-    </div>
-
-    <div class="section-copy">
-      인형과 LINK를 맺는 존재.
-      현재 등록된 인형사는 없으며,
-      최대 5명의 인형사가 참여할 예정이다.
-    </div>
-
+    <div><div class="eyebrow">05 / DOLLMASTER</div><h2 class="section-title">DOLLMASTER</h2></div>
+    <div class="section-copy">현재 등록된 인형사는 없으며, 최대 5명의 인형사가 참여할 예정이다.</div>
   </div>
-
-
   <div class="master-info">
-
     <div class="master-panel">
-
       <h3>LINK HOLDER</h3>
-
-      <p>
-        인형은 단독으로 존재할 수 있지만,
-        활동과 유지에는 인형사와의 LINK가 관여한다.
-      </p>
-
-      <p>
-        인형사와 인형의 관계는 각각 다르게 형성되며,
-        LINK는 단순한 명령 체계만으로 설명되지 않는다.
-      </p>
-
+      <p>인형사는 아니마와 링크를 형성하여 인형에게 생명력을 전달하고 운용한다.</p>
+      <p>전투 인형사는 정부의 적성 검사와 교육을 거친 공인 인력이며, 비전투 인형사는 민간에서도 활동할 수 있다.</p>
+      <p>인형사와 인형의 관계는 단순한 지휘 관계로 끝나지 않는다. 장기간 링크가 유지될수록 서로의 감정과 정신 상태가 영향을 주고받는다.</p>
     </div>
-
-
-    <div class="standby">
-
-      <div>
-
-        <div class="eyebrow">
-          DOLLMASTER DATA
-        </div>
-
-        <div class="standby-title">
-          STANDBY
-        </div>
-
-        <div class="standby-status">
-          05 SLOTS · PREPARING
-        </div>
-
-      </div>
-
-    </div>
-
+    <div class="standby"><div><div class="eyebrow">DOLLMASTER DATA</div><div class="standby-title">STANDBY</div><div class="standby-status">05 SLOTS · PREPARING</div></div></div>
   </div>
-
 </section>
-
-
-<!-- LINK -->
 
 <section id="link">
-
   <div class="section-head">
-
-    <div>
-      <div class="eyebrow">
-        05 / LINK
-      </div>
-
-      <h2 class="section-title">
-        LINK WITH<br>
-        ANIMA
-      </h2>
-    </div>
-
-    <div class="section-copy">
-      플랫폼별로 연결 가능한 인형을 확인한다.
-      아래 목록에서 원하는 인형을 선택하면
-      해당 캐릭터 페이지로 이동한다.
-    </div>
-
+    <div><div class="eyebrow">06 / LINK ARCHIVE</div><h2 class="section-title">LINK WITH<br>ANIMA</h2></div>
+    <div class="section-copy">플랫폼별 캐릭터 페이지. 합작 전체 링크가 아닌, 등록된 인형과 향후 인형사의 캐릭터 링크만 제공한다.</div>
   </div>
-
-
   <div class="link-accordion">
 
-
-    <!-- MELTING -->
-
     <div class="link-item">
-
-      <button class="link-toggle" type="button">
-
-        <div>
-          <div class="link-toggle-name">
-            MELTING
-          </div>
-
-          <div class="link-toggle-meta">
-            11 DOLLS
-          </div>
-        </div>
-
-        <span class="link-plus">+</span>
-
-      </button>
-
-
-      <div class="link-panel">
-
-        <div class="link-panel-inner">
-
-
-          <a
-            class="link-character"
-            href="https://t.melting.chat/vvq874"
-            target="_blank"
-            rel="noopener"
-          >
-            <span>ENOCH / 에녹</span>
-            <span>LINK →</span>
-          </a>
-
-
-          <a
-            class="link-character"
-            href="https://t.melting.chat/v2kej1"
-            target="_blank"
-            rel="noopener"
-          >
-            <span>SEVRIN / 세브린</span>
-            <span>LINK →</span>
-          </a>
-
-
-          <a
-            class="link-character"
-            href="https://t.melting.chat/z6v4s7"
-            target="_blank"
-            rel="noopener"
-          >
-            <span>HUGO / 휴고</span>
-            <span>LINK →</span>
-          </a>
-
-
-          <a
-            class="link-character"
-            href="https://t.melting.chat/5okzyg5"
-            target="_blank"
-            rel="noopener"
-          >
-            <span>SAIN / 세인</span>
-            <span>LINK →</span>
-          </a>
-
-
-          <a
-            class="link-character"
-            href="https://t.melting.chat/is1rmw"
-            target="_blank"
-            rel="noopener"
-          >
-            <span>ROEN / 로엔</span>
-            <span>LINK →</span>
-          </a>
-
-
-          <a
-            class="link-character"
-            href="https://t.melting.chat/gwwgy5"
-            target="_blank"
-            rel="noopener"
-          >
-            <span>XIAO / 샤오</span>
-            <span>LINK →</span>
-          </a>
-
-
-          <a
-            class="link-character"
-            href="https://t.melting.chat/a5hf6m"
-            target="_blank"
-            rel="noopener"
-          >
-            <span>ROWELL &amp; ROSÉ / 로웰 &amp; 로제</span>
-            <span>LINK →</span>
-          </a>
-
-
-          <a
-            class="link-character"
-            href="https://t.melting.chat/rpio5q"
-            target="_blank"
-            rel="noopener"
-          >
-            <span>REV / 레브</span>
-            <span>LINK →</span>
-          </a>
-
-
-          <a
-            class="link-character"
-            href="https://t.melting.chat/atavbx"
-            target="_blank"
-            rel="noopener"
-          >
-            <span>ZED / 제드</span>
-            <span>LINK →</span>
-          </a>
-
-
-          <a
-            class="link-character"
-            href="https://t.melting.chat/6pe8qox"
-            target="_blank"
-            rel="noopener"
-          >
-            <span>SERN / 세른</span>
-            <span>LINK →</span>
-          </a>
-
-
-          <a
-            class="link-character"
-            href="https://t.melting.chat/mty681k"
-            target="_blank"
-            rel="noopener"
-          >
-            <span>VALEN / 발렌</span>
-            <span>LINK →</span>
-          </a>
-
-
-        </div>
-
-      </div>
-
+      <button class="link-toggle" type="button"><div><div class="link-toggle-name">MELTING</div><div class="link-toggle-meta">11 DOLLS / ACTIVE</div></div><span class="link-plus">+</span></button>
+      <div class="link-panel"><div class="link-panel-inner">
+        <a class="link-character" href="https://t.melting.chat/vvq874" target="_blank" rel="noopener"><span>ENOCH / 에녹</span><span>LINK →</span></a>
+        <a class="link-character" href="https://t.melting.chat/v2kej1" target="_blank" rel="noopener"><span>SEVRIN / 세브린</span><span>LINK →</span></a>
+        <a class="link-character" href="https://t.melting.chat/z6v4s7" target="_blank" rel="noopener"><span>HUGO / 휴고</span><span>LINK →</span></a>
+        <a class="link-character" href="https://t.melting.chat/5okzyg5" target="_blank" rel="noopener"><span>SAIN / 세인</span><span>LINK →</span></a>
+        <a class="link-character" href="https://t.melting.chat/is1rmw" target="_blank" rel="noopener"><span>ROEN / 로엔</span><span>LINK →</span></a>
+        <a class="link-character" href="https://t.melting.chat/gwwgy5" target="_blank" rel="noopener"><span>XIAO / 샤오</span><span>LINK →</span></a>
+        <a class="link-character" href="https://t.melting.chat/a5hf6m" target="_blank" rel="noopener"><span>ROWELL &amp; ROSÉ / 로웰 &amp; 로제</span><span>LINK →</span></a>
+        <a class="link-character" href="https://t.melting.chat/rpio5q" target="_blank" rel="noopener"><span>REV / 레브</span><span>LINK →</span></a>
+        <a class="link-character" href="https://t.melting.chat/atavbx" target="_blank" rel="noopener"><span>ZED / 제드</span><span>LINK →</span></a>
+        <a class="link-character" href="https://t.melting.chat/6pe8qox" target="_blank" rel="noopener"><span>SERN / 세른</span><span>LINK →</span></a>
+        <a class="link-character" href="https://t.melting.chat/mty681k" target="_blank" rel="noopener"><span>VALEN / 발렌</span><span>LINK →</span></a>
+      </div></div>
     </div>
 
-
-    <!-- TINGLE -->
-
     <div class="link-item">
-
-      <button class="link-toggle" type="button">
-
-        <div>
-          <div class="link-toggle-name">
-            TINGLE
-          </div>
-
-          <div class="link-toggle-meta">
-            PREPARING
-          </div>
-        </div>
-
-        <span class="link-plus">+</span>
-
-      </button>
-
-
-      <div class="link-panel">
-
-        <div class="link-panel-inner">
-
-          <div class="link-character">
-            <span>CHARACTER DATA</span>
-            <span>PREPARING</span>
-          </div>
-
-        </div>
-
-      </div>
-
+      <button class="link-toggle" type="button"><div><div class="link-toggle-name">TINGLe</div><div class="link-toggle-meta">PREPARING</div></div><span class="link-plus">+</span></button>
+      <div class="link-panel"><div class="link-panel-inner">
+        <div class="link-character"><span>CHARACTER DATA</span><span>PREPARING</span></div>
+      </div></div>
     </div>
-
 
   </div>
-
 </section>
 
-
 </main>
-
-
-<footer class="footer">
-  ANIMA · COMBAT DOLL PROJECT ·
-  ARTIFICIAL LIFE / COMBAT DOLL / LINK
-</footer>
-
+<footer class="footer">ANIMA · COMBAT DOLL PROJECT · ARTIFICIAL LIFE / COMBAT DOLL / LINK</footer>
 </div>
 
-
 <script>
+const bgm=document.getElementById("bgm");
+const musicBtn=document.getElementById("musicBtn");
+function setBGMState(on){musicBtn.classList.toggle("on",on)}
+function startBGM(){bgm.volume=.7;bgm.play().then(()=>setBGMState(true)).catch(()=>{})}
+function toggleBGM(){if(bgm.paused){bgm.play().then(()=>setBGMState(true)).catch(()=>{})}else{bgm.pause();setBGMState(false)}}
 
-/* =========================
-   BGM
-========================= */
+const intro=document.getElementById("intro");
+const linkInterface=document.getElementById("linkInterface");
+const linkPort=document.getElementById("linkPort");
+const linkCore=document.getElementById("linkCore");
+const site=document.getElementById("site");
+let dragging=false,linked=false,offsetX=0,offsetY=0;
 
-const bgm = document.getElementById("bgm");
-const musicBtn = document.getElementById("musicBtn");
+function resetCore(){linkCore.style.left="20%";linkCore.style.top="50%";linkCore.style.transform="translate(-50%,-50%)"}
 
-function setBGMState(on){
-  musicBtn.classList.toggle("on",on);
-}
-
-function startBGM(){
-
-  bgm.volume = 0.7;
-
-  bgm.play().then(()=>{
-    setBGMState(true);
-  }).catch(()=>{
-    setBGMState(false);
-  });
-
-}
-
-function toggleBGM(){
-
-  if(bgm.paused){
-
-    bgm.play().then(()=>{
-      setBGMState(true);
-    }).catch(()=>{});
-
-  }else{
-
-    bgm.pause();
-    setBGMState(false);
-
-  }
-
-}
-
-
-/* =========================
-   LINK DRAG
-========================= */
-
-const intro = document.getElementById("intro");
-const linkInterface = document.getElementById("linkInterface");
-const linkPort = document.getElementById("linkPort");
-const linkCore = document.getElementById("linkCore");
-const site = document.getElementById("site");
-
-let dragging = false;
-let linked = false;
-
-let offsetX = 0;
-let offsetY = 0;
-
-
-function resetCore(){
-
-  linkCore.style.left = "20%";
-  linkCore.style.top = "50%";
-  linkCore.style.transform =
-    "translate(-50%,-50%)";
-
-}
-
-
-linkCore.addEventListener("pointerdown",(e)=>{
-
-  if(linked) return;
-
-  dragging = true;
-
+linkCore.addEventListener("pointerdown",e=>{
+  if(linked)return;
+  dragging=true;
   linkCore.classList.add("dragging");
-
   linkCore.setPointerCapture(e.pointerId);
-
-  const rect = linkCore.getBoundingClientRect();
-
-  offsetX =
-    e.clientX -
-    (rect.left + rect.width / 2);
-
-  offsetY =
-    e.clientY -
-    (rect.top + rect.height / 2);
-
+  const r=linkCore.getBoundingClientRect();
+  offsetX=e.clientX-(r.left+r.width/2);
+  offsetY=e.clientY-(r.top+r.height/2);
 });
 
-
-linkCore.addEventListener("pointermove",(e)=>{
-
-  if(!dragging || linked) return;
-
-  const area =
-    linkInterface.getBoundingClientRect();
-
-  const core =
-    linkCore.getBoundingClientRect();
-
-  let x =
-    e.clientX -
-    area.left -
-    offsetX;
-
-  let y =
-    e.clientY -
-    area.top -
-    offsetY;
-
-  const halfW =
-    core.width / 2;
-
-  const halfH =
-    core.height / 2;
-
-  x = Math.max(
-    halfW,
-    Math.min(
-      x,
-      area.width - halfW
-    )
-  );
-
-  y = Math.max(
-    halfH,
-    Math.min(
-      y,
-      area.height - halfH
-    )
-  );
-
-  linkCore.style.left = x + "px";
-  linkCore.style.top = y + "px";
-
-  linkCore.style.transform =
-    "translate(-50%,-50%) scale(1.08)";
-
-
-  const target =
-    linkPort.getBoundingClientRect();
-
-  const current =
-    linkCore.getBoundingClientRect();
-
-  const cx =
-    current.left +
-    current.width / 2;
-
-  const cy =
-    current.top +
-    current.height / 2;
-
-  const tx =
-    target.left +
-    target.width / 2;
-
-  const ty =
-    target.top +
-    target.height / 2;
-
-  const distance =
-    Math.hypot(
-      cx - tx,
-      cy - ty
-    );
-
-  const active =
-    distance < 65;
-
-  linkInterface.classList.toggle(
-    "active",
-    active
-  );
-
-  linkPort.classList.toggle(
-    "active",
-    active
-  );
-
+linkCore.addEventListener("pointermove",e=>{
+  if(!dragging||linked)return;
+  const area=linkInterface.getBoundingClientRect(), core=linkCore.getBoundingClientRect();
+  let x=e.clientX-area.left-offsetX, y=e.clientY-area.top-offsetY;
+  const hw=core.width/2, hh=core.height/2;
+  x=Math.max(hw,Math.min(x,area.width-hw));
+  y=Math.max(hh,Math.min(y,area.height-hh));
+  linkCore.style.left=x+"px";linkCore.style.top=y+"px";linkCore.style.transform="translate(-50%,-50%) scale(1.08)";
+  const t=linkPort.getBoundingClientRect(), c=linkCore.getBoundingClientRect();
+  const d=Math.hypot((c.left+c.width/2)-(t.left+t.width/2),(c.top+c.height/2)-(t.top+t.height/2));
+  const active=d<65;
+  linkInterface.classList.toggle("active",active);linkPort.classList.toggle("active",active);
 });
-
 
 function releaseCore(){
-
-  if(!dragging || linked) return;
-
-  dragging = false;
-
-  linkCore.classList.remove("dragging");
-
-  const target =
-    linkPort.getBoundingClientRect();
-
-  const current =
-    linkCore.getBoundingClientRect();
-
-  const cx =
-    current.left +
-    current.width / 2;
-
-  const cy =
-    current.top +
-    current.height / 2;
-
-  const tx =
-    target.left +
-    target.width / 2;
-
-  const ty =
-    target.top +
-    target.height / 2;
-
-  const distance =
-    Math.hypot(
-      cx - tx,
-      cy - ty
-    );
-
-
-  if(distance < 70){
-
-    establishLink();
-
-  }else{
-
-    resetCore();
-
-    linkInterface.classList.remove("active");
-    linkPort.classList.remove("active");
-
-  }
-
+  if(!dragging||linked)return;
+  dragging=false;linkCore.classList.remove("dragging");
+  const t=linkPort.getBoundingClientRect(),c=linkCore.getBoundingClientRect();
+  const d=Math.hypot((c.left+c.width/2)-(t.left+t.width/2),(c.top+c.height/2)-(t.top+t.height/2));
+  if(d<70)establishLink();
+  else{resetCore();linkInterface.classList.remove("active");linkPort.classList.remove("active")}
 }
-
-
-linkCore.addEventListener(
-  "pointerup",
-  releaseCore
-);
-
-linkCore.addEventListener(
-  "pointercancel",
-  releaseCore
-);
-
-
-/* =========================
-   LINK SUCCESS
-========================= */
+linkCore.addEventListener("pointerup",releaseCore);
+linkCore.addEventListener("pointercancel",releaseCore);
 
 function establishLink(){
-
-  linked = true;
-
+  linked=true;
   linkInterface.classList.remove("active");
   linkInterface.classList.add("success");
-
   linkPort.classList.add("active");
-
-  linkCore.style.left = "82%";
-  linkCore.style.top = "50%";
-
-  linkCore.style.transform =
-    "translate(-50%,-50%) scale(.72)";
-
-
+  linkCore.style.left="82%";linkCore.style.top="50%";linkCore.style.transform="translate(-50%,-50%) scale(.72)";
   startBGM();
-
-
   setTimeout(()=>{
-
     intro.classList.add("hide");
     site.classList.add("show");
-
     document.body.classList.remove("lock");
-
     window.scrollTo(0,0);
-
   },350);
-
 }
 
-
-/* =========================
-   ACCORDION
-========================= */
-
-document
-  .querySelectorAll(".link-toggle")
-  .forEach((button)=>{
-
-    button.addEventListener("click",()=>{
-
-      const item =
-        button.parentElement;
-
-      document
-        .querySelectorAll(".link-item.open")
-        .forEach((other)=>{
-
-          if(other !== item){
-            other.classList.remove("open");
-          }
-
-        });
-
-      item.classList.toggle("open");
-
-    });
-
+document.querySelectorAll(".db-toggle").forEach(button=>{
+  button.addEventListener("click",()=>{
+    const item=button.parentElement;
+    item.classList.toggle("open");
   });
+});
 
-
-/* =========================
-   INITIAL
-========================= */
+document.querySelectorAll(".link-toggle").forEach(button=>{
+  button.addEventListener("click",()=>{
+    const item=button.parentElement;
+    document.querySelectorAll(".link-item.open").forEach(other=>{if(other!==item)other.classList.remove("open")});
+    item.classList.toggle("open");
+  });
+});
 
 resetCore();
-
 </script>
-
 </body>
 </html>
