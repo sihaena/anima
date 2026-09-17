@@ -63,7 +63,7 @@ section{padding:100px 0;border-top:1px solid #17262d}
 .section-title{margin:7px 0 0;font:400 clamp(35px,5vw,62px)/1.05 Georgia,serif}
 .section-copy{max-width:590px;font-size:13px;color:#8fa4ab}
 
-.world{display:grid;grid-template-columns:1.15fr .85fr;gap:18px}
+.world{display:block}.world .panel{width:min(900px,100%)}
 .panel{border:1px solid #27373e;background:#091015}
 .panel img{width:100%;aspect-ratio:16/9;object-fit:cover}
 .panel-text{padding:28px;font-size:13px;color:#99adb4}
@@ -89,13 +89,13 @@ section{padding:100px 0;border-top:1px solid #17262d}
 .db-visual img{width:100%;max-height:460px;object-fit:cover}
 .db-visual-caption{padding:9px 12px;font:7px "Courier New",monospace;letter-spacing:.14em;color:#5f7e88}
 
-.system-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:#27373e}
+.system-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:#27373e}
 .system-card{background:#091015;overflow:hidden}.system-image{width:100%;aspect-ratio:1/1;object-fit:cover}
 .system-body{padding:25px}.system-name{font:29px/1 Georgia,serif}
 .system-en{margin-top:7px;font:8px "Courier New",monospace;letter-spacing:.15em;color:#688b95}
 .system-desc{margin-top:16px;font-size:12px;line-height:1.9;color:#91a5ac}
 
-.archive{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.archive{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
 .card{display:block;overflow:hidden;border:1px solid #26363d;background:#080d11;transition:.25s}
 .card:hover{border-color:#739fac;transform:translateY(-3px)}
 .card-image{width:100%;aspect-ratio:4/5;object-fit:cover;background:#020405}
@@ -139,7 +139,7 @@ section{padding:100px 0;border-top:1px solid #17262d}
 .intro-content{padding:20px}.intro-title{font-size:20vw}.intro-sub{font-size:8px;letter-spacing:.2em}
 .link-interface{width:92vw;height:190px;margin-top:40px}.link-port{right:16%}.link-core{left:18%}.core-label{left:18%}
 section{padding:75px 0}.section-head{display:block;margin-bottom:30px}.section-copy{margin-top:17px;font-size:12px}
-.world,.master-info{grid-template-columns:1fr}.system-grid{grid-template-columns:1fr}
+.world,.master-info{grid-template-columns:1fr}.system-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 .project-points{grid-template-columns:1fr 1fr}
 .archive{display:flex;overflow-x:auto;gap:12px;padding-bottom:14px;scroll-snap-type:x mandatory}
 .card{flex:0 0 78%;scroll-snap-align:start}
