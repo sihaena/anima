@@ -2,89 +2,344 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>ANIMA — COMBAT DOLL PROJECT</title>
 
 <style>
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
+
+html{
+scroll-behavior:smooth;
+}
+
+html,body{
 margin:0;
-background:#05080b;
-color:#dce7eb;
+width:100%;
+min-height:100%;
+background:#04080b;
+color:#dce8ec;
 font-family:"Noto Sans KR","Pretendard","Malgun Gothic",sans-serif;
+}
+
+body{
 line-height:1.7;
 }
-img{display:block;max-width:100%}
-a{color:inherit;text-decoration:none}
+
+body.lock{
+overflow:hidden;
+}
+
+img{
+display:block;
+max-width:100%;
+}
+
+button{
+font:inherit;
+}
+
+a{
+color:inherit;
+text-decoration:none;
+}
+
+.eyebrow{
+font:9px/1.4 "Courier New",monospace;
+letter-spacing:.18em;
+color:#8db7c2;
+}
+
+
+/* MUSIC */
+
+#musicBtn{
+position:fixed;
+top:18px;
+right:18px;
+z-index:1000;
+padding:8px 12px;
+border:1px solid rgba(145,190,202,.55);
+background:rgba(3,8,11,.78);
+color:#b9d5dc;
+font:9px "Courier New",monospace;
+letter-spacing:.12em;
+cursor:pointer;
+backdrop-filter:blur(8px);
+}
+
+
+/* INTRO */
+
+#intro{
+position:fixed;
+inset:0;
+z-index:500;
+overflow:hidden;
+background:#020507;
+transition:opacity .8s ease,visibility .8s ease;
+}
+
+#intro.hide{
+opacity:0;
+visibility:hidden;
+pointer-events:none;
+}
+
+.intro-bg{
+position:absolute;
+inset:0;
+background:
+linear-gradient(
+180deg,
+rgba(2,5,7,.12),
+rgba(2,7,10,.9)
+),
+url("assets/anima_intro_bg.png") center/cover no-repeat;
+}
+
+.intro-content{
+position:absolute;
+inset:0;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+padding:30px;
+text-align:center;
+}
+
+.intro-title{
+margin:0;
+font:clamp(64px,13vw,150px)/.8 Georgia,serif;
+letter-spacing:.06em;
+color:#edf7f9;
+}
+
+.intro-sub{
+margin-top:22px;
+font:9px "Courier New",monospace;
+letter-spacing:.3em;
+color:#91b4bd;
+}
+
+
+/* DRAG AREA */
+
+.link-zone{
+position:relative;
+width:min(420px,78vw);
+height:150px;
+margin-top:55px;
+display:flex;
+align-items:center;
+justify-content:center;
+border:1px solid rgba(126,171,184,.2);
+background:rgba(5,14,19,.28);
+transition:.3s;
+}
+
+.link-zone.active{
+border-color:rgba(154,211,224,.75);
+box-shadow:0 0 35px rgba(91,172,192,.15);
+}
+
+.link-zone.success{
+border-color:#c4e9f0;
+background:rgba(84,153,169,.13);
+}
+
+.link-label{
+position:absolute;
+top:12px;
+left:14px;
+font:7px "Courier New",monospace;
+letter-spacing:.16em;
+color:#63828b;
+}
+
+.link-target{
+position:absolute;
+width:82px;
+height:82px;
+border:1px dashed rgba(152,205,216,.45);
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+color:#6e929d;
+font:7px "Courier New",monospace;
+letter-spacing:.08em;
+}
+
+.link-core{
+position:absolute;
+width:64px;
+height:64px;
+border:1px solid #9bcbd5;
+border-radius:50%;
+background:
+radial-gradient(
+circle,
+#bce6ec 0,
+#497c88 16%,
+#102a34 48%,
+#050d11 72%
+);
+box-shadow:0 0 22px rgba(116,194,210,.22);
+cursor:grab;
+touch-action:none;
+z-index:3;
+transition:
+transform .12s ease,
+box-shadow .2s ease;
+}
+
+.link-core:before,
+.link-core:after{
+content:"";
+position:absolute;
+inset:9px;
+border:1px solid rgba(195,235,241,.3);
+border-radius:50%;
+}
+
+.link-core:after{
+inset:19px;
+border-color:rgba(195,235,241,.45);
+}
+
+.link-core.dragging{
+cursor:grabbing;
+transform:scale(1.08);
+box-shadow:0 0 35px rgba(133,215,229,.42);
+}
+
+.intro-hint{
+margin-top:20px;
+font:8px "Courier New",monospace;
+letter-spacing:.14em;
+color:#68858e;
+}
+
+
+/* LINKING */
+
+#linking{
+position:absolute;
+inset:0;
+z-index:10;
+display:none;
+align-items:center;
+justify-content:center;
+text-align:center;
+background:
+linear-gradient(
+180deg,
+rgba(3,8,11,.38),
+rgba(3,8,11,.92)
+),
+url("assets/anima_link_bg.png") center/cover no-repeat;
+}
+
+#linking.show{
+display:flex;
+}
+
+.linking-inner{
+padding:30px;
+}
+
+.linking-title{
+font:clamp(35px,8vw,75px)/1 Georgia,serif;
+letter-spacing:.08em;
+}
+
+.linking-status{
+margin-top:18px;
+font:9px "Courier New",monospace;
+letter-spacing:.22em;
+color:#91b9c3;
+}
+
+
+/* COMPLETE */
+
+#complete{
+position:absolute;
+inset:0;
+z-index:20;
+display:none;
+align-items:flex-end;
+background:
+linear-gradient(
+180deg,
+rgba(3,8,11,.1),
+rgba(3,8,11,.92)
+),
+url("assets/anima_link_complete.png") center/cover no-repeat;
+}
+
+#complete.show{
+display:flex;
+}
+
+.complete-inner{
+width:min(1180px,calc(100% - 32px));
+margin:auto;
+padding-bottom:9vh;
+}
+
+.complete-title{
+font:clamp(50px,9vw,110px)/.9 Georgia,serif;
+letter-spacing:.05em;
+}
+
+.complete-sub{
+margin-top:14px;
+font:9px "Courier New",monospace;
+letter-spacing:.22em;
+color:#9bbcc4;
+}
+
+.open-main{
+display:inline-block;
+margin-top:35px;
+padding:11px 22px;
+border:1px solid #83adb8;
+background:none;
+color:inherit;
+font:9px "Courier New",monospace;
+letter-spacing:.16em;
+cursor:pointer;
+}
+
+.open-main:hover{
+background:#d9eef2;
+color:#071015;
+}
+
+
+/* MAIN */
+
+#site{
+opacity:0;
+visibility:hidden;
+transition:opacity .8s ease;
+}
+
+#site.show{
+opacity:1;
+visibility:visible;
+}
 
 .wrap{
 width:min(1180px,calc(100% - 32px));
 margin:auto;
 }
 
-.eyebrow{
-font:10px/1.4 "Courier New",monospace;
-letter-spacing:.18em;
-color:#8eb9c5;
-}
-
-.hero{
-min-height:100vh;
-position:relative;
-display:flex;
-align-items:flex-end;
-overflow:hidden;
-background:#020508;
-}
-
-.hero:before{
-content:"";
-position:absolute;
-inset:0;
-background:
-linear-gradient(180deg,rgba(0,0,0,.05) 20%,rgba(3,8,11,.94) 100%),
-url("assets/anima_intro_bg.png") center/cover no-repeat;
-}
-
-.hero-inner{
-position:relative;
-width:min(1180px,calc(100% - 32px));
-margin:auto;
-padding:0 0 9vh;
-}
-
-.logo{
-font:clamp(64px,11vw,150px)/.82 Georgia,serif;
-letter-spacing:.05em;
-color:#edf5f7;
-}
-
-.subtitle{
-margin-top:20px;
-font:11px "Courier New",monospace;
-letter-spacing:.3em;
-color:#9ebdc5;
-}
-
-.enter{
-display:inline-block;
-margin-top:42px;
-padding:12px 24px;
-border:1px solid #6e99a6;
-font:10px "Courier New",monospace;
-letter-spacing:.18em;
-transition:.25s;
-}
-
-.enter:hover{
-background:#d7edf2;
-color:#071015;
-}
-
 section{
 padding:110px 0;
-border-top:1px solid #18262d;
+border-top:1px solid #17262d;
 }
 
 .section-head{
@@ -97,14 +352,17 @@ margin-bottom:42px;
 
 .section-title{
 margin:7px 0 0;
-font:400 clamp(34px,5vw,62px)/1.05 Georgia,serif;
+font:400 clamp(35px,5vw,62px)/1.05 Georgia,serif;
 }
 
 .section-copy{
 max-width:590px;
 font-size:13px;
-color:#8fa3aa;
+color:#8fa4ab;
 }
+
+
+/* PROJECT */
 
 .world{
 display:grid;
@@ -126,7 +384,7 @@ object-fit:cover;
 .panel-text{
 padding:25px;
 font-size:13px;
-color:#9aadb3;
+color:#99adb4;
 }
 
 .panel-text p{
@@ -154,13 +412,16 @@ display:block;
 margin-bottom:7px;
 font:10px "Courier New",monospace;
 letter-spacing:.14em;
-color:#bcdfe7;
+color:#b9dbe3;
 }
 
 .fact span{
 font-size:12px;
 color:#899da4;
 }
+
+
+/* DOLL */
 
 .archive{
 display:grid;
@@ -169,6 +430,7 @@ gap:16px;
 }
 
 .card{
+display:block;
 overflow:hidden;
 border:1px solid #26363d;
 background:#080d11;
@@ -225,14 +487,8 @@ font-size:10px;
 line-height:1.75;
 }
 
-.card-master{
-margin-top:12px;
-padding-top:11px;
-border-top:1px solid #19262c;
-font:9px "Courier New",monospace;
-color:#718e97;
-letter-spacing:.06em;
-}
+
+/* DOLLMASTER */
 
 .standby{
 min-height:330px;
@@ -242,7 +498,12 @@ justify-content:center;
 text-align:center;
 border:1px solid #293a41;
 background:
-radial-gradient(circle at center,#10222b 0,#071015 55%,#05090c 100%);
+radial-gradient(
+circle at center,
+#10222b 0,
+#071015 55%,
+#05090c 100%
+);
 }
 
 .standby-title{
@@ -258,46 +519,88 @@ letter-spacing:.2em;
 color:#718d96;
 }
 
-.links{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:16px;
+
+/* LINK ACCORDION */
+
+.link-accordion{
+border-top:1px solid #2c4149;
 }
 
-.link-card{
-min-height:270px;
-padding:34px;
+.link-item{
+border-bottom:1px solid #2c4149;
+}
+
+.link-toggle{
+width:100%;
+padding:24px 4px;
 display:flex;
-flex-direction:column;
+align-items:center;
 justify-content:space-between;
-border:1px solid #2c4149;
-background:#081015;
-transition:.25s;
+background:none;
+border:0;
+color:#dce8ec;
+cursor:pointer;
+text-align:left;
 }
 
-.link-card:hover{
-border-color:#9acbd6;
-background:#0b171d;
+.link-toggle-name{
+font:32px Georgia,serif;
 }
 
-.link-title{
-margin:8px 0;
-font:36px Georgia,serif;
-font-weight:400;
+.link-toggle-meta{
+margin-top:3px;
+font:8px "Courier New",monospace;
+letter-spacing:.16em;
+color:#718d96;
 }
 
-.link-desc{
+.link-plus{
+font:20px "Courier New",monospace;
+font-weight:300;
+transition:transform .3s;
+}
+
+.link-item.open .link-plus{
+transform:rotate(45deg);
+}
+
+.link-panel{
+display:grid;
+grid-template-rows:0fr;
+transition:grid-template-rows .35s ease;
+}
+
+.link-item.open .link-panel{
+grid-template-rows:1fr;
+}
+
+.link-panel-inner{
+overflow:hidden;
+}
+
+.link-character{
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:14px 4px;
+border-top:1px solid #142229;
 font-size:12px;
-color:#8da1a8;
+color:#8fa7ae;
+transition:.2s;
 }
 
-.link-button{
-align-self:flex-start;
-padding:10px 16px;
-border:1px solid #496b76;
-font:9px "Courier New",monospace;
-letter-spacing:.15em;
+.link-character:hover{
+color:#d9edf1;
+background:rgba(100,150,165,.04);
 }
+
+.link-character span:last-child{
+font:8px "Courier New",monospace;
+letter-spacing:.12em;
+}
+
+
+/* FOOTER */
 
 .footer{
 padding:55px 0;
@@ -308,25 +611,42 @@ letter-spacing:.14em;
 color:#526870;
 }
 
-/* mobile */
+
+/* MOBILE */
+
 @media(max-width:760px){
 
-.wrap{
-width:calc(100% - 22px);
+#musicBtn{
+top:12px;
+right:12px;
+padding:8px 10px;
 }
 
-.hero-inner{
-width:calc(100% - 22px);
-padding-bottom:7vh;
+.intro-content{
+padding:20px;
 }
 
-.logo{
-font-size:19vw;
+.intro-title{
+font-size:20vw;
 }
 
-.subtitle{
-font-size:9px;
-letter-spacing:.18em;
+.intro-sub{
+font-size:8px;
+letter-spacing:.2em;
+}
+
+.link-zone{
+width:88vw;
+height:140px;
+margin-top:45px;
+}
+
+.world{
+grid-template-columns:1fr;
+}
+
+.facts{
+grid-template-columns:1fr 1fr;
 }
 
 section{
@@ -343,14 +663,6 @@ margin-top:17px;
 font-size:12px;
 }
 
-.world{
-grid-template-columns:1fr;
-}
-
-.facts{
-grid-template-columns:1fr 1fr;
-}
-
 .archive{
 display:flex;
 overflow-x:auto;
@@ -364,17 +676,17 @@ flex:0 0 78%;
 scroll-snap-align:start;
 }
 
-.links{
-grid-template-columns:1fr;
+.link-toggle{
+padding:20px 2px;
 }
 
-.link-card{
-min-height:220px;
-padding:26px;
+.link-toggle-name{
+font-size:27px;
 }
 
-.link-title{
-font-size:30px;
+.link-character{
+padding:13px 2px;
+font-size:11px;
 }
 
 }
@@ -382,45 +694,126 @@ font-size:30px;
 </head>
 
 
-<body>
+<body class="lock">
+
+
+<!-- BGM -->
+
+<audio id="bgm" loop preload="auto">
+<source src="assets/song.mp3" type="audio/mpeg">
+</audio>
+
+<button id="musicBtn" onclick="toggleBGM()">BGM OFF</button>
+
 
 <!-- ==================== INTRO ==================== -->
 
-<header class="hero" id="top">
+<div id="intro">
 
-<div class="hero-inner">
+<div class="intro-bg"></div>
+
+<div class="intro-content">
 
 <div class="eyebrow">
 COMBAT DOLL PROJECT / ANIMA
 </div>
 
-<div class="logo">
+<h1 class="intro-title">
+ANIMA
+</h1>
+
+<div class="intro-sub">
+DRAG TO ESTABLISH LINK
+</div>
+
+<div class="link-zone" id="linkZone">
+
+<div class="link-label">
+LINK PORT
+</div>
+
+<div class="link-target" id="linkTarget">
+LINK
+</div>
+
+<div class="link-core" id="linkCore"></div>
+
+</div>
+
+<div class="intro-hint">
+CONNECT THE CORE TO THE LINK PORT
+</div>
+
+</div>
+
+
+<!-- LINKING -->
+
+<div id="linking">
+
+<div class="linking-inner">
+
+<div class="eyebrow">
+ANIMA SYSTEM
+</div>
+
+<div class="linking-title">
+LINKING
+</div>
+
+<div class="linking-status">
+ESTABLISHING CONNECTION · PLEASE WAIT
+</div>
+
+</div>
+
+</div>
+
+
+<!-- COMPLETE -->
+
+<div id="complete">
+
+<div class="complete-inner">
+
+<div class="eyebrow">
+LINK ESTABLISHED
+</div>
+
+<div class="complete-title">
 ANIMA
 </div>
 
-<div class="subtitle">
-ARTIFICIAL LIFE · COMBAT DOLL · LINK
+<div class="complete-sub">
+CONNECTION COMPLETE · ARCHIVE UNLOCKED
 </div>
 
-<a class="enter" href="#project">
-ENTER ARCHIVE ↓
-</a>
+<button class="open-main" onclick="openMain()">
+ENTER ARCHIVE →
+</button>
 
 </div>
 
-</header>
+</div>
 
+</div>
+
+
+<!-- ==================== MAIN ==================== -->
+
+<div id="site">
 
 <main class="wrap">
 
 
-<!-- ==================== PROJECT ==================== -->
+<!-- PROJECT -->
 
 <section id="project">
 
 <div class="section-head">
 
 <div>
+
 <div class="eyebrow">
 01 / PROJECT
 </div>
@@ -429,6 +822,7 @@ ENTER ARCHIVE ↓
 사람처럼 만들어진<br>
 인형
 </h2>
+
 </div>
 
 <div class="section-copy">
@@ -444,9 +838,7 @@ ANIMA는 인간과 거의 구분되지 않는 전투 인형과,
 
 <div class="panel">
 
-<img
-src="assets/anima_world.png"
-alt="ANIMA WORLD">
+<img src="assets/anima_world.png" alt="ANIMA WORLD">
 
 <div class="panel-text">
 
@@ -474,30 +866,22 @@ alt="ANIMA WORLD">
 
 <div class="fact">
 <b>ANIMA</b>
-<span>
-인형의 핵심이 되는 중심 요소.
-</span>
+<span>인형의 핵심이 되는 중심 요소.</span>
 </div>
 
 <div class="fact">
 <b>RESIUM</b>
-<span>
-인형의 몸체를 구성하는 원재료.
-</span>
+<span>인형의 몸체를 구성하는 원재료.</span>
 </div>
 
 <div class="fact">
 <b>VITA</b>
-<span>
-손상과 침식에 대응하기 위한 치료용 수액.
-</span>
+<span>손상과 침식에 대응하기 위한 치료용 수액.</span>
 </div>
 
 <div class="fact">
 <b>MORS</b>
-<span>
-인형의 정상적인 상태를 무너뜨리는 침식.
-</span>
+<span>인형의 정상적인 상태를 무너뜨리는 침식.</span>
 </div>
 
 </div>
@@ -507,7 +891,7 @@ alt="ANIMA WORLD">
 </section>
 
 
-<!-- ==================== DOLL ARCHIVE ==================== -->
+<!-- ==================== DOLL ==================== -->
 
 <section id="dolls">
 
@@ -539,7 +923,10 @@ COMBAT DOLL
 
 <!-- 01 ENOCH -->
 
-<article class="card">
+<a class="card"
+href="https://t.melting.chat/vvq874"
+target="_blank"
+rel="noopener">
 
 <img
 class="card-image"
@@ -568,18 +955,17 @@ ENOCH
 감정을 모르는 주제에 아는 척하는 인형.
 </div>
 
-<div class="card-master">
-DOLLMASTER · 시해나
 </div>
 
-</div>
-
-</article>
+</a>
 
 
 <!-- 02 SEVRIN -->
 
-<article class="card">
+<a class="card"
+href="https://t.melting.chat/v2kej1"
+target="_blank"
+rel="noopener">
 
 <img
 class="card-image"
@@ -605,22 +991,20 @@ SEVRIN
 </div>
 
 <div class="card-desc">
-자기 몸을 세상에서 제일 아끼는
-예민한 나르시시스트.
-</div>
-
-<div class="card-master">
-DOLLMASTER · 현야
+자기 몸을 세상에서 제일 아끼는 예민한 나르시시스트.
 </div>
 
 </div>
 
-</article>
+</a>
 
 
 <!-- 03 HUGO -->
 
-<article class="card">
+<a class="card"
+href="https://t.melting.chat/z6v4s7"
+target="_blank"
+rel="noopener">
 
 <img
 class="card-image"
@@ -651,18 +1035,17 @@ HUGO
 의료 인형을 전투 인형으로 비인가 개조했다.
 </div>
 
-<div class="card-master">
-DOLLMASTER · 반엽
 </div>
 
-</div>
-
-</article>
+</a>
 
 
 <!-- 04 SAIN -->
 
-<article class="card">
+<a class="card"
+href="https://t.melting.chat/5okzyg5"
+target="_blank"
+rel="noopener">
 
 <img
 class="card-image"
@@ -692,18 +1075,17 @@ SAIN
 주인을 편애하는 고집 센 자율형 인형.
 </div>
 
-<div class="card-master">
-DOLLMASTER · Pubb
 </div>
 
-</div>
-
-</article>
+</a>
 
 
 <!-- 05 ROEN -->
 
-<article class="card">
+<a class="card"
+href="https://t.melting.chat/is1rmw"
+target="_blank"
+rel="noopener">
 
 <img
 class="card-image"
@@ -728,18 +1110,17 @@ ROEN
 “인형은 고칩니다. 제 건 나중에요.”
 </div>
 
-<div class="card-master">
-DOLLMASTER · Riv
 </div>
 
-</div>
-
-</article>
+</a>
 
 
 <!-- 06 XIAO -->
 
-<article class="card">
+<a class="card"
+href="https://t.melting.chat/gwwgy5"
+target="_blank"
+rel="noopener">
 
 <img
 class="card-image"
@@ -768,21 +1149,20 @@ XIAO
 <div class="card-desc">
 장난기 많고 호기심이 지나치게 많아
 명령을 알아들어도 제멋대로 행동하는
-반항적인 탐사 인형.
-</div>
-
-<div class="card-master">
-DOLLMASTER · 스낵키
+반항적인 금쪽이 탐사 인형.
 </div>
 
 </div>
 
-</article>
+</a>
 
 
-<!-- 07 ROWELL & ROSÉ -->
+<!-- 07 ROWELL & ROSE -->
 
-<article class="card">
+<a class="card"
+href="https://t.melting.chat/a5hf6m"
+target="_blank"
+rel="noopener">
 
 <img
 class="card-image"
@@ -808,23 +1188,25 @@ ROWELL &amp; ROSÉ
 </div>
 
 <div class="card-desc">
-같은 레지움 원괴를 양분해 같은 날 제작된
-두 인형. 높은 아니마 공명률로 서로의
-위치와 손상을 감지한다.
+실제 남매는 아니지만 같은 레지움 원괴를
+양분해 같은 날 제작되었다.
+아니마의 공명률이 지나치게 높아 서로의
+위치와 손상을 감지하며 한쪽의 전투 동작을
+다른 쪽이 본능적으로 이어받는다.
+명령을 이해하면서도 복종을 기본값으로 갖지 않는다.
 </div>
 
-<div class="card-master">
-DOLLMASTER · 뽀야라
 </div>
 
-</div>
-
-</article>
+</a>
 
 
 <!-- 08 REV -->
 
-<article class="card">
+<a class="card"
+href="https://t.melting.chat/rpio5q"
+target="_blank"
+rel="noopener">
 
 <img
 class="card-image"
@@ -854,18 +1236,17 @@ REV
 못 견디는 능글맞은 생존주의자.
 </div>
 
-<div class="card-master">
-DOLLMASTER · 저온
 </div>
 
-</div>
-
-</article>
+</a>
 
 
 <!-- 09 ZED -->
 
-<article class="card">
+<a class="card"
+href="https://t.melting.chat/atavbx"
+target="_blank"
+rel="noopener">
 
 <img
 class="card-image"
@@ -887,7 +1268,8 @@ ZED
 </div>
 
 <div class="card-quote">
-“착각하지 마. 네가 없으면 귀찮아지니까 따라가는 거야.”
+“착각하지 마.
+네가 없으면 귀찮아지니까 따라가는 거야.”
 </div>
 
 <div class="card-desc">
@@ -896,18 +1278,17 @@ ZED
 흔적을 소중히 간직한다.
 </div>
 
-<div class="card-master">
-DOLLMASTER · 로멘
 </div>
 
-</div>
-
-</article>
+</a>
 
 
 <!-- 10 SERN -->
 
-<article class="card">
+<a class="card"
+href="https://t.melting.chat/6pe8qox"
+target="_blank"
+rel="noopener">
 
 <img
 class="card-image"
@@ -937,18 +1318,17 @@ SERN
 밀어내는 오만하고 까칠한 전투 인형.
 </div>
 
-<div class="card-master">
-DOLLMASTER · 은현._.
 </div>
 
-</div>
-
-</article>
+</a>
 
 
 <!-- 11 VALEN -->
 
-<article class="card">
+<a class="card"
+href="https://t.melting.chat/mty681k"
+target="_blank"
+rel="noopener">
 
 <img
 class="card-image"
@@ -970,7 +1350,8 @@ VALEN
 </div>
 
 <div class="card-quote">
-“여전히 예쁘네. 나 없이도 잘 살았나 봐.”
+“여전히 예쁘네.
+나 없이도 잘 살았나 봐.”
 </div>
 
 <div class="card-desc">
@@ -978,13 +1359,9 @@ VALEN
 반정부 세력에서 활동 중인 애증을 품은 전투 인형.
 </div>
 
-<div class="card-master">
-DOLLMASTER · 의여주
 </div>
 
-</div>
-
-</article>
+</a>
 
 
 </div>
@@ -1062,86 +1439,498 @@ ANIMA
 </div>
 
 <div class="section-copy">
-모든 인형의 기록을 확인했다면
-마지막으로 링크를 선택한다.
+각 플랫폼에서 연결 가능한 인형의
+LINK를 확인한다.
 </div>
 
 </div>
 
 
-<div class="links">
+<div class="link-accordion">
 
 
-<a
-class="link-card"
-href="#"
-target="_blank">
+<!-- MELTING -->
+
+<div class="link-item">
+
+<button class="link-toggle" type="button">
 
 <div>
 
-<div class="eyebrow">
+<div class="link-toggle-name">
 MELTING
 </div>
 
-<div class="link-title">
-LINK / MELTING
-</div>
-
-<div class="link-desc">
-멜팅에서 진행되는 ANIMA 프로젝트.
+<div class="link-toggle-meta">
+11 DOLLS
 </div>
 
 </div>
 
-<span class="link-button">
-ENTER LINK →
+<span class="link-plus">
++
 </span>
+
+</button>
+
+
+<div class="link-panel">
+
+<div class="link-panel-inner">
+
+
+<a class="link-character"
+href="https://t.melting.chat/vvq874"
+target="_blank"
+rel="noopener">
+
+<span>ENOCH / 에녹</span>
+<span>LINK →</span>
 
 </a>
 
 
-<a
-class="link-card"
-href="#"
-target="_blank">
+<a class="link-character"
+href="https://t.melting.chat/v2kej1"
+target="_blank"
+rel="noopener">
+
+<span>SEVRIN / 세브린</span>
+<span>LINK →</span>
+
+</a>
+
+
+<a class="link-character"
+href="https://t.melting.chat/z6v4s7"
+target="_blank"
+rel="noopener">
+
+<span>HUGO / 휴고</span>
+<span>LINK →</span>
+
+</a>
+
+
+<a class="link-character"
+href="https://t.melting.chat/5okzyg5"
+target="_blank"
+rel="noopener">
+
+<span>SAIN / 세인</span>
+<span>LINK →</span>
+
+</a>
+
+
+<a class="link-character"
+href="https://t.melting.chat/is1rmw"
+target="_blank"
+rel="noopener">
+
+<span>ROEN / 로엔</span>
+<span>LINK →</span>
+
+</a>
+
+
+<a class="link-character"
+href="https://t.melting.chat/gwwgy5"
+target="_blank"
+rel="noopener">
+
+<span>XIAO / 샤오</span>
+<span>LINK →</span>
+
+</a>
+
+
+<a class="link-character"
+href="https://t.melting.chat/a5hf6m"
+target="_blank"
+rel="noopener">
+
+<span>ROWELL &amp; ROSÉ / 로웰 &amp; 로제</span>
+<span>LINK →</span>
+
+</a>
+
+
+<a class="link-character"
+href="https://t.melting.chat/rpio5q"
+target="_blank"
+rel="noopener">
+
+<span>REV / 레브</span>
+<span>LINK →</span>
+
+</a>
+
+
+<a class="link-character"
+href="https://t.melting.chat/atavbx"
+target="_blank"
+rel="noopener">
+
+<span>ZED / 제드</span>
+<span>LINK →</span>
+
+</a>
+
+
+<a class="link-character"
+href="https://t.melting.chat/6pe8qox"
+target="_blank"
+rel="noopener">
+
+<span>SERN / 세른</span>
+<span>LINK →</span>
+
+</a>
+
+
+<a class="link-character"
+href="https://t.melting.chat/mty681k"
+target="_blank"
+rel="noopener">
+
+<span>VALEN / 발렌</span>
+<span>LINK →</span>
+
+</a>
+
+
+</div>
+</div>
+
+</div>
+
+
+<!-- TINGLE -->
+
+<div class="link-item">
+
+<button class="link-toggle" type="button">
 
 <div>
 
-<div class="eyebrow">
+<div class="link-toggle-name">
 TINGLE
 </div>
 
-<div class="link-title">
-LINK / TINGLE
-</div>
-
-<div class="link-desc">
-팅글에서 진행되는 ANIMA 프로젝트.
+<div class="link-toggle-meta">
+PREPARING
 </div>
 
 </div>
 
-<span class="link-button">
-ENTER LINK →
+<span class="link-plus">
++
 </span>
 
-</a>
+</button>
+
+
+<div class="link-panel">
+
+<div class="link-panel-inner">
+
+<div class="link-character">
+
+<span>CHARACTER DATA</span>
+<span>PREPARING</span>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
 
 
 </div>
 
 </section>
 
-
 </main>
 
 
 <footer class="footer">
 
-ANIMA · COMBAT DOLL PROJECT · ARTIFICIAL LIFE / COMBAT DOLL / LINK
+ANIMA · COMBAT DOLL PROJECT ·
+ARTIFICIAL LIFE / COMBAT DOLL / LINK
 
 </footer>
 
+</div>
+
+
+<script>
+
+/* ====================
+   BGM
+==================== */
+
+const bgm=document.getElementById("bgm");
+const musicBtn=document.getElementById("musicBtn");
+
+function startBGM(){
+
+bgm.volume=.7;
+
+bgm.play().then(()=>{
+
+musicBtn.textContent="BGM ON";
+
+}).catch(()=>{});
+
+}
+
+function toggleBGM(){
+
+if(bgm.paused){
+
+bgm.play().then(()=>{
+
+musicBtn.textContent="BGM ON";
+
+}).catch(()=>{});
+
+}else{
+
+bgm.pause();
+musicBtn.textContent="BGM OFF";
+
+}
+
+}
+
+
+/* ====================
+   INTRO DRAG LINK
+==================== */
+
+const intro=document.getElementById("intro");
+const linkZone=document.getElementById("linkZone");
+const linkTarget=document.getElementById("linkTarget");
+const linkCore=document.getElementById("linkCore");
+const linking=document.getElementById("linking");
+const complete=document.getElementById("complete");
+const site=document.getElementById("site");
+
+let dragging=false;
+let offsetX=0;
+let offsetY=0;
+let linked=false;
+
+
+linkCore.addEventListener("pointerdown",e=>{
+
+if(linked)return;
+
+dragging=true;
+
+linkCore.classList.add("dragging");
+
+linkCore.setPointerCapture(e.pointerId);
+
+const r=linkCore.getBoundingClientRect();
+
+offsetX=e.clientX-(r.left+r.width/2);
+offsetY=e.clientY-(r.top+r.height/2);
+
+});
+
+
+linkCore.addEventListener("pointermove",e=>{
+
+if(!dragging||linked)return;
+
+const zone=linkZone.getBoundingClientRect();
+const core=linkCore.getBoundingClientRect();
+
+let x=e.clientX-zone.left-offsetX-core.width/2;
+let y=e.clientY-zone.top-offsetY-core.height/2;
+
+x=Math.max(
+0,
+Math.min(
+x,
+zone.width-core.width
+)
+);
+
+y=Math.max(
+0,
+Math.min(
+y,
+zone.height-core.height
+)
+);
+
+linkCore.style.left=x+"px";
+linkCore.style.top=y+"px";
+linkCore.style.transform="scale(1.08)";
+
+
+const target=linkTarget.getBoundingClientRect();
+
+const cx=core.left+core.width/2;
+const cy=core.top+core.height/2;
+
+const tx=target.left+target.width/2;
+const ty=target.top+target.height/2;
+
+const distance=Math.hypot(
+cx-tx,
+cy-ty
+);
+
+linkZone.classList.toggle(
+"active",
+distance<45
+);
+
+});
+
+
+function releaseCore(){
+
+if(!dragging||linked)return;
+
+dragging=false;
+
+linkCore.classList.remove("dragging");
+
+const core=linkCore.getBoundingClientRect();
+const target=linkTarget.getBoundingClientRect();
+
+const cx=core.left+core.width/2;
+const cy=core.top+core.height/2;
+
+const tx=target.left+target.width/2;
+const ty=target.top+target.height/2;
+
+const distance=Math.hypot(
+cx-tx,
+cy-ty
+);
+
+
+if(distance<55){
+
+completeLink();
+
+}else{
+
+linkCore.style.left="";
+linkCore.style.top="";
+linkCore.style.transform="";
+
+linkZone.classList.remove("active");
+
+}
+
+}
+
+
+linkCore.addEventListener(
+"pointerup",
+releaseCore
+);
+
+linkCore.addEventListener(
+"pointercancel",
+releaseCore
+);
+
+
+/* ====================
+   LINK COMPLETE
+==================== */
+
+function completeLink(){
+
+linked=true;
+
+linkZone.classList.add("success");
+
+linkCore.style.left="50%";
+linkCore.style.top="50%";
+
+linkCore.style.transform=
+"translate(-50%,-50%) scale(1.15)";
+
+
+setTimeout(()=>{
+
+linking.classList.add("show");
+
+startBGM();
+
+
+setTimeout(()=>{
+
+linking.classList.remove("show");
+
+complete.classList.add("show");
+
+},1800);
+
+},500);
+
+}
+
+
+/* ====================
+   OPEN MAIN
+==================== */
+
+function openMain(){
+
+complete.classList.remove("show");
+
+intro.classList.add("hide");
+
+site.classList.add("show");
+
+document.body.classList.remove("lock");
+
+window.scrollTo(0,0);
+
+}
+
+
+/* ====================
+   LINK ACCORDION
+==================== */
+
+document
+.querySelectorAll(".link-toggle")
+.forEach(button=>{
+
+button.addEventListener("click",()=>{
+
+const item=button.parentElement;
+
+document
+.querySelectorAll(".link-item.open")
+.forEach(other=>{
+
+if(other!==item){
+other.classList.remove("open");
+}
+
+});
+
+item.classList.toggle("open");
+
+});
+
+});
+
+</script>
 
 </body>
 </html>
