@@ -48,7 +48,7 @@ filter:drop-shadow(0 0 3px rgba(70,150,175,.25))
 .link-port:after{content:"";position:absolute;inset:27px;border:1px solid rgba(151,207,218,.28);border-radius:50%}
 .port-label{position:absolute;top:102%;left:50%;transform:translateX(-50%);font:7px "Courier New",monospace;letter-spacing:.1em;color:#7598a2;white-space:nowrap}
 .link-port.active{border-color:#9fd9e4;box-shadow:0 0 25px rgba(91,172,192,.22),inset 0 0 20px rgba(91,172,192,.1)}
-.link-core{position:absolute;left:20%;top:50%;width:62px;height:62px;transform:translate(-50%,-50%);border:1px solid #91c6d1;border-radius:50%;background:radial-gradient(circle,#bce6ec 0,#497c88 15%,#102a34 48%,#050d11 72%);box-shadow:0 0 22px rgba(116,194,210,.2);cursor:grab;touch-action:none;z-index:3;transition:box-shadow .2s ease,transform .12s ease}
+.link-core{position:absolute;left:22%;top:50%;width:62px;height:62px;transform:translate(-50%,-50%);border:1px solid #91c6d1;border-radius:50%;background:radial-gradient(circle,#bce6ec 0,#497c88 15%,#102a34 48%,#050d11 72%);box-shadow:0 0 22px rgba(116,194,210,.2);cursor:grab;touch-action:none;z-index:3;transition:box-shadow .2s ease,transform .12s ease}
 .link-core:before,.link-core:after{content:"";position:absolute;border:1px solid rgba(195,235,241,.3);border-radius:50%}
 .link-core:before{inset:8px}.link-core:after{inset:18px;border-color:rgba(195,235,241,.45)}
 .link-core.dragging{cursor:grabbing;box-shadow:0 0 35px rgba(133,215,229,.4);transform:translate(-50%,-50%) scale(1.08)}
@@ -137,7 +137,7 @@ section{padding:100px 0;border-top:1px solid #17262d}
 
 #musicBtn{top:12px;right:12px}
 .intro-content{padding:20px}.intro-title{font-size:20vw}.intro-sub{font-size:8px;letter-spacing:.2em}
-.link-interface{width:92vw;height:190px;margin-top:40px}.link-port{right:16%}.link-core{left:18%}.core-label{left:18%}
+.link-interface{width:92vw;height:190px;margin-top:40px}.link-port{right:16%}.link-core{left:22%}.core-label{left:22%}
 section{padding:75px 0}.section-head{display:block;margin-bottom:30px}.section-copy{margin-top:17px;font-size:12px}
 .world,.master-info{grid-template-columns:1fr}.system-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 .project-points{grid-template-columns:1fr 1fr}
@@ -174,15 +174,15 @@ section{padding:75px 0}.section-head{display:block;margin-bottom:30px}.section-c
 <section id="project">
   <div class="section-head">
     <div><div class="eyebrow">01 / PROJECT</div><h2 class="section-title">ANIMA</h2></div>
-    <div class="section-copy">모르스 침식에 대응하기 위해 만들어진 인공 생명체와, 그들과 LINK를 맺는 인형사의 이야기.</div>
+    <div class="section-copy">모르스가 퍼진 세계에서, 살아남기 위해 만들어진 인형과 그 생명을 나누는 인형사.</div>
   </div>
   <div class="world">
     <div class="panel">
       <img src="assets/anima_world.png" alt="ANIMA WORLD">
       <div class="panel-text">
-        <p>모르스는 우주에서 유입된 외부 물질로 생명체를 침식시키며, 장기간 노출된 시체를 사변체로 변화시킨다.</p>
-        <p>인형은 모르스 대응을 위해 개발된 인공 생명체다. 인간과 거의 구분되지 않는 신체를 가지지만 스스로 생명력을 만들 수 없다.</p>
-        <p>인형은 인형사와의 LINK를 통해 생명력을 공급받고 활동하며, 각자의 자아·기억·성격·판단을 가진 하나의 개체로 존재한다.</p>
+        <p>모르스는 우주에서 흘러들어온 외부 물질이다. 살아 있는 몸을 잠식하고, 죽은 육체마저 그대로 내버려두지 않는다.</p>
+        <p>인형은 모르스에 맞서기 위해 만들어진 인공 생명체다. 사람과 거의 다르지 않은 몸을 가졌지만, 스스로 생명을 만들어낼 수는 없다.</p>
+        <p>그래서 인형은 인형사와 LINK를 맺는다. 건네받은 생명력으로 움직이고, 각자의 기억과 성격을 가진 하나의 존재로 살아간다.</p>
       </div>
     </div>
 </section>
@@ -190,7 +190,7 @@ section{padding:75px 0}.section-head{display:block;margin-bottom:30px}.section-c
 <section id="database">
   <div class="section-head">
     <div><div class="eyebrow">02 / WORLD DATABASE</div><h2 class="section-title">WORLD</h2></div>
-    <div class="section-copy">ANIMA의 세계를 구성하는 핵심 설정. 항목을 열어 상세 기록을 확인한다.</div>
+    <div class="section-copy">모르스가 퍼진 뒤, 사람들은 무엇을 만들었고 무엇을 잃었는가.</div>
   </div>
 
   <div class="database">
@@ -266,20 +266,20 @@ section{padding:75px 0}.section-head{display:block;margin-bottom:30px}.section-c
 <section id="system">
   <div class="section-head">
     <div><div class="eyebrow">03 / CORE SYSTEM</div><h2 class="section-title">ANIMA SYSTEM</h2></div>
-    <div class="section-copy">인형의 중심과 몸체, 치료와 침식을 구성하는 네 가지 핵심 요소.</div>
+    <div class="section-copy">인형을 살아 있게 만드는 것들. 그리고 그 생명을 잠식하는 것.</div>
   </div>
   <div class="system-grid">
-    <article class="system-card"><img class="system-image" src="assets/anima.png" alt="ANIMA"><div class="system-body"><div class="system-name">ANIMA</div><div class="system-en">CORE / ARTIFICIAL HEART</div><div class="system-desc">인형의 심장 역할을 하는 핵심 기관. 인형사의 생명력을 저장·전달하고 인형의 자아와 개체성을 유지하는 중심이다.</div></div></article>
-    <article class="system-card"><img class="system-image" src="assets/resium.png" alt="RESIUM"><div class="system-body"><div class="system-name">RESIUM</div><div class="system-en">BODY MATERIAL / SYNTHETIC CELL</div><div class="system-desc">인형의 몸체를 구성하는 대체 세포. 광석과 세포의 중간에 가까운 성질을 가진 특수한 인공 물질이다.</div></div></article>
-    <article class="system-card"><img class="system-image" src="assets/vita.png" alt="VITA"><div class="system-body"><div class="system-name">VITA</div><div class="system-en">EROSION TREATMENT</div><div class="system-desc">인형의 손상과 침식에 대응하기 위한 치료용 수액. 상태 유지와 회복에 사용된다.</div></div></article>
-    <article class="system-card"><img class="system-image" src="assets/mors.png" alt="MORS"><div class="system-body"><div class="system-name">MORS</div><div class="system-en">EXTERNAL MATTER / EROSION</div><div class="system-desc">우주에서 유입된 외부 물질. 생명체를 침식시키며 장기간 노출된 시체를 사변체로 변화시킨다.</div></div></article>
+    <article class="system-card"><img class="system-image" src="assets/anima.png" alt="ANIMA"><div class="system-body"><div class="system-name">ANIMA</div><div class="system-en">CORE / ARTIFICIAL HEART</div><div class="system-desc">인형의 심장. 인형사의 생명력을 받아들이고, 하나의 존재로 살아 있게 만드는 중심이다.</div></div></article>
+    <article class="system-card"><img class="system-image" src="assets/resium.png" alt="RESIUM"><div class="system-body"><div class="system-name">RESIUM</div><div class="system-en">BODY MATERIAL / SYNTHETIC CELL</div><div class="system-desc">인형의 몸을 이루는 대체 세포. 광석과 세포의 중간에 가까운, 특수한 인공 물질이다.</div></div></article>
+    <article class="system-card"><img class="system-image" src="assets/vita.png" alt="VITA"><div class="system-body"><div class="system-name">VITA</div><div class="system-en">EROSION TREATMENT</div><div class="system-desc">상처 입은 인형에게 투여하는 치료 수액. 손상된 몸을 붙잡고 침식에 버틸 시간을 늘린다.</div></div></article>
+    <article class="system-card"><img class="system-image" src="assets/mors.png" alt="MORS"><div class="system-body"><div class="system-name">MORS</div><div class="system-en">EXTERNAL MATTER / EROSION</div><div class="system-desc">우주에서 흘러들어온 외부 물질. 살아 있는 생명을 잠식하고, 오래 노출된 시체를 사변체로 바꾼다.</div></div></article>
   </div>
 </section>
 
 <section id="dolls">
   <div class="section-head">
     <div><div class="eyebrow">04 / DOLL ARCHIVE</div><h2 class="section-title">COMBAT DOLL</h2></div>
-    <div class="section-copy">현재 등록된 전투 인형. 서로 다른 제작 기록과 성격을 가진 11개의 개체가 존재한다.</div>
+    <div class="section-copy">같은 목적을 위해 만들어졌지만, 같은 인형은 하나도 없다. 현재 확인된 전투 인형은 11체.</div>
   </div>
 
   <div class="archive">
@@ -312,7 +312,7 @@ section{padding:75px 0}.section-head{display:block;margin-bottom:30px}.section-c
 <section id="masters">
   <div class="section-head">
     <div><div class="eyebrow">05 / DOLLMASTER</div><h2 class="section-title">DOLLMASTER</h2></div>
-    <div class="section-copy">최대 5명의 인형사가 참여한다.</div>
+    <div class="section-copy">인형과 LINK를 맺을 다섯 자리가 비어 있다.</div>
   </div>
   <div class="master-slots">
     <div class="master-slot"><div class="master-slot-no">DOLLMASTER / 01</div><div><div class="master-slot-status">READY</div><div class="master-slot-ready">SLOT AVAILABLE</div></div></div>
@@ -437,7 +437,7 @@ const site=document.getElementById("site");
 let dragging=false,linked=false,offsetX=0,offsetY=0;
 
 function resetCore(){
-  linkCore.style.left="20%";
+  linkCore.style.left="22%";
   linkCore.style.top="50%";
   linkCore.style.transform="translate(-50%,-50%)";
 }
@@ -515,8 +515,10 @@ function establishLink(){
   linkInterface.classList.remove("active");
   linkInterface.classList.add("success");
   linkPort.classList.add("active");
-  linkCore.style.left="82%";
-  linkCore.style.top="50%";
+  const area=linkInterface.getBoundingClientRect();
+  const port=linkPort.getBoundingClientRect();
+  linkCore.style.left=(port.left+port.width/2-area.left)+"px";
+  linkCore.style.top=(port.top+port.height/2-area.top)+"px";
   linkCore.style.transform="translate(-50%,-50%) scale(.72)";
 
   startBGM();
