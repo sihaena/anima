@@ -458,14 +458,13 @@ linkCore.addEventListener("pointermove",e=>{
   const area=linkInterface.getBoundingClientRect();
   const core=linkCore.getBoundingClientRect();
 
+  // 코어는 가로로만 움직이고, 세로 위치는 인터페이스 중앙에 고정한다.
   let x=e.clientX-area.left-offsetX;
-  let y=e.clientY-area.top-offsetY;
+  const y=area.height/2;
 
   const hw=core.width/2;
-  const hh=core.height/2;
 
   x=Math.max(hw,Math.min(x,area.width-hw));
-  y=Math.max(hh,Math.min(y,area.height-hh));
 
   linkCore.style.left=x+"px";
   linkCore.style.top=y+"px";
