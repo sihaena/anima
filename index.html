@@ -15,37 +15,17 @@ a{color:inherit;text-decoration:none}
 button{font:inherit}
 .eyebrow{font:9px/1.4 "Courier New",monospace;letter-spacing:.18em;color:#8db7c2}
 
-.bgm-toggle{
-position:fixed;right:20px;bottom:20px;z-index:9999;
-display:flex;align-items:center;gap:8px;
-padding:9px 13px;
-border:1px solid rgba(110,165,180,.22);
-border-radius:999px;
-background:rgba(5,12,16,.78);
-color:rgba(185,213,220,.72);
-font:inherit;font-size:11px;letter-spacing:.12em;
-backdrop-filter:blur(10px);
--webkit-backdrop-filter:blur(10px);
-cursor:pointer;
-transition:color .25s ease,border-color .25s ease,background .25s ease;
-}
-.bgm-toggle:hover,.bgm-toggle.is-playing{
-color:#e7f7fb;
-border-color:rgba(91,160,180,.58);
-background:rgba(20,65,78,.28);
-}
-.bgm-icon{font-size:14px;line-height:1}
-.bgm-label{font:inherit;font-size:11px;letter-spacing:.12em}
-
-@media(max-width:600px){
-.bgm-toggle{right:14px;bottom:14px;padding:8px 11px;font-size:10px}
-.bgm-label{font-size:10px}
-}
+/* BGM */
+.bgm-control{position:fixed;z-index:1200;top:clamp(18px,3vh,30px);right:clamp(18px,2.5vw,34px);height:34px;display:flex;align-items:center;gap:8px;padding:0 11px;border:1px solid rgba(255,255,255,.10);border-radius:999px;background:rgba(7,8,10,.46);backdrop-filter:blur(9px);color:rgba(232,232,234,.62);opacity:1;pointer-events:auto;transform:none;transition:.35s;cursor:pointer}.bgm-control.is-visible{opacity:1;pointer-events:auto;transform:none}.bgm-label{font-size:7px;letter-spacing:.18em}.bgm-bars{height:11px;width:13px;display:flex;align-items:flex-end;justify-content:center;gap:2px}.bgm-bars i{display:block;width:2px;height:4px;background:rgba(194,74,93,.78);transform-origin:bottom;animation:bgmWave .72s ease-in-out infinite alternate}.bgm-bars i:nth-child(2){height:9px;animation-delay:-.34s}.bgm-bars i:nth-child(3){height:6px;animation-delay:-.16s}.bgm-control.is-paused .bgm-bars i{animation:none;height:2px;background:rgba(185,187,192,.34)}@keyframes bgmWave{from{transform:scaleY(.35)}to{transform:scaleY(1)}}@media(max-width:720px){.bgm-control{top:auto;bottom:22px;right:16px;height:34px;padding:0 11px;background:rgba(7,8,10,.76);border-color:rgba(255,255,255,.16);box-shadow:0 5px 24px rgba(0,0,0,.38)}}
 
 #intro{position:fixed;inset:0;z-index:500;overflow:hidden;background:#020507;transition:opacity .7s ease,visibility .7s ease}
 #intro.hide{opacity:0;visibility:hidden;pointer-events:none}
 .intro-bg{position:absolute;inset:0;background:linear-gradient(180deg,rgba(2,5,7,.16),rgba(2,7,10,.9)),url("assets/anima_link_bg.png") center/cover no-repeat}
+.intro-complete{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;visibility:hidden;transition:opacity .35s ease,visibility .35s ease;z-index:1}
+#intro.complete .intro-bg{opacity:0;transition:opacity .35s ease}
+#intro.complete .intro-complete{opacity:1;visibility:visible}
 .intro-content{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:30px;text-align:center}
+#intro.complete .intro-content{opacity:0;transition:opacity .25s ease}
 .intro-title{margin:0;font:clamp(64px,13vw,150px)/.8 Georgia,serif;letter-spacing:.06em;color:#edf7f9}
 .intro-sub{margin-top:22px;font:9px "Courier New",monospace;letter-spacing:.25em;color:#91b4bd}
 .link-interface{position:relative;width:min(520px,88vw);height:210px;margin-top:48px;border:1px solid rgba(126,171,184,.18);background:rgba(5,14,19,.3);display:flex;align-items:center;justify-content:center;transition:.3s}
@@ -75,6 +55,9 @@ section{padding:100px 0;border-top:1px solid #17262d}
 .section-copy{max-width:590px;font-size:13px;color:#8fa4ab}
 
 .world{display:block}.world .panel{width:min(900px,100%)}
+.hero-visual{position:relative;width:100%;height:min(78vh,860px);min-height:500px;overflow:hidden;border-bottom:1px solid #17262d;background:#020507}
+.hero-visual img{width:100%;height:100%;object-fit:cover;object-position:center}
+.hero-visual:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(4,8,11,.08),rgba(4,8,11,0) 52%,#04080b 100%);pointer-events:none}
 .panel{border:1px solid #27373e;background:#091015}
 .panel img{width:100%;aspect-ratio:16/9;object-fit:cover}
 .panel-text{padding:28px;font-size:13px;color:#99adb4}
@@ -85,6 +68,9 @@ section{padding:100px 0;border-top:1px solid #17262d}
 .project-point span{font-size:12px;color:#899da4}
 .project-hero-visual{margin-top:18px;border:1px solid #27373e;background:#071015;overflow:hidden}
 .project-hero-visual img{width:100%;aspect-ratio:21/8;object-fit:cover}
+.wide-visual{margin:0 0 34px;border:1px solid #27373e;background:#071015;overflow:hidden}
+.wide-visual img{width:100%;aspect-ratio:21/9;object-fit:cover}
+.wide-visual-caption{padding:9px 12px;font:7px "Courier New",monospace;letter-spacing:.14em;color:#5f7e88}
 
 .database{border-top:1px solid #2a3b42}
 .db-item{border-bottom:1px solid #2a3b42}
@@ -150,6 +136,7 @@ section{padding:100px 0;border-top:1px solid #17262d}
 .intro-content{padding:20px}.intro-title{font-size:20vw}.intro-sub{font-size:8px;letter-spacing:.2em}
 .link-interface{width:92vw;height:190px;margin-top:40px}.link-port{right:16%}.link-core{left:22%}.core-label{left:22%}
 section{padding:75px 0}.section-head{margin-bottom:30px}.section-copy{margin-top:17px;font-size:12px}
+.hero-visual{height:62vh;min-height:420px}.hero-visual img{object-position:center}
 .world,.master-info{grid-template-columns:1fr}.system-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 .project-points{grid-template-columns:1fr 1fr}
 .archive{display:flex;overflow-x:auto;gap:12px;padding-bottom:14px;scroll-snap-type:x mandatory}
@@ -160,17 +147,12 @@ section{padding:75px 0}.section-head{margin-bottom:30px}.section-copy{margin-top
 </head>
 <body class="lock">
 
-<audio id="bgm" loop preload="auto">
-  <source src="assets/song.mp3" type="audio/mpeg">
-</audio>
-
-<button id="musicBtn" class="bgm-toggle" type="button" aria-label="BGM ON/OFF">
-  <span class="bgm-icon">♪</span>
-  <span class="bgm-label">BGM OFF</span>
-</button>
+<audio id="wishbornBgm" preload="auto" loop><source src="assets/song.mp3" type="audio/mpeg"></audio>
+<button class="bgm-control is-paused" id="bgmControl" type="button" aria-label="배경음악 켜기" title="BGM OFF"><span class="bgm-bars" aria-hidden="true"><i></i><i></i><i></i></span><span class="bgm-label">BGM</span></button>
 
 <div id="intro">
   <div class="intro-bg"></div>
+  <img class="intro-complete" src="assets/anima_link_complete.png" alt="LINK COMPLETE">
   <div class="intro-content">
     <div class="eyebrow">COMBAT DOLL PROJECT</div>
     <h1 class="intro-title">ANIMA</h1>
@@ -186,6 +168,7 @@ section{padding:75px 0}.section-head{margin-bottom:30px}.section-copy{margin-top
 </div>
 
 <div id="site">
+<div class="hero-visual"><img src="assets/anima_hero.png" alt="ANIMA"></div>
 <main class="wrap">
 
 <section id="project">
@@ -197,66 +180,160 @@ section{padding:75px 0}.section-head{margin-bottom:30px}.section-copy{margin-top
     <div class="panel">
       <img src="assets/anima_world.png" alt="ANIMA WORLD">
     </div>
+  </div>
 </section>
 
 <section id="system">
   <div class="section-head">
     <div><div class="eyebrow">02 / CORE SYSTEM</div><h2 class="section-title">ANIMA SYSTEM</h2></div>
-    <div class="section-copy">ANIMA를 둘러싼 네 가지 핵심 요소.</div>
+    <div class="section-copy">인형과 세계를 이루는 네 가지 핵심 요소.</div>
   </div>
+  <div class="wide-visual"><img src="assets/anima_structure.png" alt="ANIMA STRUCTURE"><div class="wide-visual-caption">ANIMA / ARTIFICIAL LIFE STRUCTURE</div></div>
   <div class="system-grid">
-    <article class="system-card"><img class="system-image" src="assets/anima.png" alt="ANIMA"><div class="system-body"><div class="system-name">ANIMA</div><div class="system-en">CORE / ARTIFICIAL HEART</div><div class="system-desc">인형의 심장. 인형사의 생명력을 받아들이는 핵심 기관.</div></div></article>
-    <article class="system-card"><img class="system-image" src="assets/resium.png" alt="RESIUM"><div class="system-body"><div class="system-name">RESIUM</div><div class="system-en">BODY MATERIAL / SYNTHETIC CELL</div><div class="system-desc">지구에 자연적으로 존재하는 극도로 희귀한 물질. 유사세포성 성질을 가지며 인형의 신체를 구성한다.</div></div></article>
-    <article class="system-card"><img class="system-image" src="assets/vita.png" alt="VITA"><div class="system-body"><div class="system-name">VITA</div><div class="system-en">EROSION TREATMENT</div><div class="system-desc">침식과 손상에 대응하기 위해 사용하는 치료 수액.</div></div></article>
-    <article class="system-card"><img class="system-image" src="assets/mors.png" alt="MORS"><div class="system-body"><div class="system-name">MORS</div><div class="system-en">EXTERNAL MATTER / EROSION</div><div class="system-desc">우주에서 유입된 외부 물질. 생명을 침식시키고 시체를 사변체로 변화시킨다.</div></div></article>
+    <article class="system-card"><img class="system-image" src="assets/anima.png" alt="ANIMA"><div class="system-body"><div class="system-name">ANIMA</div><div class="system-en">CORE / ARTIFICIAL HEART</div><div class="system-desc">인형의 중심에 존재하는 핵. 생명력과 의식의 기반이 되는 핵심 기관.</div></div></article>
+    <article class="system-card"><img class="system-image" src="assets/resium.png" alt="RESIUM"><div class="system-body"><div class="system-name">RESIUM</div><div class="system-en">BODY MATERIAL / SYNTHETIC CELL</div><div class="system-desc">인형의 신체를 구성하는 특수 소재. 인형의 몸을 이루며, 아니마와는 다른 역할을 담당한다.</div></div></article>
+    <article class="system-card"><img class="system-image" src="assets/vita.png" alt="VITA"><div class="system-body"><div class="system-name">VITA</div><div class="system-en">EROSION TREATMENT</div><div class="system-desc">침식에 대응하기 위해 사용하는 특수한 생체 활성 물질. 살아 있는 세포의 침식을 해소한다.</div></div></article>
+    <article class="system-card"><img class="system-image" src="assets/anima_mors.png" alt="MORS"><div class="system-body"><div class="system-name">MORS</div><div class="system-en">EXTERNAL MATTER / EROSION</div><div class="system-desc">약 20년 전부터 지구에 나타난 우주 기원의 미지 물질. 생명체의 세포를 침식시키며 사변체 발생의 원인이 된다.</div></div></article>
   </div>
 </section>
 
 <section id="database">
   <div class="section-head">
     <div><div class="eyebrow">03 / WORLD</div><h2 class="section-title">WORLD</h2></div>
-    <div class="section-copy">모르스가 퍼진 뒤, 사람들은 무엇을 만들었고 무엇을 잃었는가.</div>
+    <div class="section-copy">모르스가 퍼진 뒤에도, 인간의 일상은 끝나지 않았다.</div>
   </div>
 
   <div class="database">
-<article class="db-item">
-      <button class="db-toggle" type="button"><div><div class="db-title">아니마와 링크</div><div class="db-meta">ANIMA / LINK / LIFE FORCE</div></div><span class="db-plus">+</span></button>
+
+    <article class="db-item">
+      <button class="db-toggle" type="button">
+        <div><div class="db-title">사변체</div><div class="db-meta">DEAD BODY / LIFE FORCE / MORS CONSUMPTION</div></div>
+        <span class="db-plus">+</span>
+      </button>
       <div class="db-panel"><div class="db-inner"><div class="db-content">
-        <div class="db-visual"><img src="assets/anima_link.png" alt="ANIMA LINK"><div class="db-visual-caption">ANIMA / LINK</div></div>
-        <h4>아니마 Anima</h4>
-        <p>인형의 심장 역할을 하는 핵심 기관. 인형이라는 개체를 성립시키는 중심이다.</p>
-        <h4>LINK</h4>
-        <p>인형사가 아니마에 자신의 생명 정보를 기록하면 인형과 인형사 사이에 링크가 형성된다. 초기에는 단순한 생명력 전달 및 제어 과정으로 여겨졌으나, 장기간 링크를 유지한 인형사와 인형 사이에서 서로의 감정과 정신 상태가 영향을 주고받는 현상이 확인되었다.</p>
-        <div class="quote">인형사 → 생명력 전달 / 명령 전달<br>인형 → 생명력 사용 / 명령 수행</div>
-        <p>링크는 단순한 제어 과정이 아니라 인형사와 인형의 감정과 정신을 연결하는 현상으로 밝혀진다.</p>
-        <h4>링크 해제</h4>
-        <p>인형사가 의식적으로 해제하거나 링크된 인형사가 사망하면 자연스럽게 해제된다. 생명력 공급과 감정·정신 연결은 중단되지만, 인형은 신체에 남은 생명력으로 일정 시간 활동할 수 있다.</p>
-        <ul><li>링크가 끊겨도 자아와 기억은 사라지지 않는다.</li><li>새로운 인형사와 다시 LINK를 형성할 수 있다.</li><li>재링크 이후에도 이전 인형사와의 경험과 기억은 유지된다.</li></ul>
+        <div class="db-visual"><img src="assets/anima_aberrant.png" alt="사변체"><div class="db-visual-caption">ABERRANT / MUTATED REMAINS</div></div>
+        <p>모르스에 침식된 생명체가 사망한 이후에도 육체의 비정상적인 변이가 계속되어 움직이게 된 존재.</p>
+        <p>초자연적인 부활이나 감염으로 발생하는 것이 아니다. 남아 있는 육체를 기반으로 변이가 지속되며, 이 과정에는 외부의 <strong>생명력</strong>이 필요하다.</p>
+        <p>살아 있는 생명체의 세포에서 흘러나오는 잉여 생명력을 감지하며, 이를 감지하면 반사적으로 해당 생명체에게 접근하고 공격한다.</p>
+        <p>사변체의 발생과 변이 과정에서는 해당 지역의 모르스가 소모된다. 따라서 사변체화가 충분히 진행된 지역은 모르스가 감소하거나 사라져 토지 자체는 다시 이용 가능한 상태가 될 수 있다.</p>
+        <p>그러나 그곳에는 다수의 사변체가 남을 수 있다. <strong>모르스가 사라졌다고 해서 곧바로 안전한 생활권이 되는 것은 아니다.</strong></p>
       </div></div></div>
     </article>
 
     <article class="db-item">
-      <button class="db-toggle" type="button"><div><div class="db-title">인형사의 역할</div><div class="db-meta">DOLLMASTER / LICENSE / LINK</div></div><span class="db-plus">+</span></button>
+      <button class="db-toggle" type="button">
+        <div><div class="db-title">생활권과 위험지역</div><div class="db-meta">HUMAN HABITAT / DEAD ZONE / DAILY LIFE</div></div>
+        <span class="db-plus">+</span>
+      </button>
+      <div class="db-panel"><div class="db-inner"><div class="db-content">
+        <div class="db-visual"><img src="assets/anima_boundary.png" alt="생활권과 위험지역"><div class="db-visual-caption">HUMAN HABITAT / DEAD ZONE BOUNDARY</div></div>
+        <p>현재의 세계는 <strong>일상과 아포칼립스가 공존하는 세계</strong>다.</p>
+        <p>모르스가 남아 있는 땅은 인간이 다시 생활권으로 확보할 수 없다. 사변체 발생 과정에서 모르스가 소모되어 사라진 경우에는 토지 자체를 다시 이용할 수 있지만, 사변체를 제거해야 비로소 인간이 접근하고 이용할 가능성이 생긴다.</p>
+        <p>모르스는 갑작스럽게 발생하는 일회성 현상이 아니므로 별도의 발생 경보가 필요하지 않다. 반면 사변체가 인간 생활권 또는 그 인근에서 발견될 경우 목격 신고를 통해 관계 기관에 전달되며, 필요에 따라 주민 통제나 경보 등의 대응이 이루어진다.</p>
+        <h4>계속되는 일상</h4>
+        <div class="db-visual"><img src="assets/anima_main_bg.png" alt="계속되는 일상"><div class="db-visual-caption">DAILY LIFE / THE CITY CONTINUES</div></div>
+        <p>안정적으로 유지되는 생활권에서는 국가와 행정, 산업, 교육, 의료, 상업과 문화가 정상적으로 기능한다. 사람들은 직장에 다니고 학교에 가며 쇼핑하고 연애하고 여가를 즐긴다.</p>
+        <p>동시에 그 일상에서 멀지 않은 곳에는 모르스가 남은 사멸지와 사변체가 배회하는 위험지역이 존재한다. 약 20년 동안 재난은 일시적인 비상사태가 아니라 <strong>현대 사회를 구성하는 환경 자체</strong>가 되었다.</p>
+      </div></div></div>
+    </article>
+
+    <article class="db-item">
+      <button class="db-toggle" type="button">
+        <div><div class="db-title">인형과 인간 사회</div><div class="db-meta">COMBAT DOLL / CIVIL DOLL / ARTIFICIAL LIFE</div></div>
+        <span class="db-plus">+</span>
+      </button>
+      <div class="db-panel"><div class="db-inner"><div class="db-content">
+        <div class="db-visual"><img src="assets/anima_doll.png" alt="인형"><div class="db-visual-caption">DOLL / ARTIFICIAL LIFE</div></div>
+        <p>모르스 발생 초기, 침식 지역의 확대와 사변체의 출현으로 인간의 생활권은 급격히 위협받았다. 그때 <strong>모르스에 의해 침식되지 않으며 모르스 환경에서도 장기간 활동할 수 있는 전투 인형</strong>이 개발되면서 인류는 처음으로 대항 수단을 확보했다.</p>
+        <p>그러나 전투 인형 역시 모르스 자체를 제거할 수는 없다. 인류가 재난을 극복한 것도, 문명이 붕괴한 것도 아닌 교착 상태가 현재까지 이어지고 있다.</p>
+        <h4>전투 인형</h4>
+        <div class="db-visual"><img src="assets/anima_combat_doll.png" alt="전투 인형"><div class="db-visual-caption">COMBAT DOLL / DEPLOYMENT</div></div>
+        <p>사변체에 맞서는 핵심 전력이지만 개체 수가 극히 적어 일반인이 직접 볼 기회는 거의 없다. 대부분의 시민에게는 사변체 대응이나 관련 보도를 통해 접하는 특수 전력에 가깝다.</p>
+        <h4>비전투 인형</h4>
+        <p>의료·생활·산업 등 여러 분야에서 활용되고 있어 일반 시민도 비교적 접할 기회가 있다.</p>
+        <blockquote>인형은 인간을 모방한 기계·로봇·안드로이드가 아니라, 아니마를 중심으로 자아를 형성하는 인공 생명체다.</blockquote>
+      </div></div></div>
+    </article>
+
+    <article class="db-item">
+      <button class="db-toggle" type="button">
+        <div><div class="db-title">아니마와 LINK</div><div class="db-meta">ANIMA / LINK / LIFE FORCE</div></div>
+        <span class="db-plus">+</span>
+      </button>
+      <div class="db-panel"><div class="db-inner"><div class="db-content">
+        <div class="db-visual"><img src="assets/anima_link.png" alt="ANIMA LINK"><div class="db-visual-caption">ANIMA / LINK</div></div>
+        <h4>아니마</h4>
+        <p>인형의 심장 역할을 하는 핵심 기관. 인형이라는 개체를 성립시키는 중심이다.</p>
+        <h4>LINK</h4>
+        <p>인형사가 아니마에 자신의 생명 정보를 기록하면 인형과 인형사 사이에 링크가 형성된다. 초기에는 단순한 생명력 전달 및 제어 과정으로 여겨졌으나, 장기간 링크를 유지한 인형사와 인형 사이에서 서로의 감정과 정신 상태가 영향을 주고받는 현상이 확인되었다.</p>
+        <div class="quote">인형사 → 생명력 전달 / 명령 전달<br>인형 → 생명력 사용 / 명령 수행</div>
+        <p>링크는 단순한 제어 과정이 아니라 인형사와 인형의 감정과 정신을 연결하는 현상이다.</p>
+        <h4>링크 해제</h4>
+        <p>인형사가 의식적으로 해제하거나 링크된 인형사가 사망하면 자연스럽게 해제된다. 생명력 공급과 감정·정신 연결은 중단되지만, 인형은 신체에 남은 생명력으로 일정 시간 활동할 수 있다.</p>
+        <ul>
+          <li>링크가 끊겨도 자아와 기억은 사라지지 않는다.</li>
+          <li>새로운 인형사와 다시 LINK를 형성할 수 있다.</li>
+          <li>재링크 이후에도 이전 인형사와의 경험과 기억은 유지된다.</li>
+        </ul>
+      </div></div></div>
+    </article>
+
+    <article class="db-item">
+      <button class="db-toggle" type="button">
+        <div><div class="db-title">인형사의 역할</div><div class="db-meta">DOLLMASTER / LICENSE / LINK HOLDER</div></div>
+        <span class="db-plus">+</span>
+      </button>
       <div class="db-panel"><div class="db-inner"><div class="db-content">
         <div class="db-visual"><img src="assets/anima_dollmaster.png" alt="Dollmaster"><div class="db-visual-caption">DOLLMASTER / LINK HOLDER</div></div>
-        <h4>인형사</h4>
         <p>인형과 LINK를 맺고 생명력을 공급하며 운용하는 사람. 기업·연구기관·의료기관 또는 개인 단위로 활동할 수 있다.</p>
         <h4>교육</h4>
         <p>전투 인형사 자격을 취득하려는 인형사는 국가 기관에서 전문 교육을 받는다. 링크 형성, 아니마 운용, 인형 관리, 생명력 조절, 전투 인형 운용, 링크 상태의 감정·정신적 영향, 모르스 및 사변체 대응 등을 배운다.</p>
         <h4>다중 링크</h4>
         <p>한 명의 인형사가 여러 인형과 링크하는 것은 가능하지만 생명력 소모, 정신적 부담, 감정 동조의 복잡화가 발생한다. 대부분의 전투 인형사는 하나의 전투 인형과 LINK를 유지한다.</p>
-        <div class="quote">“내가 연결된 존재는 도구인가, 아니면 함께 살아가는 존재인가?”</div>
-        <p>인형에게 명령을 내려야 하는지, 인형의 의사를 존중해야 하는지, 인형의 희생을 결정할 권리가 자신에게 있는지 선택해야 한다.</p>
+        <blockquote>“내가 연결된 존재는 도구인가, 아니면 함께 살아가는 존재인가?”</blockquote>
       </div></div></div>
     </article>
 
     <article class="db-item">
-      <button class="db-toggle" type="button"><div><div class="db-title">정부 관리 기관</div><div class="db-meta">GOVERNMENT / BRANCH / FACILITIES</div></div><span class="db-plus">+</span></button>
+      <button class="db-toggle" type="button">
+        <div><div class="db-title">정부 관리 기관</div><div class="db-meta">GOVERNMENT / BRANCH / FACILITIES</div></div>
+        <span class="db-plus">+</span>
+      </button>
       <div class="db-panel"><div class="db-inner"><div class="db-content">
         <p>모르스 침식이 확산되면서 정부는 공인 전투 인형사와 전투 인형을 전문적으로 관리하고 운용하기 위한 국가 기관을 설립했다.</p>
         <p>공인 인형사 교육과 자격 관리, 전투 인형 등록·배치·정비, 아니마 및 링크 관리, 침식 지역 대응과 사변체 처리 등 국가의 인형 전력 전반을 담당한다.</p>
         <h4>지역 지부</h4>
         <p>주요 생활권마다 지역 지부를 운영한다. 전투 인형사와 전투 인형은 담당 지부를 거점으로 생활하며, 관할 지역에서 모르스 침식이나 사변체가 발견되면 현장에 파견된다.</p>
+      </div></div></div>
+    </article>
+
+    <article class="db-item">
+      <button class="db-toggle" type="button">
+        <div><div class="db-title">비인가 인형사와 반정부 조직</div><div class="db-meta">OUTLAW / MODIFIED DOLL / GOVERNMENT CONFLICT</div></div>
+        <span class="db-plus">+</span>
+      </button>
+      <div class="db-panel"><div class="db-inner"><div class="db-content">
+        <div class="db-visual"><img src="assets/anima_unregistered.png" alt="비인가 인형사"><div class="db-visual-caption">UNREGISTERED / OUTSIDE GOVERNMENT CONTROL</div></div>
+        <h4>비인가 인형사</h4>
+        <p>정부의 승인 없이 아니마에 자신의 생명 정보를 각인하고 인형과 링크를 형성한 사람. 실제 링크 형성은 가능하지만 정식 교육과 관리 과정을 거치지 않았기 때문에 정부 관리에서 벗어난다.</p>
+        <p>비인가 각인은 생명력 조건과 링크 적성을 확인할 수 없어 위험성이 높으며, 실패하거나 불안정할 경우 생명력 급격한 소모, 신체 기능 저하, 정신적 불안정 등이 발생할 수 있다.</p>
+        <h4>반정부 조직</h4>
+        <p>일부 비인가 인형사들은 정부의 인형사 관리 체계에 반발하며 조직을 형성한다. 비인가 인형사 양성, 아니마 및 링크 관련 기술 연구, 비전투 인형 개조, 정부 관리 시설 습격 등이 주요 활동이다.</p>
+        <h4>개조 인형</h4>
+        <p>반정부 조직은 공식 전투 인형을 확보할 수 없기 때문에 기존 비전투 인형을 개조해 전투 목적으로 운용한다. 공식 전투 인형이 아니며, 구조 변경이나 출력 제한 해제, 비정상적인 링크 운용 등이 이루어질 수 있어 불안정성이 발생한다.</p>
+        <h4>정부의 대응</h4>
+        <p>정부는 비인가 인형사를 국가 관리 체계를 벗어난 위험 요소로 분류한다. 정식 전투 인형사가 이탈하는 경우 해당 인형사는 최우선 제거 대상으로 지정되며, 이탈한 전투 인형은 국가 전력으로서 회수해야 하는 자산으로 취급된다.</p>
+      </div></div></div>
+    </article>
+
+    <article class="db-item">
+      <button class="db-toggle" type="button">
+        <div><div class="db-title">세계의 현재</div><div class="db-meta">20 YEARS / STALEMATE / DAILY LIFE</div></div>
+        <span class="db-plus">+</span>
+      </button>
+      <div class="db-panel"><div class="db-inner"><div class="db-content">
+        <blockquote>인류는 모르스에게 승리하지 못했다.<br>그렇다고 패배하지도 않았다.</blockquote>
+        <p>평범한 일상이 이어지는 바로 옆에서 아포칼립스 역시 끝나지 않은 채, <strong>두 세계가 약 20년째 나란히 존재하고 있다.</strong></p>
       </div></div></div>
     </article>
 
@@ -398,29 +475,66 @@ section{padding:75px 0}.section-head{margin-bottom:30px}.section-copy{margin-top
 </div>
 
 <script>
-const bgm=document.getElementById("bgm");
-const musicBtn=document.getElementById("musicBtn");
-const bgmLabel=musicBtn.querySelector(".bgm-label");
+const wishbornBgm=document.getElementById("wishbornBgm");
+const bgmControl=document.getElementById("bgmControl");
+let bgmStarted=false,bgmFadeTimer=null;
 
-function setBGMState(on){
-  musicBtn.classList.toggle("is-playing",on);
-  bgmLabel.textContent=on ? "BGM ON" : "BGM OFF";
+function setBgmUI(on){
+  if(!bgmControl)return;
+  bgmControl.classList.toggle("is-paused",!on);
+  bgmControl.title=on?"BGM ON":"BGM OFF";
+  bgmControl.setAttribute("aria-label",on?"배경음악 끄기":"배경음악 켜기");
 }
-function startBGM(){
-  bgm.volume=.7;
-  bgm.play().then(()=>setBGMState(true)).catch(()=>setBGMState(false));
+
+function fadeBgmIn(){
+  clearInterval(bgmFadeTimer);
+  wishbornBgm.volume=0;
+  let n=0;
+  bgmFadeTimer=setInterval(()=>{
+    n++;
+    wishbornBgm.volume=Math.min(.38,.38*n/24);
+    if(n>=24)clearInterval(bgmFadeTimer);
+  },45);
 }
-function toggleBGM(){
-  if(bgm.paused){
-    bgm.play().then(()=>setBGMState(true)).catch(()=>setBGMState(false));
+
+async function startBGM(){
+  if(!wishbornBgm||bgmStarted)return;
+  bgmStarted=true;
+  try{
+    wishbornBgm.currentTime=0;
+    await wishbornBgm.play();
+    fadeBgmIn();
+    setBgmUI(true);
+  }catch(e){
+    bgmStarted=false;
+    setBgmUI(false);
+  }
+  if(bgmControl)bgmControl.classList.add("is-visible");
+}
+
+async function toggleBGM(){
+  if(!wishbornBgm)return;
+  if(wishbornBgm.paused){
+    try{
+      if(!bgmStarted){
+        bgmStarted=true;
+        wishbornBgm.currentTime=0;
+        wishbornBgm.volume=.38;
+      }
+      await wishbornBgm.play();
+      setBgmUI(true);
+    }catch(e){
+      bgmStarted=false;
+      setBgmUI(false);
+    }
   }else{
-    bgm.pause();
-    setBGMState(false);
+    wishbornBgm.pause();
+    setBgmUI(false);
   }
 }
 
-musicBtn.addEventListener("click", toggleBGM);
-setBGMState(false);
+if(bgmControl)bgmControl.addEventListener("click",toggleBGM);
+setBgmUI(false);
 
 const intro=document.getElementById("intro");
 const linkInterface=document.getElementById("linkInterface");
@@ -514,13 +628,14 @@ function establishLink(){
   linkCore.style.transform="translate(-50%,-50%) scale(.72)";
 
   startBGM();
+  intro.classList.add("complete");
 
   setTimeout(()=>{
     intro.classList.add("hide");
     site.classList.add("show");
     document.body.classList.remove("lock");
     window.scrollTo(0,0);
-  },350);
+  },850);
 }
 
 document.querySelectorAll(".db-toggle").forEach(btn=>{
