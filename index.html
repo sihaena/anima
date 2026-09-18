@@ -68,7 +68,9 @@ background:rgba(20,65,78,.28);
 #site.show{opacity:1;visibility:visible}
 .wrap{width:min(1180px,calc(100% - 32px));margin:auto}
 section{padding:100px 0;border-top:1px solid #17262d}
-.section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;margin-bottom:42px}
+.section-head{display:block;margin-bottom:42px}
+.section-head>div:first-child{display:block}
+.section-copy{margin-top:14px;max-width:760px;text-align:left}
 .section-title{margin:7px 0 0;font:400 clamp(35px,5vw,62px)/1.05 Georgia,serif}
 .section-copy{max-width:590px;font-size:13px;color:#8fa4ab}
 
@@ -147,7 +149,7 @@ section{padding:100px 0;border-top:1px solid #17262d}
 #musicBtn{top:12px;right:12px}
 .intro-content{padding:20px}.intro-title{font-size:20vw}.intro-sub{font-size:8px;letter-spacing:.2em}
 .link-interface{width:92vw;height:190px;margin-top:40px}.link-port{right:16%}.link-core{left:22%}.core-label{left:22%}
-section{padding:75px 0}.section-head{display:block;margin-bottom:30px}.section-copy{margin-top:17px;font-size:12px}
+section{padding:75px 0}.section-head{margin-bottom:30px}.section-copy{margin-top:17px;font-size:12px}
 .world,.master-info{grid-template-columns:1fr}.system-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 .project-points{grid-template-columns:1fr 1fr}
 .archive{display:flex;overflow-x:auto;gap:12px;padding-bottom:14px;scroll-snap-type:x mandatory}
@@ -170,7 +172,7 @@ section{padding:75px 0}.section-head{display:block;margin-bottom:30px}.section-c
 <div id="intro">
   <div class="intro-bg"></div>
   <div class="intro-content">
-    <div class="eyebrow">COMBAT DOLL PROJECT / ANIMA</div>
+    <div class="eyebrow">COMBAT DOLL PROJECT</div>
     <h1 class="intro-title">ANIMA</h1>
     <div class="intro-sub">ESTABLISH YOUR LINK</div>
     <div class="link-interface" id="linkInterface">
@@ -416,6 +418,8 @@ function toggleBGM(){
     setBGMState(false);
   }
 }
+
+musicBtn.addEventListener("click", toggleBGM);
 setBGMState(false);
 
 const intro=document.getElementById("intro");
